@@ -43,3 +43,11 @@ A három külső alkalmazás aktuális funkcióit hivatalos dokumentációval ke
 - A build GitHub Actions munkafolyamat konfigurálva, de sikeres futás ebben a munkamenetben nem lett igazolva.
 - A futtatási környezetből a GitHub klónozása hálózati DNS-hiba miatt nem sikerült; helyi npm build nem történt.
 - Vercel-deploy nem történt.
+
+## Fejlesztési ág – élénk arculat (2026-10-29)
+- Ág: development/vibrant-redesign-20261029. A main/production nem módosult.
+- Felhasználó által elfogadott új referencia: fekete oldalsáv, fehér tartalmi felület, élénk piros, narancs, kék, zöld; pasztell színek tiltva.
+- Mobilon kompakt menü, színes fejléc, haladáskártya; megmarad a mentés, leckeazonosító és grafikonlabor.
+- Hat új kidolgozott gyakorlólecke, összesen 29.
+- GitHub Actions build ellenőrzés szükséges; Vercelre automatikus deploy nem kért, a fejlesztés külön ágon történik.
+- Production URL a felhasználó képernyőképe alapján: https://digital-tools-academy.vercel.app
