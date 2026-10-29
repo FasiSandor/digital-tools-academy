@@ -1,0 +1,19 @@
+// Kiegészítő gyakorlóleckék. A meglévő tanulási azonosítókat nem módosítjuk.
+export type ExtraLesson={id:string;title:string;summary:string;steps:string[];task:string;answer:string;url:string};
+export const extraLessons:Record<string,ExtraLesson[]>={
+ GeoGebra:[
+ {id:'gg6',title:'Metszéspontok meghatározása',summary:'Két grafikon közös pontjainak megkeresése.',steps:['Nyisd meg a grafikus számológépet.','Add meg: f(x)=x+1 és g(x)=3-x.','Keresd meg a két egyenes metszéspontját.','Ellenőrizd mindkét képletbe helyettesítéssel.'],task:'Mennyi a metszéspont x-koordinátája?',answer:'1',url:'https://www.geogebra.org/graphing'},
+ {id:'gg7',title:'Abszolútérték-függvény',summary:'V alakú grafikon és eltolás.',steps:['Írd be: f(x)=abs(x).','Írd be: g(x)=abs(x-2).','Hasonlítsd össze a minimumhelyeket.'],task:'Hol van a g(x)=|x−2| minimumhelye? (x)',answer:'2',url:'https://www.geogebra.org/graphing'},
+ {id:'gg8',title:'Meredekség vizsgálata',summary:'Lineáris függvények együtthatóinak értelmezése.',steps:['Ábrázold: f(x)=2x+1.','Ábrázold: g(x)=-x+1.','Hasonlítsd össze a meredekséget és a tengelymetszetet.'],task:'Mennyi az f(x)=2x+1 meredeksége?',answer:'2',url:'https://www.geogebra.org/graphing'},
+ {id:'gg9',title:'Derivált és érintő',summary:'A változás sebességének szemléltetése.',steps:['Ábrázold: f(x)=x^2.','Használd a Derivative(f) parancsot.','Olvasd le a derivált értékét x=2 helyen.'],task:'Mennyi az x² deriváltja x=2-ben?',answer:'4',url:'https://www.geogebra.org/graphing'}],
+ Desmos:[
+ {id:'ds4',title:'Másodfokú függvény csúcspontja',summary:'Parabolaeltolás és csúcsponti alak.',steps:['Írd be: y=(x-3)^2+2.','Azonosítsd a csúcspontot.','Módosítsd a 3 és a 2 értékét.'],task:'Mi a csúcspont x-koordinátája?',answer:'3',url:'https://www.desmos.com/calculator'},
+ {id:'ds5',title:'Egyenlőtlenségek ábrázolása',summary:'Megoldástartományok megjelenítése.',steps:['Írd be: y>2x+1.','Figyeld meg a színezett félsíkot.','Vizsgáld meg az origó helyzetét.'],task:'Az origó megfelel az y>2x+1 feltételnek? (igen/nem)',answer:'nem',url:'https://www.desmos.com/calculator'},
+ {id:'ds6',title:'Abszolútérték és eltolás',summary:'Függvénytranszformációk összehasonlítása.',steps:['Írd be: y=abs(x).','Írd be: y=abs(x+2).','Olvasd le a második függvény minimumhelyét.'],task:'Mennyi az y=|x+2| minimumhelyének x-koordinátája?',answer:'-2',url:'https://www.desmos.com/calculator'},
+ {id:'ds7',title:'Exponenciális növekedés',summary:'Kamatos kamat és modellezés.',steps:['Írd be: y=2^x.','Hasonlítsd össze az x=0,1,2 értékekhez tartozó pontokat.','Értelmezd a megduplázódást.'],task:'Mennyi 2³?',answer:'8',url:'https://www.desmos.com/calculator'}],
+ 'Wolfram|Alpha':[
+ {id:'wa4',title:'Határérték',summary:'Egyszerű határértékek ellenőrzése.',steps:['Írd be: limit sin(x)/x as x approaches 0.','Olvasd le a kapott értéket.','Gondold végig, miért nem közvetlen behelyettesítés történt.'],task:'Mennyi a sin(x)/x határértéke x→0 esetén?',answer:'1',url:'https://www.wolframalpha.com/'},
+ {id:'wa5',title:'Egyenletrendszer',summary:'Két ismeretlenes lineáris rendszer.',steps:['Írd be: solve x+y=5, x-y=1.','Olvasd le az x és y értékét.','Helyettesítsd vissza mindkét egyenletbe.'],task:'Mennyi x értéke?',answer:'3',url:'https://www.wolframalpha.com/'},
+ {id:'wa6',title:'Mátrixok és determináns',summary:'Kétszer kettes mátrix vizsgálata.',steps:['Írd be: determinant {{1,2},{3,4}}.','Olvasd le a determinánst.','Ellenőrizd: 1·4−2·3.'],task:'Mennyi a determináns?',answer:'-2',url:'https://www.wolframalpha.com/'},
+ {id:'wa7',title:'Kamatos kamat',summary:'Gazdasági matematika számológépes ellenőrzése.',steps:['Írd be: 100000*(1.05)^2.','Értelmezd a 2 éves, évi 5%-os kamatos kamatot.','Vesd össze az egyszerű kamatozással.'],task:'Mennyi a második év végén a tőke forintban?',answer:'110250',url:'https://www.wolframalpha.com/'}]
+};
