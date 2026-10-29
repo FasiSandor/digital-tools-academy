@@ -116,3 +116,5 @@ button:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid
  .lesson{padding:13px 9px}
  .answer{flex-direction:column}
 }
+
+.lesson-search{flex:1;max-width:380px;margin:0 14px}.lesson-search input{width:100%;border:1px solid #ccd4df;border-radius:10px;background:#fff;color:#111;padding:11px 14px;font-size:13px}.lesson-search input::placeholder{color:#606b79}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.no-results{padding:16px;background:#fff3e6;border-left:4px solid #ff8500;color:#111827!important;border-radius:8px}@media(max-width:650px){.topbar{flex-wrap:wrap;padding:8px 0}.topbar>span:first-child{order:0}.top-progress{order:1;margin-left:auto}.lesson-search{order:2;flex-basis:100%;max-width:none;margin:0 0 5px}}
