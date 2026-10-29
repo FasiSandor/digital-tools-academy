@@ -51,3 +51,9 @@ A három külső alkalmazás aktuális funkcióit hivatalos dokumentációval ke
 - Hat új kidolgozott gyakorlólecke, összesen 29.
 - GitHub Actions build ellenőrzés szükséges; Vercelre automatikus deploy nem kért, a fejlesztés külön ágon történik.
 - Production URL a felhasználó képernyőképe alapján: https://digital-tools-academy.vercel.app
+
+## Ellenőrzés – fejlesztési változat
+- A cb5e9ddea25a38d29946c88afb19cf4a458ea03b commit GitHub Vercel státusza: success.
+- Ez a Vercel státusz nem bizonyít teljes manuális funkcionalitást, a GitHub Actions teszt sikerét vagy a production élesítést.
+- A fejlesztési ág továbbra is külön van a main ágtól, PR #1 draft állapotban.
+- Élesítés előtt ellenőrizendő: mobilmenü, leckekeresés, 29 lecke, függvénylabor, válaszellenőrzés, JSON export/import, konzolhibák.
