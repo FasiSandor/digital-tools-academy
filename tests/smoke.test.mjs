@@ -22,3 +22,17 @@ test('roadmap and backup features remain available',()=>{
 
 test('six additional lessons retain distinct stable IDs',()=>{const ids=[...more.matchAll(/id:'([^']+)'/g)].map(m=>m[1]);assert.equal(ids.length,6);assert.equal(new Set(ids).size,6);assert.ok(ids.every(id=>!main.includes("id:'"+id+"'")&&!extra.includes("id:'"+id+"'")));});
 test('approved vibrant design and mobile menu exist',()=>{const css=read('../src/style.css');for(const hex of ['#ff1736','#ff8500','#005dff','#00b84a'])assert.ok(css.includes(hex));assert.ok(main.includes('mobile-menu-toggle'));assert.ok(main.includes('hero-progress'));});
+
+test('mobile layout stacks sidebar and content',()=>{
+ const css=read('../src/style.css');
+ assert.ok(css.includes('.app{display:block;min-width:0}'));
+ assert.ok(css.includes('aside.menu-open'));
+});
+test('lesson search keeps original lesson indices',()=>{
+ assert.ok(main.includes('visibleLessons.map(({j,...l})'));
+ assert.ok(main.includes('onClick={()=>choose(course,j)}'));
+ assert.ok(main.includes('Nincs találat'));
+});
+test('backup validation and progress persistence are present',()=>{
+ for(const token of ['Array.isArray(saved)','new Set(saved.filter','dta-progress','d.completed.every','confirm(']) assert.ok(main.includes(token),token);
+});
