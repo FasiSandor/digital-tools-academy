@@ -35,3 +35,11 @@ A három külső alkalmazás aktuális funkcióit hivatalos dokumentációval ke
 - Valódi PWA ikonok és manifest, offline alapok
 - Biztonsági mentés integritásvizsgálata és visszaállítási teszt
 - Build + manuális teszt, csak utána Vercel-import
+
+## Fejlesztési napló – 2026-10-29
+- A függvénylabor megjeleníti a csúcspontot, a zérushelyeket és az Y-tengelymetszetet.
+- 12 új vezetett lecke került a három platformhoz (összesen 23).
+- A korábbi leckeazonosítók változatlanok; a helyi haladás megőrizhető.
+- A build GitHub Actions munkafolyamat konfigurálva, de sikeres futás ebben a munkamenetben nem lett igazolva.
+- A futtatási környezetből a GitHub klónozása hálózati DNS-hiba miatt nem sikerült; helyi npm build nem történt.
+- Vercel-deploy nem történt.
