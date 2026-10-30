@@ -29,9 +29,10 @@ export function formatNumber(value:number):string{return Number(value.toFixed(3)
 
 /** Pedagogical feedback is deterministic and based only on the selected task and answer. */
 export type NumericFeedback={category:'correct'|'invalid'|'sign'|'shift'|'calculation';hint:string;worked:string};
-export function explainNumericAnswer(fn:ExtendedFunction,task:NumericTask,raw:string):NumericFeedback{
+export function explainNumericAnswer(fn:ExtendedFunction,task:NumericTask,raw:string,round=0):NumericFeedback{
  const status=checkNumericAnswer(raw,task.answer);
- const x=fn.h+2;
+ const offsets=[2,-3,4,-2,3];
+ const x=fn.h+offsets[((round%offsets.length)+offsets.length)%offsets.length];
  const dx=x-fn.h;
  const core=fn.kind==='absolute'?Math.abs(dx):fn.kind==='cubic'?dx**3:1/dx;
  const operation=fn.kind==='absolute'?'|'+formatNumber(x)+' − '+formatNumber(fn.h)+'|':fn.kind==='cubic'?'('+formatNumber(x)+' − '+formatNumber(fn.h)+')³':'1 / ('+formatNumber(x)+' − '+formatNumber(fn.h)+')';
