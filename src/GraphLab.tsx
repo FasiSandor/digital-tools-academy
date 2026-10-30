@@ -1,17 +1,20 @@
 import {useMemo,useState} from 'react';
-import {evaluateQuadratic,derivativeAt,sampleAround,realRoots} from './graphMath';
+import {evaluateQuadratic,derivativeAt,sampleAround,realRoots,secantSlope} from './graphMath';
 
 const fmt=(n:number)=>Number(n.toFixed(3)).toLocaleString('hu-HU');
 const xPx=(x:number)=>170+x*32;
 const yPx=(y:number)=>125-y*18;
 export default function GraphLab(){
- const[a,setA]=useState(1),[b,setB]=useState(0),[c,setC]=useState(-2),[probe,setProbe]=useState(1),[prediction,setPrediction]=useState(''),[predictionResult,setPredictionResult]=useState(''),[showTangent,setShowTangent]=useState(true);
+ const[a,setA]=useState(1),[b,setB]=useState(0),[c,setC]=useState(-2),[probe,setProbe]=useState(1),[prediction,setPrediction]=useState(''),[predictionResult,setPredictionResult]=useState(''),[showTangent,setShowTangent]=useState(true),[showSecant,setShowSecant]=useState(false),[stepH,setStepH]=useState(1);
  const points=useMemo(()=>Array.from({length:321},(_,i)=>{const x=(i-160)/32;return (i?'L':'M')+xPx(x)+' '+yPx(evaluateQuadratic(a,b,c,x))}).join(' '),[a,b,c]);
  const vertex=a!==0?{x:-b/(2*a),y:c-b*b/(4*a)}:null;
  const delta=b*b-4*a*c;
  const roots=realRoots(a,b,c);
  const probeY=evaluateQuadratic(a,b,c,probe);
  const slope=derivativeAt(a,b,probe);
+ const secant=secantSlope(a,b,c,probe,stepH);
+ const secantY=evaluateQuadratic(a,b,c,probe+stepH);
+ const secantPath=useMemo(()=>Array.from({length:321},(_,i)=>{const x=(i-160)/32;return (i?'L':'M')+xPx(x)+' '+yPx(probeY+secant*(x-probe))}).join(' '),[probe,probeY,secant]);
  const samples=useMemo(()=>sampleAround(a,b,c,probe),[a,b,c,probe]);
  const tangent=useMemo(()=>Array.from({length:321},(_,i)=>{const x=(i-160)/32;return (i?'L':'M')+xPx(x)+' '+yPx(probeY+slope*(x-probe))}).join(' '),[probe,probeY,slope]);
  const applyPreset=(nextA:number,nextB:number,nextC:number,nextX:number)=>{setA(nextA);setB(nextB);setC(nextC);setProbe(nextX);setPrediction('');setPredictionResult('')};
@@ -41,17 +44,17 @@ export default function GraphLab(){
  {[-6,-4,-2,2,4,6].map(y=><text key={'yt'+y} x="164" y={yPx(y)+3} textAnchor="end" fontSize="9" fill="#64748b">{y}</text>)}
  <line x1="170" y1="0" x2="170" y2="250" stroke="#263142"/>
  <line x1="0" y1="125" x2="340" y2="125" stroke="#263142"/>
- <g clipPath="url(#graph-clip)"><path d={points} stroke="#ff1736" strokeWidth="3" fill="none"/>{showTangent&&<path d={tangent} stroke="#005dff" strokeWidth="2" strokeDasharray="7 4" fill="none"/>}{marker(probe,probeY,'P')}{marker(0,c,'Y')}{vertex&&marker(vertex.x,vertex.y,'C')}{roots.map((x,i)=>marker(x,0,'Z'+(i+1)))}</g>
+ <g clipPath="url(#graph-clip)"><path d={points} stroke="#ff1736" strokeWidth="3" fill="none"/>{showSecant&&<path d={secantPath} stroke="#16a34a" strokeWidth="2" strokeDasharray="3 5" fill="none"/>}{showTangent&&<path d={tangent} stroke="#005dff" strokeWidth="2" strokeDasharray="7 4" fill="none"/>}{marker(probe,probeY,'P')}{showSecant&&marker(probe+stepH,secantY,'Q')}{marker(0,c,'Y')}{vertex&&marker(vertex.x,vertex.y,'C')}{roots.map((x,i)=>marker(x,0,'Z'+(i+1)))}</g>
  <text x="323" y="119" fill="#111827" fontSize="11">x</text><text x="177" y="13" fill="#111827" fontSize="11">y</text>
  </svg>
- <div className="controls"><label className="tangent-toggle"><input type="checkbox" checked={showTangent} onChange={e=>setShowTangent(e.target.checked)}/> Érintő megjelenítése</label><div className="lab-legend"><span><i className="legend-curve"/> Függvény</span><span><i className="legend-tangent"/> Érintő</span></div>
+ <div className="controls"><label className="tangent-toggle"><input type="checkbox" checked={showTangent} onChange={e=>setShowTangent(e.target.checked)}/> Érintő megjelenítése</label><label className="tangent-toggle"><input type="checkbox" checked={showSecant} onChange={e=>setShowSecant(e.target.checked)}/> Szelő megjelenítése</label><div className="lab-legend"><span><i className="legend-curve"/> Függvény</span><span><i className="legend-tangent"/> Érintő</span><span><i style={{display:'inline-block',width:14,height:3,background:'#16a34a'}}/> Szelő</span></div>
  {([{name:'a – másodfokú tag',value:a,fn:setA},{name:'b – elsőfokú tag',value:b,fn:setB},{name:'c – konstans tag',value:c,fn:setC}]).map(s=><label key={s.name}><span>{s.name}: <b>{fmt(s.value)}</b></span><input aria-label={s.name} type="range" min="-4" max="4" step=".5" value={s.value} onChange={e=>{s.fn(Number(e.target.value));setPredictionResult('')}}/></label>)}
- <label className="probe-slider"><span>Vizsgált x: <b>{fmt(probe)}</b></span><input aria-label="Vizsgált x koordináta" type="range" min="-5" max="5" step=".25" value={probe} onChange={e=>{setProbe(Number(e.target.value));setPredictionResult('')}}/></label><p className="probe-result"><b>f({fmt(probe)}) = {fmt(probeY)}</b><span> Érintő meredeksége: <b>{fmt(slope)}</b></span></p><strong>f(x) = {fmt(a)}x² {b<0?'−':'+'} {fmt(Math.abs(b))}x {c<0?'−':'+'} {fmt(Math.abs(c))}</strong>
+ <label className="probe-slider"><span>Vizsgált x: <b>{fmt(probe)}</b></span><input aria-label="Vizsgált x koordináta" type="range" min="-5" max="5" step=".25" value={probe} onChange={e=>{setProbe(Number(e.target.value));setPredictionResult('')}}/></label><label className="probe-slider"><span>Szelő lépésköze (h): <b>{fmt(stepH)}</b></span><input aria-label="Szelő lépésköze h" type="range" min="0.1" max="2" step="0.1" value={stepH} onChange={e=>setStepH(Number(e.target.value))}/></label><p className="probe-result"><b>f({fmt(probe)}) = {fmt(probeY)}</b><span> Érintő meredeksége: <b>{fmt(slope)}</b></span></p><p className="probe-result">P = ({fmt(probe)}; {fmt(probeY)}), Q = ({fmt(probe+stepH)}; {fmt(secantY)}). <b>Szelő meredeksége: {fmt(secant)}</b>. Az érintő meredeksége: {fmt(slope)}. Eltérés: {fmt(Math.abs(secant-slope))}. Ha h közelít nullához, a szelő meredeksége az érintőéhez tart.</p><strong>f(x) = {fmt(a)}x² {b<0?'−':'+'} {fmt(Math.abs(b))}x {c<0?'−':'+'} {fmt(Math.abs(c))}</strong>
  <p>{a===0?(b===0?'Konstans függvény.':'Lineáris függvény.'):a>0?'A parabola felfelé nyílik.':'A parabola lefelé nyílik.'}</p>
  <p><b>Y-tengelymetszet:</b> (0; {fmt(c)})</p>
  {vertex&&<p><b>Csúcspont:</b> ({fmt(vertex.x)}; {fmt(vertex.y)})</p>}
  <p><b>Valós zérushelyek:</b> {roots.length?roots.map(fmt).join('; '):a===0&&b===0&&c===0?'minden valós szám':'nincsenek'}</p>
- <button onClick={()=>{setA(1);setB(0);setC(-2);setProbe(1);setShowTangent(true);setPrediction('');setPredictionResult('')}}>Alaphelyzet</button>
+ <button onClick={()=>{setA(1);setB(0);setC(-2);setProbe(1);setShowTangent(true);setShowSecant(false);setStepH(1);setPrediction('');setPredictionResult('')}}>Alaphelyzet</button>
  </div></div><section className="guided-explanation" aria-live="polite">
  <h3>Miért ilyen a grafikon? – lépésről lépésre</h3>
  <ol>
