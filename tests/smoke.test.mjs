@@ -16,7 +16,7 @@ test('graph lab includes critical mathematical cases',()=>{
  for(const token of ['a!==0','delta>0','delta===0','realRoots(a,b,c)','vertex','roots','setA(1)']) assert.ok(graph.includes(token),token);
 });
 test('roadmap and backup features remain available',()=>{
- for(const token of ['curriculum[course]','exportData','importData','dta-progress','setDone','<GraphLab/>']) assert.ok(main.includes(token),token);
+ for(const token of ['curriculum[course]','exportData','importData','readProgress(localStorage','setDone','<GraphLab/>']) assert.ok(main.includes(token),token);
  for(const token of ['GeoGebra','Desmos','Wolfram|Alpha']) assert.ok(curriculum.includes(token));
 });
 
