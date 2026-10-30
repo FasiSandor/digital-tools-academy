@@ -134,3 +134,10 @@ A tesztet a fejlesztési preview-n kell elvégezni, **nem** az éles oldalon. A 
 - [ ] `1/(x−2)+1`: két különálló görbeág, x=2-nél nincs értelmezve; aszimptoták x=2 és y=1.
 - [ ] Hibás vagy nem támogatott képlet (`sin(x)`, `x^4`) hibaüzenetet ad, az előző jó ábrát nem törli.
 - [ ] A további függvények nézete nem módosítja a 35 lecke haladását és a korábbi függvénylabor állapotát.
+
+### Függvényvizsgálat és önálló ellenőrzés
+- [ ] `|x−2|+1`: minimum (2;1), nincs zérushely; a részletes megoldás külön nyitható.
+- [ ] `(x−1)³+2`: inflexiós pont (1;2), nem szélsőérték; a függvény szigorúan növekvő.
+- [ ] `1/(x−2)+1`: zérushely x=1, y-tengelymetszet (0;0,5), két aszimptota és két monoton ág.
+- [ ] Három kérdés választható, azonnali indokolt visszajelzés és pontszám látható; az újrakezdés törli a válaszokat, de nem a leckehaladást.
+- [ ] Másik mintafüggvény választásakor az előző válaszok és a kinyitott megoldás visszaállnak.
