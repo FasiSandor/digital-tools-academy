@@ -157,3 +157,8 @@ A három külső alkalmazás aktuális funkcióit hivatalos dokumentációval ke
 - A sérült vagy olvashatatlan helyi haladásból a rendszer most már nem enged üres, félrevezető JSON-mentést készíteni. Az export gomb zárolt, a művelet programlogikája is külön ellenőrzi a zárolást, és a felület elmagyarázza a helyreállítás lehetőségeit.
 - Megerősített helyreállítás után az exportálás újra engedélyezett. A Chromium E2E teszt a tiltást és a visszaengedést is ellenőrzi.
 - A szelőcsúszkával kibővített előző Chromium E2E, a Node-tesztek és a build sikeresek (GitHub Actions `41009732306`). A mostani exportzár-módosítás külön ellenőrzendő.
+
+## Ismeretlen leckeazonosítók adatvédelme – 2026-10-30
+- A korábban ismert leckeazonosítókat tartalmazó, de jelenlegi verzióban ismeretlen azonosítókat is hordozó `dta-progress` lista már nem tisztul ki automatikusan az alkalmazás indulásakor.
+- Az ismert eredmények a felületen továbbra is látszanak, de a teljes eredeti JSON érintetlen marad. A helyreállítási zárolás megakadályozza az automatikus felülírást, az új eredmények mentését és a hiányos exportot.
+- Ez jövőbeli vagy korábbi verziók adatainak véletlen elvesztése ellen véd. Külön Node-teszt és Chromium újratöltéses teszt védi a viselkedést. A felhasználó továbbra is választhat teljes mentés-visszaállítást vagy kifejezetten jóváhagyott újrakezdést.
