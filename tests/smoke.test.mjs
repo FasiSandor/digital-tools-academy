@@ -85,8 +85,9 @@ test('backup preview and both restoration modes are available in settings',()=>{
 });
 
 test('unknown lesson IDs block destructive restore and merge',()=>{
- for(const token of ["mode==='replace'&&backupPreview.unknown>0","disabled={backupPreview.unknown>0}","A teljes felülírás tiltva van."])assert.ok(main.includes(token),token);
+ for(const token of ["if(backupPreview.unknown>0){setBackupError(","disabled={recoveryRequired||backupPreview.unknown>0}","Az egyesítés és a teljes felülírás tiltva van."])assert.ok(main.includes(token),token);
 });
+
 test('settings exposes clickable production and Vercel project links',()=>{
  for(const token of ['href="https://digital-tools-academy.vercel.app"','href="https://vercel.com/fasi-sandor-s-projects/digital-tools-academy"'])assert.ok(main.includes(token),token);
 });
