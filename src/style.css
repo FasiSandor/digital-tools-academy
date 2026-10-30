@@ -150,3 +150,10 @@ button:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid
 .quiz-support button{background:#fff;color:#005dff;border:2px solid #005dff;border-radius:9px;padding:8px 12px;font-weight:800;cursor:pointer}
 .quiz-support span{font-size:12px;font-weight:700;color:#374151}
 .quiz-hint{padding:12px;border-left:4px solid #ff8500;background:#fff7ed;color:#713f12!important;border-radius:6px;line-height:1.6}
+
+.backup-preview{border:2px solid #005dff;background:#fff;border-radius:12px;padding:16px;margin:16px 0;color:#111827}
+.backup-preview h3{margin:0 0 10px;color:#005dff}
+.backup-preview p{line-height:1.6}
+.backup-preview .actions{display:flex;flex-wrap:wrap;gap:10px}
+.backup-preview .actions button{border-radius:8px;padding:10px 12px;cursor:pointer;font-weight:800}
+.backup-error{background:#fff0f0;border-left:5px solid #ff1736;color:#991b1b;padding:12px;border-radius:5px}
