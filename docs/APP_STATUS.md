@@ -107,3 +107,10 @@ A három külső alkalmazás aktuális funkcióit hivatalos dokumentációval ke
 - A Beállítások → Alkalmazás adatai panelen az ikon is látható.
 - Automatizált teszt ellenőrzi a manifestet, a PNG-aláírást és a 180/192/512 méreteket; a valódi iPhone/iPad/Android főképernyős megjelenés **még nincs manuálisan ellenőrizve**.
 - Ez egy telepíthető webapp-alap, **nem** offline PWA: nincs service worker vagy offline tananyag-cache. Offline működést nem szabad ígérni.
+
+## Függvénylabor – ellenőrizhető értéktáblázat
+- Új `src/graphMath.ts`: tiszta, külön tesztelhető másodfokú/lineáris függvényérték-, derivált-, valós gyök- és mintapontszámítás.
+- A függvénylabor élő öt soros értéktáblázatot kapott: x, f(x), f′(x), helyi irány; a vizsgált pont kiemelve, keskeny képernyőn görgethető.
+- A regressziós tesztek konkrét numerikus eredményeket vizsgálnak, köztük kettős gyök, negatív diszkrimináns, lineáris/konstans eset és a parabola csúcspontja.
+- Vercel ellenőrzés: a projektlistában a `digital-tools-academy` látható (`prj_7xmgcrBv7kAqsadLMIHXaF8XHb50`, `team_XukoYO5JkeumfIaEpGdPaFz9`), de a projekt részletes lekérdezése ugyanebben a scope-ban 404-et adott. A Preview Git-integráció tényleges beállítása továbbra sem hitelesített; emiatt nem módosítottuk a projektbeállításokat, nem indítottunk kézi deployt.
+- A kézi mobilos regresszió, tényleges telepítés és mentés-visszaállítás továbbra is nyitott release-kapu.
