@@ -43,6 +43,7 @@ try{
  assert.equal(await page.getByRole('alert').isVisible(),true);
  await ownFunction.fill('x²-2');
  await page.getByRole('button',{name:'Ábrázolás indítása'}).click();
+ await page.getByRole('slider',{name:'Vizsgált x koordináta'}).fill('1');
  const convergenceTable=page.getByRole('table',{name:'A szelő meredekségének közelítése a deriválthoz'});
  assert.equal(await convergenceTable.isVisible(),true);
  assert.ok((await convergenceTable.innerText()).includes('2,1'));
