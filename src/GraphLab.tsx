@@ -1,17 +1,18 @@
 import {useMemo,useState} from 'react';
+import {evaluateQuadratic,derivativeAt,sampleAround,realRoots} from './graphMath';
 
 const fmt=(n:number)=>Number(n.toFixed(3)).toLocaleString('hu-HU');
 const xPx=(x:number)=>170+x*32;
 const yPx=(y:number)=>125-y*18;
 export default function GraphLab(){
  const[a,setA]=useState(1),[b,setB]=useState(0),[c,setC]=useState(-2),[probe,setProbe]=useState(1),[prediction,setPrediction]=useState(''),[predictionResult,setPredictionResult]=useState(''),[showTangent,setShowTangent]=useState(true);
- const points=useMemo(()=>Array.from({length:321},(_,i)=>{const x=(i-160)/32;return (i?'L':'M')+xPx(x)+' '+yPx(a*x*x+b*x+c)}).join(' '),[a,b,c]);
+ const points=useMemo(()=>Array.from({length:321},(_,i)=>{const x=(i-160)/32;return (i?'L':'M')+xPx(x)+' '+yPx(evaluateQuadratic(a,b,c,x))}).join(' '),[a,b,c]);
  const vertex=a!==0?{x:-b/(2*a),y:c-b*b/(4*a)}:null;
  const delta=b*b-4*a*c;
- const roots=a!==0?(delta<0?[]:delta===0?[-b/(2*a)]:[(-b-Math.sqrt(delta))/(2*a),(-b+Math.sqrt(delta))/(2*a)]):b!==0?[-c/b]:[];
- const probeY=a*probe*probe+b*probe+c;
- const slope=2*a*probe+b;
- const samples=useMemo(()=>[-1,-0.5,0,0.5,1].map(offset=>{const x=Number((probe+offset).toFixed(2));return {x,y:a*x*x+b*x+c,derivative:2*a*x+b,offset}}),[a,b,c,probe]);
+ const roots=realRoots(a,b,c);
+ const probeY=evaluateQuadratic(a,b,c,probe);
+ const slope=derivativeAt(a,b,probe);
+ const samples=useMemo(()=>sampleAround(a,b,c,probe),[a,b,c,probe]);
  const tangent=useMemo(()=>Array.from({length:321},(_,i)=>{const x=(i-160)/32;return (i?'L':'M')+xPx(x)+' '+yPx(probeY+slope*(x-probe))}).join(' '),[probe,probeY,slope]);
  const applyPreset=(nextA:number,nextB:number,nextC:number,nextX:number)=>{setA(nextA);setB(nextB);setC(nextC);setProbe(nextX);setPrediction('');setPredictionResult('')};
  const expectedTrend=slope===0?'vízszintes':slope>0?'növekszik':'csökken';
