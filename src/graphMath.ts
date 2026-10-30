@@ -31,3 +31,32 @@ export function secantConvergence(a:number,b:number,c:number,x:number,steps:read
   return {h,secant,tangent,difference:Math.abs(secant-tangent)};
  });
 }
+
+/** Finite viewport, with visible intercept, real roots, vertex and selected point. */
+export type GraphViewport={xMin:number;xMax:number;yMin:number;yMax:number};
+export function graphViewport(a:number,b:number,c:number,probe:number,zoom=1):GraphViewport{
+ const roots=realRoots(a,b,c).filter(Number.isFinite);
+ const vertexX=a===0?null:-b/(2*a);
+ const anchors=[-2,0,2,probe,...roots];
+ if(vertexX!==null&&Number.isFinite(vertexX))anchors.push(vertexX);
+ const rawMin=Math.min(...anchors),rawMax=Math.max(...anchors);
+ const centerX=(rawMin+rawMax)/2;
+ const halfX=Math.max(3,(rawMax-rawMin)*0.65)*zoom;
+ const xMin=centerX-halfX,xMax=centerX+halfX;
+ const ys=[evaluateQuadratic(a,b,c,xMin),evaluateQuadratic(a,b,c,xMax),evaluateQuadratic(a,b,c,0),evaluateQuadratic(a,b,c,probe),0];
+ if(vertexX!==null&&vertexX>=xMin&&vertexX<=xMax)ys.push(evaluateQuadratic(a,b,c,vertexX));
+ const minY=Math.min(...ys),maxY=Math.max(...ys);
+ const centerY=(minY+maxY)/2;
+ const halfY=Math.max(3,(maxY-minY)*0.65);
+ return {xMin,xMax,yMin:centerY-halfY,yMax:centerY+halfY};
+}
+export function graphTicks(min:number,max:number):number[]{
+ const span=max-min;
+ const rough=span/7;
+ const power=Math.pow(10,Math.floor(Math.log10(rough)));
+ const step=[1,2,5,10].map(x=>x*power).find(x=>x>=rough)??10*power;
+ const first=Math.ceil(min/step)*step;
+ const result:number[]=[];
+ for(let i=0;i<20;i++){const x=Number((first+i*step).toPrecision(12));if(x>max+step*1e-8)break;result.push(x);}
+ return result;
+}
