@@ -83,3 +83,8 @@ test('unknown lesson IDs block destructive restore but allow merge',()=>{
 test('settings exposes clickable production and Vercel project links',()=>{
  for(const token of ['href="https://digital-tools-academy.vercel.app"','href="https://vercel.com/fasi-sandor-s-projects/digital-tools-academy"'])assert.ok(main.includes(token),token);
 });
+
+test('course switches clear search and answer edits clear stale feedback',()=>{
+ assert.ok(main.includes("if(i!==course)setSearch('')"));
+ assert.ok(main.includes("setAnswer(e.target.value);setFeedback('')"));
+});
