@@ -61,3 +61,6 @@ A tesztet a fejlesztési preview-n kell elvégezni, **nem** az éles oldalon. A 
 - [ ] Sérült `dta-progress` JSON mellett egy helyes feladatmegoldás sem írhatja felül a korábbi sérült adatot; a felület ne jelezzen elmentett teljesítést.
 - [ ] A Beállításokban a megerősített JSON-visszaállítás feloldja a zárolást, és a visszaállított lecke megmarad frissítés után.
 - [ ] A kifejezett újrakezdés figyelmeztet az esetleges adatvesztésre, és csak jóváhagyás után hoz létre új üres haladást.
+
+- [ ] Sérült helyi haladás esetén a mentés előnézetében az „Egyesítés” gomb inaktív, az indok olvasható; csak megfelelő, teljes mentéssel lehessen visszaállítani.
+- [ ] Ismeretlen leckeazonosítót tartalmazó mentés és sérült helyi adat együttes fennállásakor sem az egyesítés, sem a teljes felülírás nem engedélyezett.
