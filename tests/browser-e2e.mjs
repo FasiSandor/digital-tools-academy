@@ -38,6 +38,15 @@ try{
  assert.match(await page.locator('.function-guide').innerText(),/2x²/);
  await page.getByRole('button',{name:'Következő lépés'}).click();
  await page.getByText('Lépés 2 / 6').waitFor();
+ const initialRange=await page.locator('.graph-view-range').innerText();
+ await page.getByRole('button',{name:'Nagyítás +'}).click();
+ assert.notEqual(await page.locator('.graph-view-range').innerText(),initialRange);
+ await page.getByRole('button',{name:'Automatikus nézet'}).click();
+ assert.equal(await page.locator('.graph-view-range').innerText(),initialRange);
+ await ownFunction.fill('y=300');
+ await page.getByRole('button',{name:'Ábrázolás indítása'}).click();
+ assert.match(await page.locator('.graphlab').innerText(),/300/);
+ assert.ok((await page.locator('svg.graphsvg path').first().getAttribute('d')).length>100);
  await ownFunction.fill('sin(x)');
  await page.getByRole('button',{name:'Ábrázolás indítása'}).click();
  assert.equal(await page.getByRole('alert').isVisible(),true);
