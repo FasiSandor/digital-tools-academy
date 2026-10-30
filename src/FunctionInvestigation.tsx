@@ -5,12 +5,13 @@ const fmt=(x:number)=>Number(x.toFixed(3)).toLocaleString('hu-HU');
 export default function FunctionInvestigation({fn}:{fn:ExtendedFunction}){
  const [answers,setAnswers]=useState<Record<number,number>>({});
  const [reveal,setReveal]=useState(false);
+ const [checked,setChecked]=useState(false);
  const analysis=useMemo(()=>analyzeExtended(fn),[fn]);
  const questions=useMemo(()=>practiceFor(fn),[fn]);
  const score=questions.filter((q,i)=>answers[i]===q.correct).length;
  const currentKey=fn.kind+':'+fn.a+':'+fn.h+':'+fn.k;
  const [lastKey,setLastKey]=useState(currentKey);
- if(lastKey!==currentKey){setLastKey(currentKey);setAnswers({});setReveal(false);}
+ if(lastKey!==currentKey){setLastKey(currentKey);setAnswers({});setReveal(false);setChecked(false);}
  return <section className="function-investigation" aria-label="Függvényvizsgálat és önálló gyakorlás">
  <h4>Függvényvizsgálat – gondolkodj, majd ellenőrizz!</h4>
  <p>Próbáld meg először önállóan megállapítani a zérushelyeket, a monotonitást és a szimmetriát. Ezután nyisd meg a részletes megoldást.</p>
@@ -24,8 +25,9 @@ export default function FunctionInvestigation({fn}:{fn:ExtendedFunction}){
  {analysis.asymptotes.length>0&&<p><b>Aszimptoták:</b> {analysis.asymptotes.join('; ')}</p>}
  </div>}
  <h4>Önálló ellenőrző kérdések</h4>
- {questions.map((q,i)=><fieldset className="investigation-question" key={i}><legend>{i+1}. {q.prompt}</legend>{q.options.map((option,j)=><label key={j}><input type="radio" name={'extended-question-'+i} checked={answers[i]===j} onChange={()=>setAnswers(v=>({...v,[i]:j}))}/>{option}</label>)}{answers[i]!==undefined&&<p className={answers[i]===q.correct?'practice-correct':'practice-incorrect'} role="status">{answers[i]===q.correct?'Helyes!':'Még nem jó.'} {q.explanation}</p>}</fieldset>)}
- <p className="practice-score" aria-live="polite">Eredmény: {score} / {questions.length} helyes válasz.</p>
- <button type="button" onClick={()=>setAnswers({})}>Gyakorlás újrakezdése</button>
+ {questions.map((q,i)=><fieldset className="investigation-question" key={i}><legend>{i+1}. {q.prompt}</legend>{q.options.map((option,j)=><label key={j}><input type="radio" name={'extended-question-'+i} checked={answers[i]===j} onChange={()=>{setAnswers(v=>({...v,[i]:j}));setChecked(false)}}/>{option}</label>)}{checked&&answers[i]!==undefined&&<p className={answers[i]===q.correct?'practice-correct':'practice-incorrect'} role="status">{answers[i]===q.correct?'Helyes!':'Még nem jó.'} {q.explanation}</p>}</fieldset>)}
+ <p className="practice-score" aria-live="polite">{checked?`Eredmény: ${score} / ${questions.length} helyes válasz.`:`Megválaszolva: ${Object.keys(answers).length} / ${questions.length}`}</p>
+ <button type="button" disabled={Object.keys(answers).length!==questions.length} onClick={()=>setChecked(true)}>Válaszok ellenőrzése</button>
+ <button type="button" onClick={()=>{setAnswers({});setChecked(false)}}>Gyakorlás újrakezdése</button>
  </section>;
 }
