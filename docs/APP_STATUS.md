@@ -215,3 +215,6 @@ A három támogatott új függvénycsaládhoz önálló számolási gyakorlás k
 
 ## Célzott matematikai hibajavítás – 2026-10-30
 A számbeviteles gyakorlás ellenőrzés után már nem csupán a helyes eredményt közli: felismeri a hiányzó függőleges eltolást, a vízszintes eltolás előjelcseréjét, a kihagyott a együtthatót és az érvénytelen számbevitelt. Mindhárom függvénycsaládnál négy számozott lépésben mutatja a behelyettesítést, illetve az eltolások magyarázatát. Az elemzés determinisztikus, nem AI és nem általános hibafelismerő; más tévedésnél általános sorrendi segítséget ad. A megoldás csak az ellenőrző gomb után jelenik meg. Új matematikai és mobilböngészős tesztek.
+
+## Önálló gyakorlás: több feladatsor és fokozatos segítség
+A három új függvénycsalád számolási gyakorlásában öt egymást követő kör érhető el, eltérő behelyettesítési x értékekkel. Minden feladat előtt két, külön kérhető segítség nyitható meg, amelyek a megoldási módszert mutatják, de nem közlik a konkrét számot. Új körben a válaszok és a segítség állapota nullázódik; a részletes hibadiagnosztika a választott körhöz igazodik. A haladás és korábbi leckék tárolása változatlan. Node és Chromium regressziós tesztek bővítve.
