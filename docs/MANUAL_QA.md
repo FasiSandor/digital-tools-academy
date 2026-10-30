@@ -30,7 +30,15 @@ A tesztet a fejlesztési preview-n kell elvégezni, **nem** az éles oldalon. A 
 10. Hibás JSON és idegen alkalmazás mentése esetén hiba jelenjen meg, a haladás ne változzon.
 8. Végül állítsd vissza a **legfrissebb** exportodat.
 
-## 4. Release-kapu
+## 4. PWA telepítés iPhone-on és Androidon
+- [ ] iPhone Safari: Megosztás → Hozzáadás a főképernyőhöz; a Digitális Akadémia név és a Σ ikon jelenik meg.
+- [ ] A főképernyőről indítva a webapp külön alkalmazásablakban nyílik meg, nem a Safari címsoros lapján.
+- [ ] iPadOS és Android esetén az ikon nem vágódik le, nem torzul, a felirat olvasható.
+- [ ] Beállítások → Alkalmazás adatai: ugyanaz az ikon, az eredeti alkalmazásnév és a technikai linkek láthatók.
+- [ ] Telepítés előtt a haladást JSON-exporttal menteni kell; főképernyőről törlés vagy böngészőadat-törlés helyi adatvesztést okozhat.
+- [ ] Offline állapotban nincs garantált tananyag-elérés: az app még nem tartalmaz service workert.
+
+## 5. Release-kapu
 - [ ] GitHub Actions Node tesztek és Vite/TypeScript build sikeres.
 - [ ] A Vercel preview ellenőrzött, production deploy nem történt.
 - [ ] Mobilos és mentési ellenőrzés sikeres.
