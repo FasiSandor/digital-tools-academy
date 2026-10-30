@@ -55,3 +55,24 @@ test('graph lab supports tangent visibility and immediate prediction feedback',(
 test('lesson self-check provides hints, attempt feedback and decimal normalization',()=>{
  for(const token of ['normalizeAnswer','quiz-support','quiz-hint','Segítő tipp','próbálkozás','setAttempts(0)','setShowHint(false)'])assert.ok(main.includes(token),token);
 });
+
+test('backup module performs real validation, merge and replace',async()=>{
+ const ts=await import('typescript');
+ const source=read('../src/backup.ts');
+ const js=ts.transpileModule(source,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ESNext}}).outputText;
+ const mod=await import('data:text/javascript;base64,'+Buffer.from(js).toString('base64'));
+ const valid=new Set(['gg1','gg2','ds1']);
+ const data=mod.makeBackup(['gg1','gg1','ds1']);
+ assert.deepEqual(data.completed,['gg1','ds1']);
+ const preview=mod.inspectBackup({...data,completed:['gg1','gg1','ghost','ds1']},valid);
+ assert.equal(preview.unknown,1);assert.equal(preview.duplicates,1);
+ assert.deepEqual(mod.restoreProgress(['gg2'],preview,'merge'),['gg2','gg1','ds1']);
+ assert.deepEqual(mod.restoreProgress(['gg2'],preview,'replace'),['gg1','ds1']);
+ assert.throws(()=>mod.inspectBackup({...data,app:'other'},valid));
+ assert.throws(()=>mod.inspectBackup({...data,version:2},valid));
+ assert.throws(()=>mod.inspectBackup({...data,completed:[null]},valid));
+ assert.throws(()=>mod.inspectBackup({...data,exportedAt:'invalid'},valid));
+});
+test('backup preview and both restoration modes are available in settings',()=>{
+ for(const token of ['inspectBackup','restoreProgress','Mentés előnézete','Haladás egyesítése','Teljes visszaállítás','backupError'])assert.ok(main.includes(token),token);
+});
