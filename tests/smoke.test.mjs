@@ -64,14 +64,21 @@ test('backup module performs real validation, merge and replace',async()=>{
  const valid=new Set(['gg1','gg2','ds1']);
  const data=mod.makeBackup(['gg1','gg1','ds1']);
  assert.deepEqual(data.completed,['gg1','ds1']);
- const preview=mod.inspectBackup({...data,completed:['gg1','gg1','ghost','ds1']},valid);
- assert.equal(preview.unknown,1);assert.equal(preview.duplicates,1);
+ const preview=await mod.inspectBackup({...data,completed:['gg1','gg1','ghost','ds1']},valid);
+ assert.equal(preview.unknown,1);assert.equal(preview.duplicates,1);assert.equal(preview.integrity,'legacy');
  assert.deepEqual(mod.restoreProgress(['gg2'],preview,'merge'),['gg2','gg1','ds1']);
  assert.deepEqual(mod.restoreProgress(['gg2'],preview,'replace'),['gg1','ds1']);
- assert.throws(()=>mod.inspectBackup({...data,app:'other'},valid));
- assert.throws(()=>mod.inspectBackup({...data,version:2},valid));
- assert.throws(()=>mod.inspectBackup({...data,completed:[null]},valid));
- assert.throws(()=>mod.inspectBackup({...data,exportedAt:'invalid'},valid));
+ const signed=await mod.makeVerifiedBackup(['gg1','ds1']);
+ assert.match(signed.checksum,/^[0-9a-f]{64}$/);
+ assert.equal(signed.manifest.count,2);
+ assert.equal((await mod.inspectBackup(signed,valid)).integrity,'verified');
+ await assert.rejects(()=>mod.inspectBackup({...signed,completed:['gg1']},valid),/állományjegyzék/);
+ await assert.rejects(()=>mod.inspectBackup({...signed,completed:['ds1','gg1']},valid),/ellenőrzőösszege/);
+ await assert.rejects(()=>mod.inspectBackup({...signed,checksum:'bad'},valid),/ellenőrzőösszeg/);
+ await assert.rejects(()=>mod.inspectBackup({...data,app:'other'},valid));
+ await assert.rejects(()=>mod.inspectBackup({...data,version:2},valid));
+ await assert.rejects(()=>mod.inspectBackup({...data,completed:[null]},valid));
+ await assert.rejects(()=>mod.inspectBackup({...data,exportedAt:'invalid'},valid));
 });
 test('backup preview and both restoration modes are available in settings',()=>{
  for(const token of ['inspectBackup','restoreProgress','Mentés előnézete','Haladás egyesítése','Teljes visszaállítás','backupError'])assert.ok(main.includes(token),token);
@@ -91,4 +98,8 @@ test('course switches clear search and answer edits clear stale feedback',()=>{
 
 test('graph explains discriminant and line/constant edge cases',()=>{
  for(const token of ['Diszkrimináns és zérushelyek','D = b² − 4ac','delta>0','delta===0','Lineáris esetben','Minden x értéknél f(x)=0'])assert.ok(graph.includes(token),token);
+});
+
+test('new export and import await checksum verification',()=>{
+ for(const token of ['await makeVerifiedBackup(done)','await inspectBackup(raw,valid)','SHA-256 ellenőrzött','Régi mentés, ellenőrzőösszeg nélkül'])assert.ok(main.includes(token),token);
 });
