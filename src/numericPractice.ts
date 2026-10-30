@@ -8,7 +8,7 @@ export function numericTasks(fn:ExtendedFunction,round=0):NumericTask[]{
  if(y===null)throw new Error('A kiválasztott pont nem értelmezhető.');
  const tasks:NumericTask[]=[
  {id:'value',prompt:'Mennyi f('+formatNumber(x)+') értéke?',answer:y,explanation:'Helyettesítsd be az x = '+formatNumber(x)+' értéket a függvény képletébe. Az eredmény '+formatNumber(y)+'.'},
- {id:'horizontal',prompt:fn.kind==='reciprocal'?'Hol van a függőleges aszimptota? Add meg az x értékét.':fn.kind==='absolute'?'Mi a csúcspont x koordinátája?':'Mi az inflexiós pont x koordinátája?',answer:fn.h,explanation:'Az x − h alakból h = '+formatNumber(fn.h)+' olvasható le.'},
+ {id:'horizontal',prompt:fn.kind==='reciprocal'?(fn.a===0?'Hol van a hiányzó pont? Add meg az x értékét.':'Hol van a függőleges aszimptota? Add meg az x értékét.'):fn.kind==='absolute'?'Mi a csúcspont x koordinátája?':'Mi az inflexiós pont x koordinátája?',answer:fn.h,explanation:'Az x − h alakból h = '+formatNumber(fn.h)+' olvasható le.'},
  {id:'vertical',prompt:fn.kind==='reciprocal'?'Hol van a vízszintes aszimptota? Add meg az y értékét.':fn.kind==='absolute'?'Mi a csúcspont y koordinátája?':'Mi az inflexiós pont y koordinátája?',answer:fn.k,explanation:'A függőleges eltolás k = '+formatNumber(fn.k)+'.'}
  ];
  return tasks;
