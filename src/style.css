@@ -157,3 +157,5 @@ button:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid
 .backup-preview .actions{display:flex;flex-wrap:wrap;gap:10px}
 .backup-preview .actions button{border-radius:8px;padding:10px 12px;cursor:pointer;font-weight:800}
 .backup-error{background:#fff0f0;border-left:5px solid #ff1736;color:#991b1b;padding:12px;border-radius:5px}
+
+.settings-app-icon{display:block;border-radius:17px;box-shadow:0 8px 22px #0b0f1426;margin:12px 0 16px}
