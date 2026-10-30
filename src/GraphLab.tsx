@@ -1,5 +1,6 @@
 import {useMemo,useState} from 'react';
 import {parsePolynomial} from './functionInput';
+import ExtendedGraphLab from './ExtendedGraphLab';
 import {evaluateQuadratic,derivativeAt,sampleAround,realRoots,secantSlope,secantConvergence,graphViewport,graphTicks} from './graphMath';
 
 const fmt=(n:number)=>Number(n.toFixed(3)).toLocaleString('hu-HU');
@@ -101,6 +102,7 @@ export default function GraphLab(){
  <p>Öt pontban egyszerre látod a függvény értékét és a deriváltat. A kiemelt sor a csúszkán kiválasztott x értéket mutatja. Így a grafikon képernyőolvasó nélkül is számokból követhető.</p>
  <div className="graph-table-scroll"><table><caption>Az aktuális f(x) és f′(x) értékek</caption><thead><tr><th scope="col">x</th><th scope="col">f(x)</th><th scope="col">f′(x)</th><th scope="col">Helyi irány</th></tr></thead><tbody>{samples.map(sample=><tr key={sample.offset} className={sample.offset===0?'graph-current-row':''}><th scope="row">{fmt(sample.x)}{sample.offset===0?' (vizsgált)':''}</th><td>{fmt(sample.y)}</td><td>{fmt(sample.derivative)}</td><td>{sample.derivative===0?'vízszintes érintő':sample.derivative>0?'növekszik':'csökken'}</td></tr>)}</tbody></table></div>
  </section>
+ <ExtendedGraphLab/>
  <section className="graph-challenge" aria-labelledby="graph-challenge-title">
  <h3 id="graph-challenge-title">Tippeld meg, mi történik!</h3>
  <p>Az aktuális pont környezetében a függvény növekszik vagy csökken? Ha a meredekség nulla, válaszd a vízszintes érintőt. Előbb próbáld önállóan, aztán ellenőrizd.</p>
