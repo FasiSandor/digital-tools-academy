@@ -71,12 +71,14 @@ try{
  await page.getByRole('button',{name:'Menü megnyitása'}).click();
  await settings(page);
  assert.match(await page.locator('main').innerText(),/helyi haladás adatai hibásak/);
+ assert.equal(await page.getByRole('button',{name:/Exportálás/}).isDisabled(),true);
  await upload(page,backup(['gg1']));
  assert.equal(await page.getByRole('button',{name:'Haladás egyesítése'}).isDisabled(),true);
  page.once('dialog',dialog=>dialog.accept());
  await page.getByRole('button',{name:'Teljes visszaállítás'}).click();
  await page.waitForFunction(()=>localStorage.getItem('dta-progress')==='["gg1"]');
  assert.deepEqual(await page.evaluate(()=>JSON.parse(localStorage.getItem('dta-progress'))),['gg1']);
+ assert.equal(await page.getByRole('button',{name:/Exportálás/}).isEnabled(),true);
  console.log('Browser E2E passed: mobile menu, PWA manifest/icon, SHA-256 export, import, persisted restore and corrupted-progress recovery.');
 }finally{
  if(browser)await browser.close();
