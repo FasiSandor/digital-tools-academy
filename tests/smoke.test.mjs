@@ -410,3 +410,22 @@ test('zero-numerator reciprocal has a hole rather than a vertical asymptote',()=
  assert.ok(graph.includes("fn.kind==='reciprocal'&&fn.a!==0"),'no vertical asymptote should be drawn when a=0');
  assert.ok(graph.includes("hiányzó pont, nem függőleges aszimptota"));
 });
+
+test('GeoGebra multi-method workshop has stable unique content and is course-scoped',async()=>{
+ const ts=await import('typescript');
+ const source=read('../src/geoTips.ts');
+ const js=ts.transpileModule(source,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ESNext}}).outputText;
+ const bank=await import('data:text/javascript;base64,'+Buffer.from(js).toString('base64'));
+ assert.ok(bank.geoTips.length>=15);
+ assert.equal(new Set(bank.geoTips.map(t=>t.id)).size,bank.geoTips.length);
+ for(const t of bank.geoTips){
+  assert.ok(t.title&&t.goal&&t.challenge&&t.reason&&t.link.startsWith('https://www.geogebra.org/'));
+  assert.ok(t.methods.length>=2&&t.methods.every(m=>m.steps.length>=2&&m.when));
+  assert.ok(t.options.length===3&&t.correct>=0&&t.correct<t.options.length);
+ }
+ assert.ok(bank.filterGeoTips('érintő','Mind').length>=1);
+ assert.ok(bank.filterGeoTips('','CAS').every(t=>t.category==='CAS'));
+ const app=read('../src/main.tsx'),ui=read('../src/GeoTipsLab.tsx');
+ assert.ok(app.includes('course===0&&<GeoTipsLab/>'));
+ for(const token of ['aria-pressed','Válasz ellenőrzése','Kipróbálás a GeoGebrában','type="search"'])assert.ok(ui.includes(token));
+});
