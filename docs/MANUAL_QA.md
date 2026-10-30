@@ -149,3 +149,10 @@ A tesztet a fejlesztési preview-n kell elvégezni, **nem** az éles oldalon. A 
 - [ ] Tizedesvessző működik; nem számot tartalmazó válasz elutasítva.
 - [ ] Ellenőrzés csak három kitöltött válasz után; javítás elrejti a régi pontozást; újrakezdés törli a kitöltést.
 - [ ] Mobilon a számbeviteli mezők és magyarázatok nem lógnak ki.
+
+### Hibadiagnosztika és részletes számolás
+- [ ] `|x−2|+1`, f(4): 2 beírása után jelezze a hiányzó +1 eltolást; 3-ra javítva helyes legyen.
+- [ ] `|x−2|+1`, csúcs x: −2 beírásánál az x−h előjelének felcserélését jelezze.
+- [ ] `−2|x+1|+3`, f(1): 5 beírásánál az a=−2 szorzó kimaradását jelezze.
+- [ ] `1/(x−2)+1`, f(4): 1,5 jó eredmény; hibás válasz után a négy behelyettesítési lépés olvasható.
+- [ ] Ellenőrzés előtt a helyes számok és a részletes megoldások ne látszódjanak.
