@@ -2,8 +2,8 @@ import {useState} from 'react';
 const coord=(x:number,y:number)=>({x:240+x*28,y:165-y*22});
 export default function GeoTransformLab(){
  const [a,setA]=useState(1),[h,setH]=useState(0),[k,setK]=useState(0),[showBase,setShowBase]=useState(true);
- const points:Array<string>=[];
- for(let x=-8;x<=8;x+=0.08){const y=a*(x-h)**2+k;if(Math.abs(y)>8)continue;const p=coord(x,y);points.push((points.length?'L':'M')+p.x.toFixed(1)+' '+p.y.toFixed(1))}
+ const points:Array<string>=[];let visible=false;
+ for(let x=-8;x<=8;x+=0.08){const y=a*(x-h)**2+k;if(Math.abs(y)>7.5){visible=false;continue}const p=coord(x,y);points.push((visible?'L':'M')+p.x.toFixed(1)+' '+p.y.toFixed(1));visible=true}
  const base:Array<string>=[];
  for(let x=-8;x<=8;x+=0.08){const y=x*x;if(y>8)continue;const p=coord(x,y);base.push((base.length?'L':'M')+p.x.toFixed(1)+' '+p.y.toFixed(1))}
  const vertex=coord(h,k);
