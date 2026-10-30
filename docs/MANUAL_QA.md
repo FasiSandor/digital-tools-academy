@@ -1,0 +1,37 @@
+# Kézi regressziós ellenőrzés – Digital Tools Academy
+
+A tesztet a fejlesztési preview-n kell elvégezni, **nem** az éles oldalon. A GitHub Actions nem helyettesíti a böngészős ellenőrzést.
+
+## 1. Mobil (iPhone Safari és keskeny asztali nézet)
+- [ ] A menü nyitható és csukható, a tartalom nem lóg ki vízszintesen.
+- [ ] A GeoGebra / Desmos / Wolfram|Alpha váltás után helyes a leckelista.
+- [ ] A keresés megtartja a lecke valódi sorszámát; nincs találat állapot működik.
+- [ ] A grafikon csúszkái ujjal működnek, a jelmagyarázat olvasható.
+- [ ] Az öt grafikonkísérlet mindegyike visszaállítja az együtthatókat és a vizsgált pontot.
+- [ ] A kék érintő elrejthető és újra megjeleníthető.
+
+## 2. Tanulási haladás
+- [ ] Hibás válasz nem jelöl teljesítettnek.
+- [ ] Helyes válasz jelöli a leckét; frissítés után is megmarad.
+- [ ] A segítő tipp nyitható és zárható; a próbálkozások száma nő.
+- [ ] Leckeváltáskor a korábbi válasz és visszajelzés nem marad látható.
+- [ ] A magyar tizedesvesszővel írt szám elfogadása egyezik a tizedespontos változattal.
+
+## 3. Mentés és visszaállítás – adatvesztés elleni sorrend
+1. Készíts JSON-exportot és őrizd meg.
+2. Teljesíts egy további leckét.
+3. Importáld a korábbi mentést; **csak az előnézet** jelenjen meg, a haladás még ne változzon.
+4. Válaszd az **Egyesítés** lehetőséget: a később teljesített lecke is maradjon meg.
+5. Importáld ismét a korábbi mentést; válaszd a **Teljes visszaállítás** opciót, majd erősítsd meg: csak a mentésbeli leckék maradjanak.
+6. Módosított, ismeretlen azonosítót tartalmazó mentésnél a teljes visszaállítás legyen letiltva.
+7. Hibás JSON és idegen alkalmazás mentése esetén hiba jelenjen meg, a haladás ne változzon.
+8. Végül állítsd vissza a **legfrissebb** exportodat.
+
+## 4. Release-kapu
+- [ ] GitHub Actions Node tesztek és Vite/TypeScript build sikeres.
+- [ ] A Vercel preview ellenőrzött, production deploy nem történt.
+- [ ] Mobilos és mentési ellenőrzés sikeres.
+- [ ] `docs/APP_STATUS.md` frissítve, szükség esetén visszaállítási tag létrehozva.
+- [ ] Csak ezután PR #4 merge és egy összevont production deploy.
+
+**Megjegyzés:** a jelenlegi helyi tárolás böngészőhöz kötött. A böngészőadatok törlése, PWA újratelepítése vagy eszközváltás adatvesztést okozhat ellenőrzött export nélkül.
