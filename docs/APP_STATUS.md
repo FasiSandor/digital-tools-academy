@@ -99,3 +99,11 @@ A három külső alkalmazás aktuális funkcióit hivatalos dokumentációval ke
 - Az integritás nem digitális aláírás és nem titkosítás: a mentés helyi felhasználói fájl, az SHA-256 véletlen sérülés észlelésére szolgál, nem bizonyítja a készítő személyét.
 - A mentésben továbbra is kizárólag a helyi teljesített leckeazonosítók szerepelnek; nem tartalmaz fiókadatot, jelszót vagy API-kulcsot.
 - Automatizált teszt: valós SHA-256 generálás, visszaolvasás, módosított és sérült állományjegyzék elutasítása, régi formátum elfogadása.
+
+## PWA ikon és telepíthetőség – 2026-10-30
+- Elkészült az alkalmazás saját, az elfogadott arculathoz igazított Σ-jelű ikonja: `public/icons/dta-180.png`, `dta-192.png`, `dta-512.png` és SVG-változat.
+- `public/manifest.webmanifest`: eredeti appnév, rövid név, `id: /`, `start_url: /`, `scope: /`, magyar nyelv, standalone, PNG és SVG ikonhivatkozások.
+- `index.html`: manifest, Apple Touch Icon, SVG favicon, iOS főképernyős metaadatok.
+- A Beállítások → Alkalmazás adatai panelen az ikon is látható.
+- Automatizált teszt ellenőrzi a manifestet, a PNG-aláírást és a 180/192/512 méreteket; a valódi iPhone/iPad/Android főképernyős megjelenés **még nincs manuálisan ellenőrizve**.
+- Ez egy telepíthető webapp-alap, **nem** offline PWA: nincs service worker vagy offline tananyag-cache. Offline működést nem szabad ígérni.
