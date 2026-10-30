@@ -4,13 +4,13 @@
 - Eredeti név: Digitális Alkalmazások – Digital Tools Academy
 - GitHub: https://github.com/FasiSandor/digital-tools-academy
 - Alapág: main
-- Production/Vercel: nincs létrehozva, URL nem ismert
+- Production/Vercel: https://digital-tools-academy.vercel.app (GitHub-integráció)
 - Adattárolás: localStorage (csak az adott böngészőben)
-- Változat: 0.1.0, fejlesztés alatt
+- Csomagverzió: 0.1.0 (a package.json szerint); éles funkciók: 35 lecke, függvénylabor
 
 ## Megőrzendő működés
 - Három platform szerinti tanulás: GeoGebra, Desmos, Wolfram|Alpha
-- Magyar nyelv, Dark Tech színvilág, mobil-first
+- Magyar nyelv, felhasználó által jóváhagyott élénk piros/narancs/kék/zöld arculat, fekete oldalsáv, fehér felületek, mobil-first
 - Feladatellenőrzés és teljesített leckék tárolása
 - JSON export és import megerősítéssel
 - Külső platformok linkjei; nincs beágyazott harmadik fél fiókhozzáférés
@@ -19,7 +19,7 @@
 ## Minőségi kapuk
 - GitHub Actions: TypeScript + Vite build
 - Kézi ellenőrzés: mobilos megjelenés, csúszkák, navigáció, válaszellenőrzés, mentés-visszaállítás
-- Vercel: NEM telepítendő külön mérföldkő és ellenőrzés előtt
+- Vercel: új production deploy csak ellenőrzött, összevont mérföldkőnél; automatikus preview deployok beállítása külön ellenőrzendő
 - Visszaállítási pont: az egyes Git commitok; stabil release tag csak teszt után
 
 ## Tartalomfejlesztési követelmények
@@ -34,7 +34,7 @@ A három külső alkalmazás aktuális funkcióit hivatalos dokumentációval ke
 - Függvénylabor fejlesztése (csúcspont, gyökök, tengelymetszet)
 - Valódi PWA ikonok és manifest, offline alapok
 - Biztonsági mentés integritásvizsgálata és visszaállítási teszt
-- Build + manuális teszt, csak utána Vercel-import
+- Build + manuális teszt, csak utána összevont production merge (Vercel-projekt már létezik)
 
 ## Fejlesztési napló – 2026-10-29
 - A függvénylabor megjeleníti a csúcspontot, a zérushelyeket és az Y-tengelymetszetet.
@@ -57,3 +57,12 @@ A három külső alkalmazás aktuális funkcióit hivatalos dokumentációval ke
 - Ez a Vercel státusz nem bizonyít teljes manuális funkcionalitást, a GitHub Actions teszt sikerét vagy a production élesítést.
 - A fejlesztési ág továbbra is külön van a main ágtól, PR #1 draft állapotban.
 - Élesítés előtt ellenőrizendő: mobilmenü, leckekeresés, 29 lecke, függvénylabor, válaszellenőrzés, JSON export/import, konzolhibák.
+
+## Állapotfrissítés – 2026-10-30
+- Production: https://digital-tools-academy.vercel.app
+- Éles kiadások: PR #1 élénk arculat és 29 lecke; PR #2 összesen 35 lecke; PR #3 mozgatható pont és érintő. A GitHub/Vercel automatikus státuszok ezeknél sikeresek voltak; ez nem helyettesíti a kézi böngészős tesztet.
+- Aktuális fejlesztési ág: `development/graphlab-guided-explanations-20261030`, PR #4 (draft).
+- PR #4 csomag: öt élő matematikai magyarázati lépés; öt visszaállítható grafikonkísérlet (pozitív/negatív parabola, lineáris, konstans, csúcsponti érintő); érintő ki-be kapcsolása; aktuális meredekségre épülő önellenőrző feladat és azonnali visszajelzés; mobilos CSS; automatikus smoke tesztek.
+- Megőrzés: a 35 lecke azonosítója, a `dta-progress` localStorage-adatok és a JSON export/import változatlanok.
+- Ismert korlát: a smoke tesztek részben forrásszöveg-alapúak; valódi mobilos interakciós, képernyőolvasós és export-visszaállítási teszt még szükséges. A Vercel-projekt beállításait az aktuális csatlakozással nem sikerült kiolvasni (404), ezért a preview deployok kizárása nem igazolt.
+- Következő nagy csomag: többfeladatos leckék és differenciált hibamagyarázat; mentés előnézete, integritás és visszaállítási teszt; böngészős regressziótesztek.
