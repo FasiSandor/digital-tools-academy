@@ -159,3 +159,17 @@ button:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid
 .backup-error{background:#fff0f0;border-left:5px solid #ff1736;color:#991b1b;padding:12px;border-radius:5px}
 
 .settings-app-icon{display:block;border-radius:17px;box-shadow:0 8px 22px #0b0f1426;margin:12px 0 16px}
+
+/* Accessible numeric alternative to the live SVG graph. */
+.graph-values{margin-top:18px;padding:18px;background:#fff;border:2px solid #ff8500;border-radius:12px;color:#111827}
+.graph-values h3{margin:0 0 8px;color:#b74b00;font-size:20px}
+.graph-values p{line-height:1.55}
+.graph-table-scroll{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.graph-values table{width:100%;min-width:470px;border-collapse:collapse;text-align:left;font-variant-numeric:tabular-nums}
+.graph-values caption{text-align:left;font-size:12px;color:#374151;margin-bottom:8px}
+.graph-values th,.graph-values td{padding:11px 10px;border-bottom:1px solid #d6dee8}
+.graph-values thead{background:#111827;color:#fff}
+.graph-values tbody tr:nth-child(even){background:#f3f6fa}
+.graph-values .graph-current-row{background:#e6f0ff!important;box-shadow:inset 4px 0 #005dff}
+.graph-values .graph-current-row th{color:#003cb1}
+@media(max-width:600px){.graph-values{padding:13px}.graph-values th,.graph-values td{padding:9px 7px;font-size:13px}}
