@@ -152,3 +152,8 @@ A három külső alkalmazás aktuális funkcióit hivatalos dokumentációval ke
 - A felület élőben megmutatja P, Q koordinátáit, a szelő és érintő meredekségét, valamint az eltérést. A h csökkentése a derivált fogalmát szemlélteti.
 - Az alaphelyzet visszaállítja a szelő kapcsolóját és a h csúszkát is. Az eredeti funkciók megmaradtak.
 - Node regressziós tesztek ellenőrzik a másodfokú, lineáris, konstans eseteket és a h→0 konvergenciát. A fizikai eszközös QA nyitott.
+
+## Sérült haladás exportzár – 2026-10-30
+- A sérült vagy olvashatatlan helyi haladásból a rendszer most már nem enged üres, félrevezető JSON-mentést készíteni. Az export gomb zárolt, a művelet programlogikája is külön ellenőrzi a zárolást, és a felület elmagyarázza a helyreállítás lehetőségeit.
+- Megerősített helyreállítás után az exportálás újra engedélyezett. A Chromium E2E teszt a tiltást és a visszaengedést is ellenőrzi.
+- A szelőcsúszkával kibővített előző Chromium E2E, a Node-tesztek és a build sikeresek (GitHub Actions `41009732306`). A mostani exportzár-módosítás külön ellenőrzendő.
