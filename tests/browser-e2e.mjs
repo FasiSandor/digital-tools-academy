@@ -45,7 +45,7 @@ try{
  await extended.getByRole('textbox',{name:'Függvény képlete'}).fill('sin(x)');
  await extended.getByRole('button',{name:'Ábrázolás indítása'}).click();
  assert.equal(await extended.getByRole('alert').isVisible(),true);
- const ownFunction=page.getByRole('textbox',{name:'Függvény képlete'});
+ const ownFunction=page.locator('#function-expression');
  await ownFunction.fill('f(x)=2x²-3x+1');
  await page.getByRole('button',{name:'Ábrázolás indítása'}).click();
  await page.getByText('Lépés 1 / 6').waitFor();
