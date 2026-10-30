@@ -141,3 +141,11 @@ A tesztet a fejlesztési preview-n kell elvégezni, **nem** az éles oldalon. A 
 - [ ] `1/(x−2)+1`: zérushely x=1, y-tengelymetszet (0;0,5), két aszimptota és két monoton ág.
 - [ ] Három kérdés választható, azonnali indokolt visszajelzés és pontszám látható; az újrakezdés törli a válaszokat, de nem a leckehaladást.
 - [ ] Másik mintafüggvény választásakor az előző válaszok és a kinyitott megoldás visszaállnak.
+
+### Számolási gyakorlás
+- [ ] Reciprok 1/(x−2)+1: f(4)=1,5, aszimptoták x=2 és y=1; három jó szám 3/3 eredmény.
+- [ ] Abszolútérték |x−2|+1: f(4)=3, csúcs (2;1).
+- [ ] Harmadfok (x−1)³+2: f(3)=10, inflexiós pont (1;2).
+- [ ] Tizedesvessző működik; nem számot tartalmazó válasz elutasítva.
+- [ ] Ellenőrzés csak három kitöltött válasz után; javítás elrejti a régi pontozást; újrakezdés törli a kitöltést.
+- [ ] Mobilon a számbeviteli mezők és magyarázatok nem lógnak ki.
