@@ -256,3 +256,20 @@ test('secant convergence table is mathematically correct for quadratic, linear a
  }
  for(const token of ['secantConvergence(a,b,c,probe)','Hogyan lesz a szelőből érintő?','A szelő meredekségének közelítése a deriválthoz','|ah|'])assert.ok(graph.includes(token),token);
 });
+
+test('user polynomial input parses safely and handles negative and decimal coefficients',async()=>{
+ const ts=await import('typescript');
+ const js=ts.transpileModule(read('../src/functionInput.ts'),{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ESNext}}).outputText;
+ const m=await import('data:text/javascript;base64,'+Buffer.from(js).toString('base64'));
+ for(const [input,expected] of [
+  ['f(x)=2x²-3x+1',[2,-3,1]],
+  ['-x^2+2x+3',[-1,2,3]],
+  ['y=3',[0,0,3]],
+  ['2x-1',[0,2,-1]],
+  ['x²-4',[1,0,-4]],
+  ['0,5x²+1,5x-2',[0.5,1.5,-2]],
+  ['-x', [0,-1,0]]
+ ]){const {a,b,c}=m.parsePolynomial(input);assert.deepEqual([a,b,c],expected,input);}
+ for(const invalid of ['sin(x)','x^3','x/x','x²+x²','x++2','2*(x+1)','', 'x;alert(1)'])assert.throws(()=>m.parsePolynomial(invalid),undefined,invalid);
+ for(const token of ['Saját függvényem – ábrázolás lépésről lépésre','Ábrázolás indítása','Következő lépés','parsePolynomial(functionText)','guidedSteps[guidedStep]'])assert.ok(graph.includes(token),token);
+});
