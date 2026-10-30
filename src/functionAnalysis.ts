@@ -14,7 +14,7 @@ export function analyzeExtended(f:ExtendedFunction):FunctionAnalysis{
   return {zeros:zero,intercept,criticalPoint:a===0?null:{x:h,y:k,type:'vízszintes érintőjű inflexiós pont, nem szélsőérték'},monotonic:[a>0?'Szigorúan növekvő mindenütt':a<0?'Szigorúan csökkenő mindenütt':'Állandó'],symmetry:`Középpontos szimmetria: (${h}; ${k})`,asymptotes:[],domain:'Minden valós szám',range:a===0?`y = ${k}`:'Minden valós szám'};
  }
  const zero=a===0?[]:!near(k,0)?[h-a/k]:[];
- return {zeros:zero,intercept,criticalPoint:null,monotonic:a>0?[`Csökken: x < ${h}`,`Csökken: x > ${h}`]:a<0?[`Nő: x < ${h}`,`Nő: x > ${h}`]:['Állandó az értelmezési tartományban'],symmetry:`Középpontos szimmetria: (${h}; ${k})`,asymptotes:[`Függőleges: x = ${h}`,a===0?'Nincs vízszintes aszimptota':`Vízszintes: y = ${k}`],domain:`Minden valós szám, kivéve x = ${h}`,range:a===0?`y = ${k}`:`Minden valós szám, kivéve y = ${k}`};
+ return {zeros:zero,intercept,criticalPoint:null,monotonic:a>0?[`Csökken: x < ${h}`,`Csökken: x > ${h}`]:a<0?[`Nő: x < ${h}`,`Nő: x > ${h}`]:['Állandó az értelmezési tartományban'],symmetry:`Középpontos szimmetria: (${h}; ${k})`,asymptotes:[`Függőleges: x = ${h}`,`Vízszintes: y = ${k}`],domain:`Minden valós szám, kivéve x = ${h}`,range:a===0?`y = ${k}`:`Minden valós szám, kivéve y = ${k}`};
 }
 export type PracticeQuestion={prompt:string;options:string[];correct:number;explanation:string};
 function choose(correct:string,distractors:string[],seed:number):{options:string[];correct:number}{
