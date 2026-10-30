@@ -56,6 +56,11 @@ try{
  await numeric.getByRole('textbox',{name:/vízszintes aszimptota/}).fill('1');
  await numeric.getByRole('button',{name:'Számolási feladatok ellenőrzése'}).click();
  assert.match(await numeric.innerText(),/Számolási eredmény: 3 \/ 3/);
+ assert.match(await investigation.locator('.practice-history').innerText(),/Ellenőrzött próbálkozások: 1/);
+ await investigation.getByRole('button',{name:'Szöveges összesítő megjelenítése'}).click();
+ assert.match(await investigation.locator('#practice-report').inputValue(),/3 \/ 3/);
+ await investigation.getByRole('button',{name:'Összesítő elrejtése'}).click();
+
  await numeric.getByRole('textbox',{name:/Mennyi f\(4\)/}).fill('1');
  assert.match(await numeric.innerText(),/Kitöltve: 3 \/ 3/);
  await numeric.getByRole('button',{name:'Számolási feladatok ellenőrzése'}).click();
