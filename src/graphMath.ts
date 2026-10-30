@@ -16,3 +16,9 @@ export function realRoots(a:number,b:number,c:number):number[]{
  const sqrt=Math.sqrt(d);
  return [(-b-sqrt)/(2*a),(-b+sqrt)/(2*a)];
 }
+
+/** Slope of the secant through x and x+h; h must be nonzero. */
+export function secantSlope(a:number,b:number,c:number,x:number,h:number):number{
+ if(!Number.isFinite(h)||h===0)throw new RangeError('A szelőhöz nem nulla h szükséges.');
+ return 2*a*x+b+a*h;
+}
