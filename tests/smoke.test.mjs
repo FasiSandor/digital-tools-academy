@@ -191,3 +191,12 @@ test('corrupted local progress cannot be merged into a backup',()=>{
  assert.ok(main.includes('Az egyesítés nem használható'));
  assert.ok(main.includes("setRecoveryRequired(false);setDone(next)"));
 });
+
+test('graph grid uses the same mathematical scale as the plotted curve',()=>{
+ assert.ok(graph.includes("x1={xPx(x)}"));
+ assert.ok(graph.includes("y1={yPx(y)}"));
+ assert.ok(graph.includes("key={'xt'+x}"));
+ assert.ok(graph.includes("key={'yt'+y}"));
+ assert.equal(graph.includes("x1={10+i*20}"),false);
+ assert.equal(graph.includes("y1={5+i*20}"),false);
+});
