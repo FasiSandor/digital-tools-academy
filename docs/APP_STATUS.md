@@ -78,3 +78,10 @@ A három külső alkalmazás aktuális funkcióit hivatalos dokumentációval ke
 - Új futtatható Node-teszt a backup modulon: export, hibás metaadatok, duplikációk, ismeretlen ID-k, egyesítés és felülírás.
 - Korlát: a JSON formátum nem tartalmaz kriptográfiai ellenőrzőösszeget, és csak a helyi leckekészültséget menti. A felhasználói beállítások és egyéb állományok nem részei a jelenlegi adatsémának.
 - Kézi böngészős visszaállítási teszt még szükséges, az automatizált modulvizsgálat nem helyettesíti.
+
+## Folytatás – 2026-10-30, adatvédelmi és regressziós kapu
+- A `4ad3c473` commiton GitHub Actions sikeres: futtatható mentési tesztek és TypeScript/Vite build.
+- Biztonsági javítás: ismeretlen leckeazonosítót tartalmazó mentés nem írhatja felül teljesen a haladást; egyesítés megengedett. A production/Vercel hivatkozások kattinthatók.
+- Navigációs javítás: platformváltáskor keresés törlése; válaszmódosításkor elavult visszajelzés törlése.
+- Kézi tesztprotokoll: `docs/MANUAL_QA.md`.
+- Aktuális csomag továbbra is PR #4 draft. A teljes böngészős/mobilos teszt és a legfrissebb commit GitHub Actions visszaigazolása még hátravan; production merge nincs.
