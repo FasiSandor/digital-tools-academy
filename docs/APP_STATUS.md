@@ -201,3 +201,8 @@ A három külső alkalmazás aktuális funkcióit hivatalos dokumentációval ke
 - Külön grafikon, mobilbarát mintagombok, nagyítás, hatlépéses tanári magyarázat, értelmezési tartomány/értékkészlet és értéktáblázat. A reciprok két ága szakadáspontnál külön görbe, aszimptotái szaggatott kékkel jelennek meg.
 - A bemeneti értelmezés kifejezetten korlátozott és biztonságos; nem futtat tetszőleges JavaScriptet. Az általános összetett kifejezések, szinusz/koszinusz, többtagú harmadfokú polinomok még nem támogatottak.
 - Az eredeti másodfokú/lineáris labor, tanulói haladás és elfogadott dizájn változatlan. Új Node matematikai és Chromium mobil E2E tesztek.
+
+## Függvényvizsgálat és önálló gyakorlás – 2026-10-30
+- Az abszolútértékes, harmadfokú és reciprokfüggvényekhez megnyitható részletes vizsgálat készült: értelmezési tartomány, értékkészlet, zérushelyek, y-tengelymetszet, nevezetes pont, monotonitás, szimmetria és aszimptoták.
+- A tanuló először önállóan gondolkodhat, majd megjelenítheti a megoldást. Három kérdéses azonnali visszajelzéses gyakorlás, pontszámmal és újrakezdéssel. Új képlet kiválasztásakor a gyakorlás újraindul; a 35 lecke mentett haladása változatlan.
+- Az új vizsgálat matematikai függvényei külön tesztelhetők. A megoldás csak a támogatott függvénycsaládokra érvényes; általános CAS-elemzést nem állítunk.
