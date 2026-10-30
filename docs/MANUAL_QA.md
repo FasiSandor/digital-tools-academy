@@ -156,3 +156,9 @@ A tesztet a fejlesztési preview-n kell elvégezni, **nem** az éles oldalon. A 
 - [ ] `−2|x+1|+3`, f(1): 5 beírásánál az a=−2 szorzó kimaradását jelezze.
 - [ ] `1/(x−2)+1`, f(4): 1,5 jó eredmény; hibás válasz után a négy behelyettesítési lépés olvasható.
 - [ ] Ellenőrzés előtt a helyes számok és a részletes megoldások ne látszódjanak.
+
+### Ötkörös számolás
+- [ ] A reciprokfüggvény első köre f(4), második köre f(-1).
+- [ ] Két egymás utáni segítség csak módszert ad, nem végeredményt.
+- [ ] Új körben a kitöltés és a pontozás alaphelyzetbe áll.
+- [ ] Öt kör után újra az első következik.
