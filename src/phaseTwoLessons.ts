@@ -1,0 +1,13 @@
+import type {ExtraLesson} from './extraLessons';
+/** Second guided practice block. IDs are immutable for local progress compatibility. */
+export const phaseTwoLessons:Record<string,ExtraLesson[]>={
+ GeoGebra:[
+ {id:'gg12',title:'Derivált és érintő',summary:'Az érintő meredeksége szemléletesen.',steps:['Nyisd meg a GeoGebra grafikus számológépet.','Írd be: f(x)=x^2.','Hozz létre A=(2,f(2)) pontot.','Írd be: Tangent(A,f).','Olvasd le az érintő meredekségét, és ellenőrizd f\u0027(2)=4 alapján.'],task:'Mennyi az x² függvény érintőjének meredeksége x=2-nél?',answer:'4',url:'https://www.geogebra.org/graphing'},
+ {id:'gg13',title:'Terület integrállal',summary:'A grafikon és a határozott integrál kapcsolata.',steps:['Írd be: f(x)=x^2.','Írd be: Integral(f,0,3).','Figyeld meg a 0 és 3 közötti tartományt.','Ellenőrizd számolással: [x³/3] 0-tól 3-ig.'],task:'Mennyi az x² integrálja 0 és 3 között?',answer:'9',url:'https://www.geogebra.org/graphing'}],
+ Desmos:[
+ {id:'ds10',title:'Másodfokú modell költségekre',summary:'Minimumköltség megkeresése csúszkával.',steps:['Ábrázold: C(x)=(x-5)^2+20.','Nagyíts a csúcspont környékére.','Olvasd le a minimum helyét és értékét.','Vizsgáld meg, hogyan módosul a grafikon a +20 tag változtatásakor.'],task:'Mennyi a C(x) függvény minimumértéke?',answer:'20',url:'https://www.desmos.com/calculator'},
+ {id:'ds11',title:'Exponenciális növekedés',summary:'Kamatos kamat grafikonon és táblázatban.',steps:['Írd be: y=1000*1.1^x.','Hozz létre táblázatot x=0,1,2,3 értékekkel.','Olvasd le a második év végi összeget.','Hasonlítsd össze az egyszerű kamatozással.'],task:'Mennyi 1000 egység 10%-os éves kamattal két év múlva?',answer:'1210',url:'https://www.desmos.com/calculator'}],
+ 'Wolfram|Alpha':[
+ {id:'wa10',title:'Egyenlet grafikus ellenőrzése',summary:'Algebrai megoldás és grafikon összevetése.',steps:['Írd be: solve x^2-5x+6=0.','Olvasd le mindkét gyököt.','Kérd le a plot x^2-5x+6 ábrát.','Ellenőrizd a zérushelyeket a grafikonon.'],task:'Mennyi a két gyök összege?',answer:'5',url:'https://www.wolframalpha.com/'},
+ {id:'wa11',title:'Részletfizetés alapmodellje',summary:'Havi törlesztőrészlet matematikai modellje.',steps:['Tekints egy 120000 egységnyi kamatmentes tartozást.','Oszd fel 12 azonos havi részletre.','Írd be: 120000/12.','Értelmezd, hogy a kamatmentes példa nem valódi hitel THM-számítása.'],task:'Mennyi a havi részlet kamat nélkül?',answer:'10000',url:'https://www.wolframalpha.com/'}]
+};
