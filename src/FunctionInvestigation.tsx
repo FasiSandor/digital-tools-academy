@@ -1,7 +1,7 @@
 import {useMemo,useState} from 'react';
 import type {ExtendedFunction} from './extendedFunctions';
 import {analyzeExtended,practiceFor} from './functionAnalysis';
-import {numericTasks,checkNumericAnswer,formatNumber,explainNumericAnswer} from './numericPractice';
+import {numericTasks,checkNumericAnswer,formatNumber,explainNumericAnswer,numericHint} from './numericPractice';
 const fmt=(x:number)=>Number(x.toFixed(3)).toLocaleString('hu-HU');
 export default function FunctionInvestigation({fn}:{fn:ExtendedFunction}){
  const [answers,setAnswers]=useState<Record<number,number>>({});
@@ -9,14 +9,16 @@ export default function FunctionInvestigation({fn}:{fn:ExtendedFunction}){
  const [checked,setChecked]=useState(false);
  const [numericAnswers,setNumericAnswers]=useState<Record<string,string>>({});
  const [numericChecked,setNumericChecked]=useState(false);
+ const [round,setRound]=useState(0);
+ const [hintLevels,setHintLevels]=useState<Record<string,0|1|2>>({});
  const analysis=useMemo(()=>analyzeExtended(fn),[fn]);
  const questions=useMemo(()=>practiceFor(fn),[fn]);
- const tasks=useMemo(()=>numericTasks(fn),[fn]);
+ const tasks=useMemo(()=>numericTasks(fn,round),[fn,round]);
  const numericScore=tasks.filter(t=>checkNumericAnswer(numericAnswers[t.id]??'',t.answer)==='correct').length;
  const score=questions.filter((q,i)=>answers[i]===q.correct).length;
  const currentKey=fn.kind+':'+fn.a+':'+fn.h+':'+fn.k;
  const [lastKey,setLastKey]=useState(currentKey);
- if(lastKey!==currentKey){setLastKey(currentKey);setAnswers({});setReveal(false);setChecked(false);setNumericAnswers({});setNumericChecked(false);}
+ if(lastKey!==currentKey){setLastKey(currentKey);setAnswers({});setReveal(false);setChecked(false);setNumericAnswers({});setNumericChecked(false);setRound(0);setHintLevels({});}
  return <section className="function-investigation" aria-label="Függvényvizsgálat és önálló gyakorlás">
  <h4>Függvényvizsgálat – gondolkodj, majd ellenőrizz!</h4>
  <p>Próbáld meg először önállóan megállapítani a zérushelyeket, a monotonitást és a szimmetriát. Ezután nyisd meg a részletes megoldást.</p>
@@ -37,14 +39,18 @@ export default function FunctionInvestigation({fn}:{fn:ExtendedFunction}){
  {tasks.map((task,i)=>{
  const value=numericAnswers[task.id]??'';
  const status=checkNumericAnswer(value,task.answer);
- const feedback=explainNumericAnswer(fn,task,value);
+ const feedback=explainNumericAnswer(fn,task,value,round);
+ const hintLevel=hintLevels[task.id]??0;
  return <div className="numeric-task" key={task.id}>
  <label htmlFor={'numeric-'+task.id}>{i+1}. {task.prompt}</label>
  <input id={'numeric-'+task.id} inputMode="decimal" autoComplete="off" value={value} onChange={e=>{setNumericAnswers(v=>({...v,[task.id]:e.target.value}));setNumericChecked(false)}} placeholder="Írd be az eredményt"/>
+ <div className="numeric-hint"><button type="button" onClick={()=>setHintLevels(v=>({...v,[task.id]:Math.min(2,(v[task.id]??0)+1) as 0|1|2}))} disabled={hintLevel===2}>{hintLevel===0?'Segítség kérek':hintLevel===1?'Még egy segítség':'Mindkét segítség megnyitva'}</button>{hintLevel>0&&<p>1. segítség: {numericHint(fn,task,1)}</p>}{hintLevel===2&&<p>2. segítség: {numericHint(fn,task,2)}</p>}</div>
  {numericChecked&&<div role="status" className={status==='correct'?'practice-correct':'practice-incorrect'}><p>{status==='correct'?'Helyes!':status==='invalid'?'Nem számot adtál meg.':'Még nem megfelelő az eredmény.'} {feedback.hint}</p><p className="numeric-worked">{feedback.worked}</p></div>}
  </div>})}
  <button type="button" disabled={tasks.some(t=>!numericAnswers[t.id]?.trim())} onClick={()=>setNumericChecked(true)}>Számolási feladatok ellenőrzése</button>
- <button type="button" onClick={()=>{setNumericAnswers({});setNumericChecked(false)}}>Számolás újrakezdése</button>
+ <button type="button" onClick={()=>{setNumericAnswers({});setNumericChecked(false);setHintLevels({})}}>Számolás újrakezdése</button>
+ <p className="practice-round">Gyakorlási kör: {round+1} / 5. A függvényértéket minden körben másik x helyen kell kiszámolni.</p>
+ <button type="button" onClick={()=>{setRound(v=>(v+1)%5);setNumericAnswers({});setNumericChecked(false);setHintLevels({})}}>Új feladatsor</button>
  <p className="practice-score" aria-live="polite">{numericChecked?'Számolási eredmény: '+numericScore+' / '+tasks.length:'Kitöltve: '+tasks.filter(t=>numericAnswers[t.id]?.trim()).length+' / '+tasks.length}</p>
  {numericChecked&&<p>A helyes számok: {tasks.map(t=>formatNumber(t.answer)).join('; ')}. Ellenőrizd a behelyettesítés és az eltolások lépéseit!</p>}
  </section>
