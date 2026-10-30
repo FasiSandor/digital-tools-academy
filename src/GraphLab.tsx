@@ -35,8 +35,10 @@ export default function GraphLab(){
  <div className="graphlayout">
  <svg viewBox="0 0 340 250" role="img" aria-label={`A függvény grafikonja: ${a} x négyzet plusz ${b} x plusz ${c}`} className="graphsvg">
  <defs><clipPath id="graph-clip"><rect width="340" height="250"/></clipPath></defs>
- {Array.from({length:17},(_,i)=><line key={'v'+i} x1={10+i*20} y1="0" x2={10+i*20} y2="250" stroke="#d6dee8" strokeWidth=".6"/>)}
- {Array.from({length:13},(_,i)=><line key={'h'+i} x1="0" y1={5+i*20} x2="340" y2={5+i*20} stroke="#d6dee8" strokeWidth=".6"/>)}
+ {Array.from({length:11},(_,i)=>i-5).map(x=><line key={'v'+x} x1={xPx(x)} y1="0" x2={xPx(x)} y2="250" stroke="#d6dee8" strokeWidth=".6"/>)}
+ {Array.from({length:13},(_,i)=>i-6).map(y=><line key={'h'+y} x1="0" y1={yPx(y)} x2="340" y2={yPx(y)} stroke="#d6dee8" strokeWidth=".6"/>)}
+ {[-4,-2,2,4].map(x=><text key={'xt'+x} x={xPx(x)} y="139" textAnchor="middle" fontSize="9" fill="#64748b">{x}</text>)}
+ {[-6,-4,-2,2,4,6].map(y=><text key={'yt'+y} x="164" y={yPx(y)+3} textAnchor="end" fontSize="9" fill="#64748b">{y}</text>)}
  <line x1="170" y1="0" x2="170" y2="250" stroke="#263142"/>
  <line x1="0" y1="125" x2="340" y2="125" stroke="#263142"/>
  <g clipPath="url(#graph-clip)"><path d={points} stroke="#ff1736" strokeWidth="3" fill="none"/>{showTangent&&<path d={tangent} stroke="#005dff" strokeWidth="2" strokeDasharray="7 4" fill="none"/>}{marker(probe,probeY,'P')}{marker(0,c,'Y')}{vertex&&marker(vertex.x,vertex.y,'C')}{roots.map((x,i)=>marker(x,0,'Z'+(i+1)))}</g>
