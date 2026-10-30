@@ -34,7 +34,7 @@ test('lesson search keeps original lesson indices',()=>{
  assert.ok(main.includes('Nincs találat'));
 });
 test('backup validation and progress persistence are present',()=>{
- for(const token of ['Array.isArray(saved)','new Set(saved.filter','dta-progress','d.completed.every','confirm(']) assert.ok(main.includes(token),token);
+ for(const token of ['Array.isArray(saved)','new Set(saved.filter','dta-progress','inspectBackup','confirm(']) assert.ok(main.includes(token),token);
 });
 
 const phaseTwo=read('../src/phaseTwoLessons.ts');
