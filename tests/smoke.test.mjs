@@ -426,7 +426,7 @@ test('GeoGebra multi-method workshop has stable unique content and is course-sco
  assert.ok(bank.filterGeoTips('érintő','Mind').length>=1);
  assert.ok(bank.filterGeoTips('','CAS').every(t=>t.category==='CAS'));
  const app=read('../src/main.tsx'),ui=read('../src/GeoTipsLab.tsx');
- assert.ok(app.includes('course===0&&<GeoTipsLab/>'));
+ assert.ok(app.includes('course===0&&<><GeoTransformLab/><GeoTipsLab/></>'));
  for(const token of ['aria-pressed','Válasz ellenőrzése','Kipróbálás a GeoGebrában','type="search"'])assert.ok(ui.includes(token));
 });
 
