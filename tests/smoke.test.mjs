@@ -366,6 +366,16 @@ test('numeric exercise generation and Hungarian answer parsing',async()=>{
  assert.equal(n.checkNumericAnswer('2,004',2),'correct');
  assert.equal(n.checkNumericAnswer('2,01',2),'incorrect');
  assert.equal(n.parseNumericAnswer('−2,5'),-2.5);
+ const shifted=e.parseExtendedFunction('|x−2|+1');
+ const shiftedTasks=n.numericTasks(shifted);
+ assert.equal(n.explainNumericAnswer(shifted,shiftedTasks[0],'2').category,'shift');
+ assert.match(n.explainNumericAnswer(shifted,shiftedTasks[0],'2').hint,/eltolás/);
+ assert.match(n.explainNumericAnswer(shifted,shiftedTasks[0],'2').worked,/3\./);
+ assert.equal(n.explainNumericAnswer(shifted,shiftedTasks[1],'-2').category,'sign');
+ assert.equal(n.explainNumericAnswer(shifted,shiftedTasks[0],'3').category,'correct');
+ assert.equal(n.explainNumericAnswer(shifted,shiftedTasks[0],'abc').category,'invalid');
+ const stretched=e.parseExtendedFunction('-2|x+1|+3');
+ assert.match(n.explainNumericAnswer(stretched,n.numericTasks(stretched)[0],'5').hint,/együtthatóval/);
  const ui=read('../src/FunctionInvestigation.tsx');
  for(const token of ['Számolási feladatok – saját eredménnyel','Számolási feladatok ellenőrzése','Számolás újrakezdése','inputMode="decimal"','setNumericChecked(false)'])assert.ok(ui.includes(token),token);
 });
