@@ -227,3 +227,9 @@ button:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid
 .numeric-task input:focus-visible{outline:3px solid #ff8500;outline-offset:2px}
 .numeric-practice>button{border:0;border-radius:8px;background:#005dff;color:#fff;padding:10px 12px;font-weight:750;margin:12px 8px 0 0;cursor:pointer}
 .numeric-practice>button:disabled{opacity:.5;cursor:not-allowed}
+
+.numeric-hint{margin:8px 0;padding:8px 10px;border-left:3px solid #ff8500;background:#fff8ed;border-radius:6px}
+.numeric-hint button{border:1px solid #b45309;background:#fff;color:#92400e;padding:7px 10px;border-radius:7px;font-weight:700;cursor:pointer}
+.numeric-hint button:disabled{opacity:.6;cursor:default}
+.numeric-hint p{margin:7px 0;line-height:1.5}
+.practice-round{font-weight:750;color:#003cb1}
