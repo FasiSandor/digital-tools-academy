@@ -389,3 +389,16 @@ test('numeric exercise generation and Hungarian answer parsing',async()=>{
  const ui=read('../src/FunctionInvestigation.tsx');
  for(const token of ['Számolási feladatok – saját eredménnyel','Számolási feladatok ellenőrzése','Számolás újrakezdése','inputMode="decimal"','setNumericChecked(false)'])assert.ok(ui.includes(token),token);
 });
+
+test('session practice summary is deterministic and does not persist progress',async()=>{
+ const ts=await import('typescript');
+ const js=ts.transpileModule(read('../src/practiceSummary.ts'),{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ESNext}}).outputText;
+ const m=await import('data:text/javascript;base64,'+Buffer.from(js).toString('base64'));
+ assert.deepEqual(m.summarizeAttempts([]),{attempts:0,best:0,average:0,totalCorrect:0,totalQuestions:0,hintUses:0,completedRounds:0});
+ const attempts=[{round:1,correct:2,total:3,hints:1,timestamp:'2026-10-30T08:00:00Z'},{round:2,correct:3,total:3,hints:0,timestamp:'2026-10-30T08:05:00Z'},{round:2,correct:1,total:3,hints:2,timestamp:'2026-10-30T08:10:00Z'}];
+ const s=m.summarizeAttempts(attempts);
+ assert.equal(s.average,66.7);assert.equal(s.completedRounds,2);assert.equal(s.hintUses,3);assert.equal(s.best,3);
+ assert.match(m.formatPracticeReport('f(x)',attempts),/6 \/ 9/);
+ const ui=read('../src/FunctionInvestigation.tsx');
+ for(const token of ['setAttempts','Eredmények törlése','Másolható gyakorlási összesítő','csak ebben a megnyitott munkamenetben'])assert.ok(ui.includes(token),token);
+});
