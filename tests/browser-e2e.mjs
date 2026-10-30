@@ -49,6 +49,17 @@ try{
  assert.match(await investigation.innerText(),/Eredmény: [1-3] \/ 3 helyes válasz/);
  await investigation.getByRole('button',{name:'Gyakorlás újrakezdése'}).click();
  assert.match(await investigation.innerText(),/Megválaszolva: 0 \/ 3/);
+ const numeric=investigation.locator('.numeric-practice');
+ assert.equal(await numeric.getByRole('button',{name:'Számolási feladatok ellenőrzése'}).isDisabled(),true);
+ await numeric.getByRole('textbox',{name:/Mennyi f\(4\)/}).fill('1,5');
+ await numeric.getByRole('textbox',{name:/függőleges aszimptota/}).fill('2');
+ await numeric.getByRole('textbox',{name:/vízszintes aszimptota/}).fill('1');
+ await numeric.getByRole('button',{name:'Számolási feladatok ellenőrzése'}).click();
+ assert.match(await numeric.innerText(),/Számolási eredmény: 3 \/ 3/);
+ await numeric.getByRole('textbox',{name:/Mennyi f\(4\)/}).fill('2');
+ assert.match(await numeric.innerText(),/Kitöltve: 3 \/ 3/);
+ await numeric.getByRole('button',{name:'Számolás újrakezdése'}).click();
+ assert.match(await numeric.innerText(),/Kitöltve: 0 \/ 3/);
  await extended.getByRole('button',{name:'|x−2|+1',exact:true}).click();
  assert.match(await extended.innerText(),/Abszolútérték-függvény/);
  await extended.getByRole('button',{name:'x³−2',exact:true}).click();
