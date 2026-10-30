@@ -103,3 +103,8 @@ A tesztet a fejlesztési preview-n kell elvégezni, **nem** az éles oldalon. A 
 - [ ] A letöltött `.txt` pontosan a helyi `dta-progress` eredeti szövege; a mentés után a böngésző tárhelye nem változik.
 - [ ] A felület jelzi, hogy a nyers szöveg nem ellenőrzött mentés és nem importálható közvetlenül.
 - [ ] Ha a helyi tárhely nem olvasható, a nyers mentés hibát jelez, nem állítja, hogy sikeres volt.
+
+### Ismert leckék egyesítésének regressziója
+- [ ] Ismert `gg1` haladáshoz `gg1, gg2, gg2` mentés egyesítése pontosan `gg1, gg2` eredményt ad, újratöltés után is.
+- [ ] Ismeretlen azonosítót tartalmazó mentésnél továbbra is mindkét importgomb tiltott.
+- [ ] Ismeretlen azonosítót tartalmazó helyi haladásból a nyers `.txt` mentés a teljes eredeti szöveget tartalmazza, változatlanul.
