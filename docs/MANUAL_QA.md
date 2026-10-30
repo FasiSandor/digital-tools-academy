@@ -120,3 +120,9 @@ A tesztet a fejlesztési preview-n kell elvégezni, **nem** az éles oldalon. A 
 - [ ] Az „Előző/Következő lépés” gombok végigvezetik a tanulót; a korábbi értéktáblázatok és csúszkák használhatók.
 - [ ] `sin(x)`, `x^3`, `x/x`, `x²+x²` és rosszindulatú kódnak látszó szöveg nem fut le, hanem értelmezhető hibaüzenetet ad.
 - [ ] 390px mobilnézetben a képletmező, gombok és magyarázat olvasható, nem lógnak ki.
+
+### Automatikus koordinátarendszer és zoom
+- [ ] `y=300` esetén a vízszintes egyenes megjelenik, nem tűnik el a régi ±6-os függőleges tartomány miatt.
+- [ ] `x²−20x` esetén a csúcspont és mindkét zérushely a grafikon tartományába esik.
+- [ ] Nagyítás +, Kicsinyítés −, Automatikus nézet a látható x-tartományt módosítja, a függvény együtthatóit nem.
+- [ ] A tengelyek beosztásai olvashatók mobilon, nem zsúfolódnak össze; a csúszkák és a hatlépéses tanulómód továbbra is működnek.
