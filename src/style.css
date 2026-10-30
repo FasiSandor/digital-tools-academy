@@ -145,3 +145,8 @@ button:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid
 .graph-correct{border-left:4px solid #00b84a;padding:10px;background:#effcf3;color:#065f2a}
 .graph-retry{border-left:4px solid #ff8500;padding:10px;background:#fff7ed;color:#713f12}
 @media(max-width:600px){.graph-presets button{flex:1 1 140px}.graph-choices label{flex:1 1 110px}}
+
+.quiz-support{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:12px 0}
+.quiz-support button{background:#fff;color:#005dff;border:2px solid #005dff;border-radius:9px;padding:8px 12px;font-weight:800;cursor:pointer}
+.quiz-support span{font-size:12px;font-weight:700;color:#374151}
+.quiz-hint{padding:12px;border-left:4px solid #ff8500;background:#fff7ed;color:#713f12!important;border-radius:6px;line-height:1.6}
