@@ -108,3 +108,8 @@ A tesztet a fejlesztési preview-n kell elvégezni, **nem** az éles oldalon. A 
 - [ ] Ismert `gg1` haladáshoz `gg1, gg2, gg2` mentés egyesítése pontosan `gg1, gg2` eredményt ad, újratöltés után is.
 - [ ] Ismeretlen azonosítót tartalmazó mentésnél továbbra is mindkét importgomb tiltott.
 - [ ] Ismeretlen azonosítót tartalmazó helyi haladásból a nyers `.txt` mentés a teljes eredeti szöveget tartalmazza, változatlanul.
+
+### Szelő közelítési táblázata
+- [ ] Az alap parabola x=1 esetén h=2;1;0,5;0,1 sorokban 4;3;2,5;2,1 szelőmeredekség jelenik meg, az érintőé végig 2.
+- [ ] Az a/b/c/x csúszkák módosítására a táblázat frissül; lineáris és konstans esetben minden eltérés nulla.
+- [ ] Mobilon a táblázat vízszintesen görgethető, a képernyőolvasó számára címe és oszlopfejlécei vannak.
