@@ -4,7 +4,7 @@ import {setTimeout as delay} from 'node:timers/promises';
 import {chromium} from 'playwright';
 
 const port=4177,base='http://127.0.0.1:'+port;
-const server=spawn('npm',['run','preview','--','--host','127.0.0.1','--port',String(port),'--strictPort'],{stdio:'pipe'});
+const server=spawn(process.execPath,['node_modules/vite/bin/vite.js','preview','--host','127.0.0.1','--port',String(port),'--strictPort'],{stdio:'pipe'});
 let output='';
 server.stdout.on('data',chunk=>{output+=chunk.toString()});
 server.stderr.on('data',chunk=>{output+=chunk.toString()});
