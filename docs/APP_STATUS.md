@@ -114,3 +114,10 @@ A három külső alkalmazás aktuális funkcióit hivatalos dokumentációval ke
 - A regressziós tesztek konkrét numerikus eredményeket vizsgálnak, köztük kettős gyök, negatív diszkrimináns, lineáris/konstans eset és a parabola csúcspontja.
 - Vercel ellenőrzés: a projektlistában a `digital-tools-academy` látható (`prj_7xmgcrBv7kAqsadLMIHXaF8XHb50`, `team_XukoYO5JkeumfIaEpGdPaFz9`), de a projekt részletes lekérdezése ugyanebben a scope-ban 404-et adott. A Preview Git-integráció tényleges beállítása továbbra sem hitelesített; emiatt nem módosítottuk a projektbeállításokat, nem indítottunk kézi deployt.
 - A kézi mobilos regresszió, tényleges telepítés és mentés-visszaállítás továbbra is nyitott release-kapu.
+
+## Helyi tárhely hibabiztonsága – 2026-10-30
+- `src/progressStorage.ts` külön kezeli a haladás betöltését és mentését. A `dta-progress` kulcs és a régi JSON-tömb formátuma változatlan.
+- Hibás helyi JSON vagy blokkolt böngészőtárhely esetén az alkalmazás látható figyelmeztetést ad; a sérült kezdeti adatot nem írja azonnal felül üres haladással.
+- Sikertelen mentésnél a felhasználó figyelmeztetést kap, hogy exportáljon; sikeres újrapróbálkozáskor a figyelmeztetés eltűnik.
+- Valódi Node-tesztek: hiányzó, duplikált, ismeretlen, sérült és blokkolt tárhely; sikeres írás és kvótahiba.
+- A böngészős hibainjektálás és az iPhone Safari kézi tesztje még nem történt meg. A PR továbbra is draft, production merge/deploy nincs.
