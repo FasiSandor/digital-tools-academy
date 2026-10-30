@@ -55,12 +55,12 @@ export default function ExtendedGraphLab(){
  {Array.from({length:9},(_,i)=>i-4).map(i=><line key={'y'+i} x1="0" x2="340" y1={yAt(fn.k+i*halfY/4)} y2={yAt(fn.k+i*halfY/4)} stroke="#d6dee8" strokeWidth=".6"/>)}
  {xMin<=0&&xMax>=0&&<line x1={xAt(0)} x2={xAt(0)} y1="0" y2="250" stroke="#263142"/>}
  {Math.abs(fn.k)<=halfY&&<line x1="0" x2="340" y1={yAt(0)} y2={yAt(0)} stroke="#263142"/>}
- <g clipPath="url(#extended-clip)">{paths.map((p,i)=><path key={i} d={p} fill="none" stroke="#ff1736" strokeWidth="2.8"/>)}{fn.kind==='reciprocal'&&<><line x1={xAt(fn.h)} x2={xAt(fn.h)} y1="0" y2="250" stroke="#005dff" strokeDasharray="5 5"/><line x1="0" x2="340" y1={yAt(fn.k)} y2={yAt(fn.k)} stroke="#005dff" strokeDasharray="5 5"/></>}{fn.kind!=='reciprocal'&&<circle cx={xAt(fn.h)} cy={yAt(fn.k)} r="5" fill="#ff8500"/>}</g>
+ <g clipPath="url(#extended-clip)">{paths.map((p,i)=><path key={i} d={p} fill="none" stroke="#ff1736" strokeWidth="2.8"/>)}{fn.kind==='reciprocal'&&fn.a!==0&&<><line x1={xAt(fn.h)} x2={xAt(fn.h)} y1="0" y2="250" stroke="#005dff" strokeDasharray="5 5"/><line x1="0" x2="340" y1={yAt(fn.k)} y2={yAt(fn.k)} stroke="#005dff" strokeDasharray="5 5"/></>}{fn.kind!=='reciprocal'&&<circle cx={xAt(fn.h)} cy={yAt(fn.k)} r="5" fill="#ff8500"/>}</g>
  <text x="320" y="238" fill="#111827" fontSize="11">x</text><text x="14" y="15" fill="#111827" fontSize="11">y</text>
  </svg>
  <div className="controls"><div className="graph-zoom" role="group" aria-label="További függvények nagyítása"><button type="button" onClick={()=>setZoom(v=>Math.max(0.25,v/1.5))}>Nagyítás +</button><button type="button" onClick={()=>setZoom(v=>Math.min(8,v*1.5))}>Kicsinyítés −</button><button type="button" onClick={()=>setZoom(1)}>Automatikus nézet</button></div>
  <p><b>Vízszintes eltolás (h):</b> {fmt(fn.h)}</p><p><b>Függőleges eltolás (k):</b> {fmt(fn.k)}</p><p><b>Nyújtás és tükrözés (a):</b> {fmt(fn.a)}</p>
- {fn.kind==='reciprocal'&&<p><b>Aszimptoták:</b> x = {fmt(fn.h)} és y = {fmt(fn.k)}. A két ág külön rajzolódik.</p>}
+ {fn.kind==='reciprocal'&&<p><b>Aszimptoták:</b> {fn.a===0?`Csak y = ${fmt(fn.k)} vízszintes határvonal; x = ${fmt(fn.h)} helyen hiányzó pont, nem függőleges aszimptota.`:`x = ${fmt(fn.h)} és y = ${fmt(fn.k)}. A két ág külön rajzolódik.`}</p>}
  </div></div>
  <div className="function-guide" aria-live="polite"><p className="function-step-count">Lépés {step+1} / {facts.steps.length}</p><h4>{['Alapfüggvény','Vízszintes eltolás','Függőleges eltolás és nevezetes pont','Nyújtás, tükrözés vagy aszimptoták','Értelmezési tartomány','Grafikus ellenőrzés'][step]}</h4><p>{facts.steps[step]}</p><div className="function-step-actions"><button type="button" disabled={step===0} onClick={()=>setStep(v=>v-1)}>Előző lépés</button><button type="button" disabled={step===facts.steps.length-1} onClick={()=>setStep(v=>v+1)}>Következő lépés</button></div></div>
  <FunctionInvestigation fn={fn}/>
