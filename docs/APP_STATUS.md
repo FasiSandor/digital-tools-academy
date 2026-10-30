@@ -189,3 +189,9 @@ A három külső alkalmazás aktuális funkcióit hivatalos dokumentációval ke
 - Hat egymás után megnyitható magyarázó lépés: függvénytípus, együtthatók/tengelymetszet, zérushelyek, csúcspont/szélsőérték, derivált/változás, grafikus ellenőrzés. A meglévő csúszkák, szelő, érintő és értéktáblázatok továbbra is használhatók.
 - Biztonságos, `eval` nélküli feldolgozás; jelenleg összevont, legfeljebb másodfokú polinomok, tizedesvessző, `x²` és `x^2`, `f(x)=`/`y=` jelölések. Zárójeles, tört-, trigonometrikus, magasabb fokú vagy össze nem vont kifejezéseket a felület egyértelmű hibaüzenettel elutasítja; nem állítja, hogy általános függvényrajzoló.
 - A jelenlegi rögzített koordinátatartomány miatt nagy együtthatóknál a görbe részben kívül eshet a képen. Későbbi mérföldkő: automatikus zoom és több függvénytípus.
+
+## Nagyobb fejlesztési egység: automatikus grafikonméretezés és zoom – 2026-10-30
+- A saját függvényekhez az ábrázolási tartomány automatikusan alkalmazkodik: a vizsgált pont, az y-tengelymetszet, a valós zérushelyek és a parabolacsúcs lehetőség szerint egyszerre látható. A vízszintes és függőleges tengely beosztása a megjelenített tartományhoz igazodik.
+- Nagyítás, kicsinyítés, automatikus nézet gombok; az eredeti függvények, értéktáblázat, szelő/érintő, vezetett ábrázolás megmaradtak. A nézetbeállítás csak megjelenítés, nem módosítja a tanulói haladást.
+- A képernyőn a látható x-tartomány kiolvasható. Új matematikai tesztek ellenőrzik a fontos pontok bekerülését és a skála beosztásait; Chromium E2E nagy y-tengelymetszetet és zoom-visszaállítást is vizsgál.
+- A megoldás egyelőre az első- és másodfokú polinomokra készült; későbbi függvénytípusokhoz külön adaptív mintavételezés és szakadáspont-kezelés szükséges.
