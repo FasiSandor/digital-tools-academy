@@ -12,6 +12,10 @@ export default function GraphLab(){
  const probeY=a*probe*probe+b*probe+c;
  const slope=2*a*probe+b;
  const tangent=useMemo(()=>Array.from({length:321},(_,i)=>{const x=(i-160)/32;return (i?'L':'M')+xPx(x)+' '+yPx(probeY+slope*(x-probe))}).join(' '),[probe,probeY,slope]);
+ const isConstant=a===0&&b===0;
+ const turning=a!==0?(a>0?'minimuma':'maximuma'):null;
+ const direction=a>0?'felfelé':a<0?'lefelé':'egyik irányba sem';
+ const interceptText=c===0?'az origón halad át':c>0?'a pozitív y-tengelyt metszi':'a negatív y-tengelyt metszi';
  const marker=(x:number,y:number,label:string)=>Number.isFinite(x)&&Number.isFinite(y)&&x>=-5&&x<=5&&y>=-6.9&&y<=6.9?<g key={label}><circle cx={xPx(x)} cy={yPx(y)} r="5" fill="#ff8500" stroke="#ffffff" strokeWidth="2"/><text x={xPx(x)+8} y={yPx(y)-8} fill="#005dff" fontSize="11">{label}</text></g>:null;
  return <section className="panel graphlab">
  <h2>Interaktív függvénylabor</h2>
@@ -34,5 +38,14 @@ export default function GraphLab(){
  {vertex&&<p><b>Csúcspont:</b> ({fmt(vertex.x)}; {fmt(vertex.y)})</p>}
  <p><b>Valós zérushelyek:</b> {roots.length?roots.map(fmt).join('; '):a===0&&b===0&&c===0?'minden valós szám':'nincsenek'}</p>
  <button onClick={()=>{setA(1);setB(0);setC(-2);setProbe(1)}}>Alaphelyzet</button>
- </div></div></section>;
+ </div></div><section className="guided-explanation" aria-live="polite">
+ <h3>Miért ilyen a grafikon? – lépésről lépésre</h3>
+ <ol>
+ <li><b>Az a együttható:</b> {a===0?'Most a = 0, ezért eltűnik az x²-es tag.':`Az a = ${fmt(a)} miatt a parabola ${direction} nyílik.`} {a!==0?'Az |a| növelése keskenyebbé, csökkentése szélesebbé teszi.':''}</li>
+ <li><b>A b együttható:</b> {a===0?(b===0?'A b is 0: vízszintes egyenest kapsz.':`A b = ${fmt(b)} a lineáris függvény meredeksége.`):`A b = ${fmt(b)} a csúcspont vízszintes helyzetét is befolyásolja: x = −b/(2a) = ${fmt(vertex!.x)}.`}</li>
+ <li><b>A c együttható:</b> { `c = ${fmt(c)}, ezért f(0) = ${fmt(c)}; a grafikon ${interceptText}.` } Ha csak c-t változtatod, az egész grafikon függőlegesen tolódik.</li>
+ <li><b>A mozgó pont:</b> { `x = ${fmt(probe)} helyen f(x) = ${fmt(probeY)}. A kék érintő meredeksége f′(x) = 2ax+b = ${fmt(slope)}.` } {slope===0?(isConstant?'A függvény állandó, ezért az érintő vízszintes.':'Itt az érintő vízszintes, tehát a függvénynek helyi szélsőértéke van.'):slope>0?'A pozitív meredekség azt jelzi, hogy a függvény itt növekszik.':'A negatív meredekség azt jelzi, hogy a függvény itt csökken.'}</li>
+ <li><b>Összefoglalás:</b> {vertex?`A parabola ${turning} a C(${fmt(vertex.x)}; ${fmt(vertex.y)}) pontban van.`:isConstant?'A grafikon vízszintes egyenes.':'A grafikon egyenes, ezért nincs parabolacsúcsa.'} {roots.length?`Valós zérushelyek: ${roots.map(fmt).join('; ')}.`:isConstant&&c===0?'Minden valós szám zérushely.':'Nincs valós zérushely.'}</li>
+ </ol>
+ </section></section>;
 }
