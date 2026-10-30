@@ -31,6 +31,12 @@ try{
  const context=await browser.newContext({viewport:{width:390,height:844},acceptDownloads:true});
  const page=await open(context);
  await page.getByText('Interaktív függvénylabor megnyitása').click();
+ const convergenceTable=page.getByRole('table',{name:'A szelő meredekségének közelítése a deriválthoz'});
+ assert.equal(await convergenceTable.isVisible(),true);
+ assert.ok((await convergenceTable.innerText()).includes('2,1'));
+ await page.getByRole('button',{name:'Egyenes',exact:true}).click();
+ assert.ok((await convergenceTable.innerText()).includes('2'));
+ await page.getByRole('button',{name:'Felfelé nyíló parabola'}).click();
  const secantToggle=page.getByRole('checkbox',{name:'Szelő megjelenítése'});
  await secantToggle.check();
  assert.equal(await secantToggle.isChecked(),true);
