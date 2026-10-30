@@ -184,3 +184,10 @@ test('recovery gate protects damaged browser progress',()=>{
  assert.ok(main.includes('setRecoveryRequired(false);setDone(next)'));
  assert.ok(main.includes('setRecoveryRequired(false);setDone([])'));
 });
+
+test('corrupted local progress cannot be merged into a backup',()=>{
+ assert.ok(main.includes("if(recoveryRequired&&mode==='merge')"));
+ assert.ok(main.includes("disabled={recoveryRequired}"));
+ assert.ok(main.includes('Az egyesítés nem használható'));
+ assert.ok(main.includes("setRecoveryRequired(false);setDone(next)"));
+});
