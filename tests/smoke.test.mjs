@@ -345,3 +345,27 @@ test('function analysis and practice: roots, asymptotes, monotonicity, feedback'
  const ui=read('../src/FunctionInvestigation.tsx');
  for(const token of ['Részletes megoldás megjelenítése','Gyakorlás újrakezdése','Eredmény:','setAnswers','analysis.monotonic'])assert.ok(ui.includes(token),token);
 });
+
+test('numeric exercise generation and Hungarian answer parsing',async()=>{
+ const ts=await import('typescript');
+ const compilerOptions={target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ESNext};
+ const ext=ts.transpileModule(read('../src/extendedFunctions.ts'),{compilerOptions}).outputText;
+ const extUri='data:text/javascript;base64,'+Buffer.from(ext).toString('base64');
+ const numeric=ts.transpileModule(read('../src/numericPractice.ts'),{compilerOptions}).outputText.replaceAll("from './extendedFunctions'",'from '+JSON.stringify(extUri));
+ const e=await import(extUri);
+ const n=await import('data:text/javascript;base64,'+Buffer.from(numeric).toString('base64'));
+ for(const [expr,expected] of [['|x−2|+1',[3,2,1]],['(x−1)³+2',[10,1,2]],['1/(x−2)+1',[1.5,2,1]]]){
+  const tasks=n.numericTasks(e.parseExtendedFunction(expr));
+  assert.deepEqual(tasks.map(t=>t.answer),expected,expr);
+  assert.equal(tasks.length,3);
+  assert.equal(n.checkNumericAnswer(String(expected[0]).replace('.',','),tasks[0].answer),'correct');
+ }
+ for(const invalid of ['NaN','Infinity','2+2','1e10','0x10','1,2,3','<script>'])assert.equal(n.parseNumericAnswer(invalid),null);
+ assert.equal(n.checkNumericAnswer('','2'),'empty');
+ assert.equal(n.checkNumericAnswer('abc',2),'invalid');
+ assert.equal(n.checkNumericAnswer('2,004',2),'correct');
+ assert.equal(n.checkNumericAnswer('2,01',2),'incorrect');
+ assert.equal(n.parseNumericAnswer('−2,5'),-2.5);
+ const ui=read('../src/FunctionInvestigation.tsx');
+ for(const token of ['Számolási feladatok – saját eredménnyel','Számolási feladatok ellenőrzése','Számolás újrakezdése','inputMode="decimal"','setNumericChecked(false)'])assert.ok(ui.includes(token),token);
+});
