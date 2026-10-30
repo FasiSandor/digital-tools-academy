@@ -218,3 +218,6 @@ A számbeviteles gyakorlás ellenőrzés után már nem csupán a helyes eredmé
 
 ## Önálló gyakorlás: több feladatsor és fokozatos segítség
 A három új függvénycsalád számolási gyakorlásában öt egymást követő kör érhető el, eltérő behelyettesítési x értékekkel. Minden feladat előtt két, külön kérhető segítség nyitható meg, amelyek a megoldási módszert mutatják, de nem közlik a konkrét számot. Új körben a válaszok és a segítség állapota nullázódik; a részletes hibadiagnosztika a választott körhöz igazodik. A haladás és korábbi leckék tárolása változatlan. Node és Chromium regressziós tesztek bővítve.
+
+## Munkameneti gyakorlási összesítő – 2026-10-30
+Az öt gyakorlási kör ellenőrzött próbálkozásai a megnyitott oldalon belül összesítődnek: próbálkozások, helyes/összes feladat, átlagos eredmény, különböző körök és felhasznált segítségek. A tanuló szöveges összesítőt nyithat meg és kijelölve másolhat. Az összesítő kézzel törölhető, függvényváltáskor nullázódik, és nem kerül sem localStorage-ba, sem a meglévő 35 lecke haladásmentésébe. Azonos ellenőrzés ismételt kattintása nem hoz létre új próbálkozást. Automatikus tesztek kiegészítve.
