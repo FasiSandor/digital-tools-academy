@@ -88,3 +88,7 @@ test('course switches clear search and answer edits clear stale feedback',()=>{
  assert.ok(main.includes("if(i!==course)setSearch('')"));
  assert.ok(main.includes("setAnswer(e.target.value);setFeedback('')"));
 });
+
+test('graph explains discriminant and line/constant edge cases',()=>{
+ for(const token of ['Diszkrimináns és zérushelyek','D = b² − 4ac','delta>0','delta===0','Lineáris esetben','Minden x értéknél f(x)=0'])assert.ok(graph.includes(token),token);
+});
