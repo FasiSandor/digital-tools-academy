@@ -376,6 +376,16 @@ test('numeric exercise generation and Hungarian answer parsing',async()=>{
  assert.equal(n.explainNumericAnswer(shifted,shiftedTasks[0],'abc').category,'invalid');
  const stretched=e.parseExtendedFunction('-2|x+1|+3');
  assert.match(n.explainNumericAnswer(stretched,n.numericTasks(stretched)[0],'5').hint,/együtthatóval/);
+ for(const [expr,expected] of [['|x−2|+1',[3,4,5,3,4]],['(x−1)³+2',[10,-25,66,-6,29]],['1/(x−2)+1',[1.5,2/3,1.25,0.5,4/3]]]){
+  const fn=e.parseExtendedFunction(expr);
+  for(let round=0;round<5;round++){
+   const task=n.numericTasks(fn,round)[0];
+   assert.ok(Math.abs(task.answer-expected[round])<1e-10,expr+' round '+round);
+   assert.ok(n.explainNumericAnswer(fn,task,String(task.answer),round).worked.includes('Belső kifejezés'));
+  }
+ }
+ assert.match(n.numericHint(e.parseExtendedFunction('|x|'),n.numericTasks(e.parseExtendedFunction('|x|'))[0],1),/Helyettesítsd/);
+ assert.match(n.numericHint(e.parseExtendedFunction('1/x'),n.numericTasks(e.parseExtendedFunction('1/x'))[0],2),/reciprok/);
  const ui=read('../src/FunctionInvestigation.tsx');
  for(const token of ['Számolási feladatok – saját eredménnyel','Számolási feladatok ellenőrzése','Számolás újrakezdése','inputMode="decimal"','setNumericChecked(false)'])assert.ok(ui.includes(token),token);
 });
