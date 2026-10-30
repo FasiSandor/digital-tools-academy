@@ -1,6 +1,7 @@
 import {useMemo,useState} from 'react';
 import {parseExtendedFunction,evaluateExtended,extendedFacts} from './extendedFunctions';
 import type {ExtendedFunction} from './extendedFunctions';
+import FunctionInvestigation from './FunctionInvestigation';
 const fmt=(n:number)=>Number(n.toFixed(3)).toLocaleString('hu-HU');
 const presets=['|x−2|+1','−2|x+1|+3','x³−2','(x−1)³+2','1/(x−2)+1','-1/x'];
 export default function ExtendedGraphLab(){
@@ -62,6 +63,7 @@ export default function ExtendedGraphLab(){
  {fn.kind==='reciprocal'&&<p><b>Aszimptoták:</b> x = {fmt(fn.h)} és y = {fmt(fn.k)}. A két ág külön rajzolódik.</p>}
  </div></div>
  <div className="function-guide" aria-live="polite"><p className="function-step-count">Lépés {step+1} / {facts.steps.length}</p><h4>{['Alapfüggvény','Vízszintes eltolás','Függőleges eltolás és nevezetes pont','Nyújtás, tükrözés vagy aszimptoták','Értelmezési tartomány','Grafikus ellenőrzés'][step]}</h4><p>{facts.steps[step]}</p><div className="function-step-actions"><button type="button" disabled={step===0} onClick={()=>setStep(v=>v-1)}>Előző lépés</button><button type="button" disabled={step===facts.steps.length-1} onClick={()=>setStep(v=>v+1)}>Következő lépés</button></div></div>
+ <FunctionInvestigation fn={fn}/>
  <div className="graph-table-scroll"><table><caption>Értéktáblázat a nevezetes pont körül</caption><thead><tr><th scope="col">x</th><th scope="col">f(x)</th></tr></thead><tbody>{rows.map((r,i)=><tr key={i}><th scope="row">{fmt(r.x)}</th><td>{r.y===null?'Nincs értelmezve':fmt(r.y)}</td></tr>)}</tbody></table></div>
  </section>;
 }
