@@ -11,6 +11,7 @@ export default function GraphLab(){
  const roots=a!==0?(delta<0?[]:delta===0?[-b/(2*a)]:[(-b-Math.sqrt(delta))/(2*a),(-b+Math.sqrt(delta))/(2*a)]):b!==0?[-c/b]:[];
  const probeY=a*probe*probe+b*probe+c;
  const slope=2*a*probe+b;
+ const samples=useMemo(()=>[-1,-0.5,0,0.5,1].map(offset=>{const x=Number((probe+offset).toFixed(2));return {x,y:a*x*x+b*x+c,derivative:2*a*x+b,offset}}),[a,b,c,probe]);
  const tangent=useMemo(()=>Array.from({length:321},(_,i)=>{const x=(i-160)/32;return (i?'L':'M')+xPx(x)+' '+yPx(probeY+slope*(x-probe))}).join(' '),[probe,probeY,slope]);
  const applyPreset=(nextA:number,nextB:number,nextC:number,nextX:number)=>{setA(nextA);setB(nextB);setC(nextC);setProbe(nextX);setPrediction('');setPredictionResult('')};
  const expectedTrend=slope===0?'vízszintes':slope>0?'növekszik':'csökken';
@@ -58,6 +59,11 @@ export default function GraphLab(){
  <li><b>Diszkrimináns és zérushelyek:</b> {a===0?(b===0?(c===0?'Minden x értéknél f(x)=0.':'A konstans függvénynek nincs zérushelye.'):`Lineáris esetben 0 = ${fmt(b)}x + ${fmt(c)}, ezért x = −c/b = ${fmt(-c/b)}.`):`D = b² − 4ac = ${fmt(b)}² − 4·(${fmt(a)})·(${fmt(c)}) = ${fmt(delta)}. ${delta>0?'Két különböző valós zérushely van.':delta===0?'Egy kétszeres valós zérushely van.':'Nincs valós zérushely.'}`}</li>
  <li><b>Összefoglalás:</b> {vertex?`A parabola ${turning} a C(${fmt(vertex.x)}; ${fmt(vertex.y)}) pontban van.`:isConstant?'A grafikon vízszintes egyenes.':'A grafikon egyenes, ezért nincs parabolacsúcsa.'} {roots.length?`Valós zérushelyek: ${roots.map(fmt).join('; ')}.`:isConstant&&c===0?'Minden valós szám zérushely.':'Nincs valós zérushely.'}</li>
  </ol>
+ </section>
+ <section className="graph-values" aria-labelledby="graph-values-title">
+ <h3 id="graph-values-title">Értéktáblázat a vizsgált pont körül</h3>
+ <p>Öt pontban egyszerre látod a függvény értékét és a deriváltat. A kiemelt sor a csúszkán kiválasztott x értéket mutatja. Így a grafikon képernyőolvasó nélkül is számokból követhető.</p>
+ <div className="graph-table-scroll"><table><caption>Az aktuális f(x) és f′(x) értékek</caption><thead><tr><th scope="col">x</th><th scope="col">f(x)</th><th scope="col">f′(x)</th><th scope="col">Helyi irány</th></tr></thead><tbody>{samples.map(sample=><tr key={sample.offset} className={sample.offset===0?'graph-current-row':''}><th scope="row">{fmt(sample.x)}{sample.offset===0?' (vizsgált)':''}</th><td>{fmt(sample.y)}</td><td>{fmt(sample.derivative)}</td><td>{sample.derivative===0?'vízszintes érintő':sample.derivative>0?'növekszik':'csökken'}</td></tr>)}</tbody></table></div>
  </section>
  <section className="graph-challenge" aria-labelledby="graph-challenge-title">
  <h3 id="graph-challenge-title">Tippeld meg, mi történik!</h3>
