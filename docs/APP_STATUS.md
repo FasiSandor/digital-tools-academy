@@ -121,3 +121,9 @@ A három külső alkalmazás aktuális funkcióit hivatalos dokumentációval ke
 - Sikertelen mentésnél a felhasználó figyelmeztetést kap, hogy exportáljon; sikeres újrapróbálkozáskor a figyelmeztetés eltűnik.
 - Valódi Node-tesztek: hiányzó, duplikált, ismeretlen, sérült és blokkolt tárhely; sikeres írás és kvótahiba.
 - A böngészős hibainjektálás és az iPhone Safari kézi tesztje még nem történt meg. A PR továbbra is draft, production merge/deploy nincs.
+
+## Helyreállítási zárolás – 2026-10-30
+- Hibás vagy nem olvasható helyi haladásnál a rendszer nemcsak az induláskori automatikus írást, hanem a lecke teljesítésekor keletkező felülírást is blokkolja.
+- A tanuló helyes választ továbbra is ellenőrizhet, de a felület nem állítja, hogy a teljesítés elmentődött.
+- Az adatvédelem feloldása csak a Beállításokban, megerősített JSON-visszaállítással vagy kifejezett újrakezdéssel történik.
+- E változás böngészős és iPhone-os manuális tesztje továbbra is nyitott; nem történt production merge/deploy.
