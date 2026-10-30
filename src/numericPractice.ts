@@ -1,8 +1,9 @@
 import type {ExtendedFunction} from './extendedFunctions';
 import {evaluateExtended} from './extendedFunctions';
 export type NumericTask={id:string;prompt:string;answer:number;explanation:string};
-export function numericTasks(fn:ExtendedFunction):NumericTask[]{
- const x=fn.h+2;
+export function numericTasks(fn:ExtendedFunction,round=0):NumericTask[]{
+ const offsets=[2,-3,4,-2,3];
+ const x=fn.h+offsets[((round%offsets.length)+offsets.length)%offsets.length];
  const y=evaluateExtended(fn,x);
  if(y===null)throw new Error('A kiválasztott pont nem értelmezhető.');
  const tasks:NumericTask[]=[
@@ -51,4 +52,11 @@ export function explainNumericAnswer(fn:ExtendedFunction,task:NumericTask,raw:st
    return {category:'calculation',hint:'Az alapfüggvény értéke után még az a együtthatóval is szorozni kell.',worked};
  }
  return {category:'calculation',hint:task.id==='value'?'Haladj sorrendben: először x − h, majd alapfüggvény, utána szorzás a-val, végül + k.':'Nézd meg, hogy a keresett koordináta a belső (h) vagy a külső (k) eltolásból adódik.',worked};
+}
+
+export function numericHint(fn:ExtendedFunction,task:NumericTask,level:1|2):string{
+ if(task.id==='horizontal')return level===1?'Keresd meg a belső x − h kifejezést.':'Az x − h = 0 egyenletet oldd meg; az x koordinátát kapod.';
+ if(task.id==='vertical')return level===1?'Keresd a függvény végén álló, kívül hozzáadott számot.':'A + k tag függőlegesen tol: az y koordináta k.';
+ if(level===1)return 'Helyettesítsd be a feladatban megadott x értéket. Először a zárójelen belül számolj!';
+ return fn.kind==='absolute'?'Sorrend: x − h, abszolútérték, szorzás a-val, végül + k.':fn.kind==='cubic'?'Sorrend: x − h, köbre emelés, szorzás a-val, végül + k.':'Sorrend: x − h, reciprok képzése, szorzás a-val, végül + k.';
 }
