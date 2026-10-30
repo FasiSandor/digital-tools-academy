@@ -41,3 +41,5 @@ const phaseTwo=read('../src/phaseTwoLessons.ts');
 test('second phase has six unique lessons and is wired into course catalog',()=>{const ids=[...phaseTwo.matchAll(/id:'([^']+)'/g)].map(x=>x[1]);assert.equal(ids.length,6);assert.equal(new Set(ids).size,6);assert.ok(ids.every(id=>!extra.includes("id:'"+id+"'")&&!more.includes("id:'"+id+"'")));assert.ok(main.includes('phaseTwoLessons[course.name]'));});
 
 test('graph lab includes probe point and tangent slope',()=>{for(const token of ['setProbe(1)','2*a*probe+b','probeY+slope*(x-probe)','strokeDasharray','Vizsgált x koordináta'])assert.ok(graph.includes(token),token);});
+
+test('guided graph explanations cover all coefficients and tangent',()=>{for(const token of ['guided-explanation','Az a együttható','A b együttható','A c együttható','A mozgó pont','f′(x) = 2ax+b'])assert.ok(graph.includes(token),token);});
