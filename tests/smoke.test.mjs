@@ -51,3 +51,7 @@ test('graph lab supports tangent visibility and immediate prediction feedback',(
  for(const token of ['setShowTangent','showTangent&&','expectedTrend','checkPrediction','role="status"','setPredictionResult(\'\')','type="radio"'])assert.ok(graph.includes(token),token);
  const css=read('../src/style.css');for(const token of ['.graph-presets','.graph-challenge','.graph-choices','@media(max-width:600px)'])assert.ok(css.includes(token),token);
 });
+
+test('lesson self-check provides hints, attempt feedback and decimal normalization',()=>{
+ for(const token of ['normalizeAnswer','quiz-support','quiz-hint','Segítő tipp','próbálkozás','setAttempts(0)','setShowHint(false)'])assert.ok(main.includes(token),token);
+});
