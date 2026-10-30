@@ -9,6 +9,10 @@ A tesztet a fejlesztési preview-n kell elvégezni, **nem** az éles oldalon. A 
 - [ ] A grafikon csúszkái ujjal működnek, a jelmagyarázat olvasható.
 - [ ] Az öt grafikonkísérlet mindegyike visszaállítja az együtthatókat és a vizsgált pontot.
 - [ ] A kék érintő elrejthető és újra megjeleníthető.
+- [ ] Az öt soros értéktáblázat együtt változik a csúszkákkal, a vizsgált pont sora kiemelt.
+- [ ] Az `a=1, b=-2, c=1, x=1` beállításnál a középső sor `f(x)=0`, `f′(x)=0`.
+- [ ] Keskeny képernyőn a táblázat vízszintesen görgethető, a grafikon nem vágódik le.
+- [ ] Billentyűzettel a csúszkák, a példagombok és a táblázat körüli vezérlők elérhetők.
 
 ## 2. Tanulási haladás
 - [ ] Hibás válasz nem jelöl teljesítettnek.
