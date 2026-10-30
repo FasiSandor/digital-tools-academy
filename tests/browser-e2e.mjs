@@ -30,6 +30,16 @@ try{
  browser=await chromium.launch({headless:true});
  const context=await browser.newContext({viewport:{width:390,height:844},acceptDownloads:true});
  const page=await open(context);
+ await page.getByText('Interaktív függvénylabor megnyitása').click();
+ const secantToggle=page.getByRole('checkbox',{name:'Szelő megjelenítése'});
+ await secantToggle.check();
+ assert.equal(await secantToggle.isChecked(),true);
+ const hSlider=page.getByRole('slider',{name:'Szelő lépésköze h'});
+ await hSlider.fill('0.1');
+ await page.getByText('Szelő meredeksége: 2,1').waitFor();
+ assert.match(await page.locator('.graphlab').innerText(),/Eltérés: 0,1/);
+ await page.getByRole('button',{name:'Alaphelyzet'}).click();
+ assert.equal(await secantToggle.isChecked(),false);
  const manifest=await page.evaluate(async()=>{const r=await fetch('/manifest.webmanifest');return r.json()});
  assert.equal(manifest.display,'standalone');
  assert.equal(manifest.icons.some(i=>i.sizes==='512x512'),true);
