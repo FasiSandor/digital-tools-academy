@@ -92,3 +92,10 @@ A három külső alkalmazás aktuális funkcióit hivatalos dokumentációval ke
 - A `327c6bc6` commit új ellenőrzése még nem igazolt; ne olvasszuk be CI nélkül.
 - PWA-manifest és 192/512/180 PNG ikon jelenleg hiányzik: a központi szabályzat szerinti következő összevont csomagban pótolandó, nem állítható késznek.
 - Vercel preview-deployok kikapcsolását nem sikerült hitelesen ellenőrizni; a Git-integráció automatikusan indíthat preview-t, ezért a deploytakarékosság teljesülése nem igazolt.
+
+## Mentési integritás – 2026-10-30
+- Új export: a meglévő `version: 1` formátumot megtartva `manifest` (állományjegyzék) és SHA-256 `checksum` mezőkkel egészül ki. A kanonikus JSON a `app`, `version`, `exportedAt`, `completed` mezőkből áll.
+- Import: az ellenőrzőösszeges mentés módosítását/sérülését elutasítja; a régi v1 mentés változatlanul importálható, de „ellenőrzőösszeg nélkül” jelölést kap.
+- Az integritás nem digitális aláírás és nem titkosítás: a mentés helyi felhasználói fájl, az SHA-256 véletlen sérülés észlelésére szolgál, nem bizonyítja a készítő személyét.
+- A mentésben továbbra is kizárólag a helyi teljesített leckeazonosítók szerepelnek; nem tartalmaz fiókadatot, jelszót vagy API-kulcsot.
+- Automatizált teszt: valós SHA-256 generálás, visszaolvasás, módosított és sérült állományjegyzék elutasítása, régi formátum elfogadása.
