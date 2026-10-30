@@ -122,3 +122,6 @@ button:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid
 /* Mobile layout fix: app is a row flex container on desktop; stack it on phones/tablets. */
 @media(max-width:900px){.app{display:block;min-width:0}.mobile-menu-toggle{box-sizing:border-box}main{width:100%;max-width:100%;min-width:0}.topbar{width:100%}aside.menu-open{position:relative;z-index:15}.hero-progress{flex-shrink:0}}
 @media(max-width:650px){.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}.stat{min-width:0}.stat strong{overflow-wrap:anywhere}.panel{min-width:0}.content{overflow-wrap:anywhere}}
+
+/* Function lab: vivid curve, tangent, and live point inspection. */
+.lab-legend{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:12px;font-size:12px;font-weight:750;color:#111827}.lab-legend span{display:inline-flex;align-items:center;gap:6px}.lab-legend i{display:inline-block;width:24px;height:4px;border-radius:2px}.legend-curve{background:#ff1736}.legend-tangent{background:#005dff}.probe-slider{display:flex;flex-direction:column;gap:8px;padding:13px;border:2px solid #005dff;border-radius:10px;background:white}.probe-slider input{width:100%;accent-color:#005dff}.probe-result{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;border-left:4px solid #ff8500;background:#fff7ed;padding:11px;color:#111827!important;border-radius:5px}
