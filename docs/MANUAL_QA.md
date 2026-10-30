@@ -56,3 +56,8 @@ A tesztet a fejlesztési preview-n kell elvégezni, **nem** az éles oldalon. A 
 - [ ] Csak ezután PR #4 merge és egy összevont production deploy.
 
 **Megjegyzés:** a jelenlegi helyi tárolás böngészőhöz kötött. A böngészőadatok törlése, PWA újratelepítése vagy eszközváltás adatvesztést okozhat ellenőrzött export nélkül.
+
+### Helyreállítási zárolás külön próbája
+- [ ] Sérült `dta-progress` JSON mellett egy helyes feladatmegoldás sem írhatja felül a korábbi sérült adatot; a felület ne jelezzen elmentett teljesítést.
+- [ ] A Beállításokban a megerősített JSON-visszaállítás feloldja a zárolást, és a visszaállított lecke megmarad frissítés után.
+- [ ] A kifejezett újrakezdés figyelmeztet az esetleges adatvesztésre, és csak jóváhagyás után hoz létre új üres haladást.
