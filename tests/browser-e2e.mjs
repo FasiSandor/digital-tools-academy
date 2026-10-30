@@ -66,6 +66,16 @@ try{
  assert.match(await page.locator('main').innerText(),/1 \/ 35/);
  const persisted=await page.evaluate(()=>JSON.parse(localStorage.getItem('dta-progress')));
  assert.deepEqual(persisted,['gg1']);
+ await upload(page,backup(['gg1','gg2','gg2']));
+ assert.match(await page.locator('.backup-preview').innerText(),/Duplikációk: 1/);
+ page.once('dialog',dialog=>dialog.accept());
+ await page.getByRole('button',{name:'Haladás egyesítése'}).click();
+ await page.waitForFunction(()=>localStorage.getItem('dta-progress')==='["gg1","gg2"]');
+ assert.deepEqual(await page.evaluate(()=>JSON.parse(localStorage.getItem('dta-progress'))),['gg1','gg2']);
+ await page.reload();
+ await page.getByRole('button',{name:'Menü megnyitása'}).click();
+ await settings(page);
+ assert.deepEqual(await page.evaluate(()=>JSON.parse(localStorage.getItem('dta-progress'))),['gg1','gg2']);
  await upload(page,backup(['gg1','future-lesson']));
  assert.equal(await page.getByRole('button',{name:'Haladás egyesítése'}).isDisabled(),true);
  assert.equal(await page.getByRole('button',{name:'Teljes visszaállítás'}).isDisabled(),true);
