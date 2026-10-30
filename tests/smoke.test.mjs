@@ -233,3 +233,11 @@ test('backups with unknown lesson IDs cannot be partially merged or restored',()
  assert.ok(main.includes("disabled={recoveryRequired||backupPreview.unknown>0}"));
  assert.ok(main.includes("Az egyesítés és a teljes felülírás tiltva van."));
 });
+
+test('recovery offers a raw text snapshot without pretending it is a verified backup',()=>{
+ assert.ok(main.includes("const exportRawRecovery=()=>{if(!recoveryRequired)return;"));
+ assert.ok(main.includes("localStorage.getItem('dta-progress')"));
+ assert.ok(main.includes("digital-tools-academy-eredeti-helyi-adat.txt"));
+ assert.ok(main.includes("Ez nem ellenőrzött alkalmazásmentés"));
+ assert.ok(main.includes("{recoveryRequired&&<button onClick={exportRawRecovery}>"));
+});
