@@ -103,3 +103,15 @@ test('graph explains discriminant and line/constant edge cases',()=>{
 test('new export and import await checksum verification',()=>{
  for(const token of ['await makeVerifiedBackup(done)','await inspectBackup(raw,valid)','SHA-256 ellenőrzött','Régi mentés, ellenőrzőösszeg nélkül'])assert.ok(main.includes(token),token);
 });
+
+test('all 35 published lessons have unique IDs and nonempty learning elements',()=>{
+ const sources=[main,extra,more,phaseTwo];
+ const ids=sources.flatMap(src=>[...src.matchAll(/id:'([^']+)'/g)].map(m=>m[1]));
+ assert.equal(ids.length,35,'lesson count changed unexpectedly');
+ assert.equal(new Set(ids).size,ids.length,'duplicate lesson ID would corrupt progress');
+ for(const src of [extra,more,phaseTwo]){
+  const lessons=[...src.matchAll(/\{id:'([^']+)',title:'([^']+)',summary:'([^']+)',steps:\[([\s\S]*?)\],task:'([^']+)',answer:'([^']+)',url:'(https:\/\/[^']+)'/g)];
+  assert.ok(lessons.length>0,'lesson bank must remain parseable');
+  for(const l of lessons){assert.ok(l[2].trim()&&l[3].trim()&&l[4].trim()&&l[5].trim()&&l[6].trim()&&l[7].trim(),l[1]);}
+ }
+});
