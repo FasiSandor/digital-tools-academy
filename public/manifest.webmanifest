@@ -1,0 +1,20 @@
+{
+  "id": "/",
+  "name": "Digitális Alkalmazások – Digital Tools Academy",
+  "short_name": "Digitális Akadémia",
+  "description": "Interaktív GeoGebra, Desmos és Wolfram|Alpha tanulási akadémia.",
+  "lang": "hu",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0b0f14",
+  "theme_color": "#ff1736",
+  "icons": [
+    {
+      "src": "/icons/dta-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
