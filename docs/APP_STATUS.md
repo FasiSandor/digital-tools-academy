@@ -139,3 +139,9 @@ A három külső alkalmazás aktuális funkcióit hivatalos dokumentációval ke
 - A teszt lefedi a mobilmenüt, Beállítások megnyitását, PWA manifestet és ikont, SHA-256 JSON exportot, fájlból történő importot, megerősített visszaállítást, újratöltés utáni megmaradást, sérült localStorage esetén zárolt egyesítést és teljes helyreállítást.
 - A GitHub Actions build után Chromiumot telepít, majd helyi szerveren futtatja az E2E ellenőrzést. Ez automatizált böngészős teszt, **nem valódi iPhone/iPad/Android hardverteszt**.
 - A teszt első CI-futása külön ellenőrizendő; a korábbi 28+ teszt és build sikeres volt.
+
+## Koordinátarács helyesbítése – 2026-10-30
+- A GraphLab SVG-rács korábban 20 képpontot lépett, miközben az x egysége 32, az y egysége 18 képpont volt. Ez vizuálisan téves leolvasást okozhatott.
+- Most az egész x és y rácsvonalak ugyanazt az `xPx`/`yPx` transzformációt használják, mint a függvénygörbe; az x és y tengelyen diszkrét számozott osztások vannak.
+- A numerikus értéktáblázat, a csúszkák, a színvilág és az elfogadott megjelenés változatlan. Regressziós teszt védi a közös skálát.
+- A Chromium E2E a megelőző fejlesztési mérföldkőn sikeresen lefutott. A rácsjavítás új CI-futása külön ellenőrzendő.
