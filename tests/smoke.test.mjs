@@ -241,3 +241,18 @@ test('recovery offers a raw text snapshot without pretending it is a verified ba
  assert.ok(main.includes("Ez nem ellenőrzött alkalmazásmentés"));
  assert.ok(main.includes("{recoveryRequired&&<button onClick={exportRawRecovery}>"));
 });
+
+test('secant convergence table is mathematically correct for quadratic, linear and constant cases',async()=>{
+ const ts=await import('typescript');
+ const js=ts.transpileModule(read('../src/graphMath.ts'),{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ESNext}}).outputText;
+ const m=await import('data:text/javascript;base64,'+Buffer.from(js).toString('base64'));
+ const rows=m.secantConvergence(1,0,-2,1);
+ assert.deepEqual(rows.map(r=>r.h),[2,1,0.5,0.1]);
+ assert.deepEqual(rows.map(r=>r.secant),[4,3,2.5,2.1]);
+ assert.deepEqual(rows.map(r=>r.tangent),[2,2,2,2]);
+ assert.ok(rows.every((r,i)=>i===0||r.difference<rows[i-1].difference));
+ for(const [a,b,c] of [[0,2,1],[0,0,2]]){
+  assert.ok(m.secantConvergence(a,b,c,1).every(r=>r.difference===0));
+ }
+ for(const token of ['secantConvergence(a,b,c,probe)','Hogyan lesz a szelőből érintő?','A szelő meredekségének közelítése a deriválthoz','|ah|'])assert.ok(graph.includes(token),token);
+});
