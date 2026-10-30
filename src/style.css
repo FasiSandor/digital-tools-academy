@@ -218,3 +218,12 @@ button:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid
 .practice-correct{color:#166534;font-weight:700}
 .practice-incorrect{color:#9a3412;font-weight:700}
 .practice-score{font-weight:800;color:#003cb1}
+
+.numeric-practice{margin:18px 0;padding:14px;border:1px solid #005dff;border-radius:10px;background:#f7faff}
+.numeric-practice h4{margin:4px 0 8px}
+.numeric-task{padding:10px 0;border-bottom:1px solid #d6dee8}
+.numeric-task label{display:block;font-weight:750;margin-bottom:6px}
+.numeric-task input{display:block;width:100%;max-width:290px;padding:10px;border:2px solid #94a3b8;border-radius:8px;background:white;color:#111827;font-size:16px}
+.numeric-task input:focus-visible{outline:3px solid #ff8500;outline-offset:2px}
+.numeric-practice>button{border:0;border-radius:8px;background:#005dff;color:#fff;padding:10px 12px;font-weight:750;margin:12px 8px 0 0;cursor:pointer}
+.numeric-practice>button:disabled{opacity:.5;cursor:not-allowed}
