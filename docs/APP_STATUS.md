@@ -85,3 +85,10 @@ A három külső alkalmazás aktuális funkcióit hivatalos dokumentációval ke
 - Navigációs javítás: platformváltáskor keresés törlése; válaszmódosításkor elavult visszajelzés törlése.
 - Kézi tesztprotokoll: `docs/MANUAL_QA.md`.
 - Aktuális csomag továbbra is PR #4 draft. A teljes böngészős/mobilos teszt és a legfrissebb commit GitHub Actions visszaigazolása még hátravan; production merge nincs.
+
+## Új matematikai ellenőrzési szakasz – 2026-10-30
+- A korábbi fejlesztési állapot `554583a1` commitja GitHub Actions szerint **success**.
+- A függvénylabor magyarázata kiegészült a diszkrimináns (D=b²−4ac) tényleges számolásával és a gyökök számának értelmezésével; a lineáris és konstans szélsőesetek külön szöveget kapnak.
+- A `327c6bc6` commit új ellenőrzése még nem igazolt; ne olvasszuk be CI nélkül.
+- PWA-manifest és 192/512/180 PNG ikon jelenleg hiányzik: a központi szabályzat szerinti következő összevont csomagban pótolandó, nem állítható késznek.
+- Vercel preview-deployok kikapcsolását nem sikerült hitelesen ellenőrizni; a Git-integráció automatikusan indíthat preview-t, ezért a deploytakarékosság teljesülése nem igazolt.
