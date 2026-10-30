@@ -56,8 +56,12 @@ try{
  await numeric.getByRole('textbox',{name:/vízszintes aszimptota/}).fill('1');
  await numeric.getByRole('button',{name:'Számolási feladatok ellenőrzése'}).click();
  assert.match(await numeric.innerText(),/Számolási eredmény: 3 \/ 3/);
- await numeric.getByRole('textbox',{name:/Mennyi f\(4\)/}).fill('2');
+ await numeric.getByRole('textbox',{name:/Mennyi f\(4\)/}).fill('1');
  assert.match(await numeric.innerText(),/Kitöltve: 3 \/ 3/);
+ await numeric.getByRole('button',{name:'Számolási feladatok ellenőrzése'}).click();
+ assert.match(await numeric.innerText(),/Számolási eredmény: 2 \/ 3/);
+ assert.match(await numeric.innerText(),/Belső kifejezés/);
+ assert.match(await numeric.innerText(),/Szorozd meg/);
  await numeric.getByRole('button',{name:'Számolás újrakezdése'}).click();
  assert.match(await numeric.innerText(),/Kitöltve: 0 \/ 3/);
  await extended.getByRole('button',{name:'|x−2|+1',exact:true}).click();
