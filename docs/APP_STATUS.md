@@ -183,3 +183,9 @@ A három külső alkalmazás aktuális funkcióit hivatalos dokumentációval ke
 - A táblázat élőben frissül az a, b, c és a vizsgált x csúszkák módosításakor. A szelő és az érintő meredeksége, illetve az eltérés egyszerre olvasható.
 - Külön magyarázat vezeti le a másodfokú eset |ah| különbségét, és megkülönbözteti a lineáris és konstans esetet.
 - Matematikai Node regresszió és mobilméretű Chromium-teszt védi az új funkciót. Az elfogadott megjelenés és a korábbi funkciók megmaradtak.
+
+## Saját függvény bevitele és vezetett ábrázolás – 2026-10-30
+- A függvénylaborban külön „Saját függvényem” szekció jelent meg: a tanuló begépelheti például `f(x)=2x²-3x+1` képletét, és az alkalmazás beállítja a grafikont.
+- Hat egymás után megnyitható magyarázó lépés: függvénytípus, együtthatók/tengelymetszet, zérushelyek, csúcspont/szélsőérték, derivált/változás, grafikus ellenőrzés. A meglévő csúszkák, szelő, érintő és értéktáblázatok továbbra is használhatók.
+- Biztonságos, `eval` nélküli feldolgozás; jelenleg összevont, legfeljebb másodfokú polinomok, tizedesvessző, `x²` és `x^2`, `f(x)=`/`y=` jelölések. Zárójeles, tört-, trigonometrikus, magasabb fokú vagy össze nem vont kifejezéseket a felület egyértelmű hibaüzenettel elutasítja; nem állítja, hogy általános függvényrajzoló.
+- A jelenlegi rögzített koordinátatartomány miatt nagy együtthatóknál a görbe részben kívül eshet a képen. Későbbi mérföldkő: automatikus zoom és több függvénytípus.
