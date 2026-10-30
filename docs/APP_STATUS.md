@@ -127,3 +127,9 @@ A három külső alkalmazás aktuális funkcióit hivatalos dokumentációval ke
 - A tanuló helyes választ továbbra is ellenőrizhet, de a felület nem állítja, hogy a teljesítés elmentődött.
 - Az adatvédelem feloldása csak a Beállításokban, megerősített JSON-visszaállítással vagy kifejezett újrakezdéssel történik.
 - E változás böngészős és iPhone-os manuális tesztje továbbra is nyitott; nem történt production merge/deploy.
+
+## Visszaállítási védelem – új ellenőrzés
+- A korábbi helyreállítási zárolás automatikus GitHub Actions ellenőrzése sikeres (`4dc2ac3`).
+- Sérült vagy nem olvasható helyi haladás mellett az egyesítés már nem megengedett: a gomb letiltott, és a műveleti függvény is külön visszautasítja. Ez kizárja a hiányos, üresnek látszó helyi állapot és egy mentés félrevezető összefésülését.
+- Teljes visszaállítás csak ellenőrzött, ismert azonosítójú mentéssel, felhasználói jóváhagyással engedélyezett; az ismeretlen azonosítók miatti korábbi védelem megmaradt.
+- A valódi Safari/böngészős visszaállítási teszt még nincs elvégezve. Production változatlan.
