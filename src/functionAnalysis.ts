@@ -17,13 +17,23 @@ export function analyzeExtended(f:ExtendedFunction):FunctionAnalysis{
  return {zeros:zero,intercept,criticalPoint:null,monotonic:a>0?[`Csökken: x < ${h}`,`Csökken: x > ${h}`]:a<0?[`Nő: x < ${h}`,`Nő: x > ${h}`]:['Állandó az értelmezési tartományban'],symmetry:`Középpontos szimmetria: (${h}; ${k})`,asymptotes:[`Függőleges: x = ${h}`,a===0?'Nincs vízszintes aszimptota':`Vízszintes: y = ${k}`],domain:`Minden valós szám, kivéve x = ${h}`,range:a===0?`y = ${k}`:`Minden valós szám, kivéve y = ${k}`};
 }
 export type PracticeQuestion={prompt:string;options:string[];correct:number;explanation:string};
+function choose(correct:string,distractors:string[],seed:number):{options:string[];correct:number}{
+ const unique=[correct,...distractors.filter(x=>x!==correct)].filter((x,i,arr)=>arr.indexOf(x)===i).slice(0,3);
+ if(unique.length!==3)throw new Error('A gyakorlókérdés válaszai nem különböznek.');
+ const shift=((seed%3)+3)%3;
+ const options=[...unique.slice(shift),...unique.slice(0,shift)];
+ return {options,correct:options.indexOf(correct)};
+}
 export function practiceFor(f:ExtendedFunction):PracticeQuestion[]{
- const analysis=analyzeExtended(f);
- const options=(correct:string,wrong:string,other:string):string[]=>[correct,wrong,other];
- const q:PracticeQuestion[]=[
- {prompt:'Melyik állítás igaz az értelmezési tartományra?',options:options(analysis.domain,'Csak pozitív x értékek','Csak egész x értékek'),correct:0,explanation:`A képletből következik: ${analysis.domain}.`},
- {prompt:'Melyik szimmetria jellemzi a függvényt?',options:options('Nincs szimmetriája',analysis.symmetry,'Az x-tengelyre szimmetrikus'),correct:1,explanation:analysis.symmetry},
- {prompt:'Hogyan változik a függvény?',options:options('Mindig szigorúan növekvő','Mindig szigorúan csökkenő',analysis.monotonic.join('; ')),correct:2,explanation:analysis.monotonic.join('; ')},
+ const a=analyzeExtended(f);
+ const domain=choose(a.domain,['Minden valós szám','Minden valós szám, kivéve x = '+f.h,'Csak pozitív x értékek','Csak egész x értékek'],Math.round(f.h+f.k+3));
+ const symmetry=choose(a.symmetry,['Az y-tengelyre szimmetrikus','Az x-tengelyre szimmetrikus','Nincs szimmetriája'],Math.round(f.a+7));
+ const correctTrend=a.monotonic.join('; ');
+ const trends=['Szigorúan növekvő mindenütt','Szigorúan csökkenő mindenütt','Állandó','Csökken: x < '+f.h+'; Nő: x > '+f.h,'Nő: x < '+f.h+'; Csökken: x > '+f.h,'Csökken: x < '+f.h+'; Csökken: x > '+f.h,'Nő: x < '+f.h+'; Nő: x > '+f.h];
+ const monotonic=choose(correctTrend,trends,Math.round(f.a+f.h+11));
+ return [
+ {prompt:'Melyik állítás igaz az értelmezési tartományra?',...domain,explanation:'A képletből következik: '+a.domain+'.'},
+ {prompt:'Melyik szimmetria jellemzi a függvényt?',...symmetry,explanation:a.symmetry},
+ {prompt:'Hogyan változik a függvény?',...monotonic,explanation:correctTrend}
  ];
- return q;
 }
