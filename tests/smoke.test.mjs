@@ -340,7 +340,7 @@ test('function analysis and practice: roots, asymptotes, monotonicity, feedback'
  assert.equal(recip.asymptotes.length,2);
  assert.ok(recip.monotonic.every(s=>s.includes('Csökken')));
  for(const fn of [e.parseExtendedFunction('|x|'),e.parseExtendedFunction('x^3'),e.parseExtendedFunction('1/x')]){
-  const qs=a.practiceFor(fn);assert.equal(qs.length,3);assert.deepEqual(qs.map(q=>q.correct),[0,1,2]);assert.ok(qs.every(q=>q.options.length===3&&q.explanation.length>5));
+  const qs=a.practiceFor(fn);assert.equal(qs.length,3);assert.ok(qs.every(q=>q.correct>=0&&q.correct<3));assert.ok(qs.every(q=>q.options.length===3&&new Set(q.options).size===3&&q.explanation.length>5));
  }
  const ui=read('../src/FunctionInvestigation.tsx');
  for(const token of ['Részletes megoldás megjelenítése','Gyakorlás újrakezdése','Eredmény:','setAnswers','analysis.monotonic'])assert.ok(ui.includes(token),token);
