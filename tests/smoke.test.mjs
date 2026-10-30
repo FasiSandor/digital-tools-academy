@@ -215,3 +215,9 @@ test('secant slope converges to the tangent and handles all function types',asyn
  assert.ok(graph.includes('showSecant&&<path d={secantPath}'));
  assert.ok(graph.includes("showSecant&&marker(probe+stepH,secantY,'Q')"));
 });
+
+test('unreadable local progress cannot be exported as a misleading empty backup',()=>{
+ assert.ok(main.includes("if(recoveryRequired){setBackupError('A helyi haladás sérült"));
+ assert.ok(main.includes("onClick={exportData} disabled={recoveryRequired}"));
+ assert.ok(main.includes('Az exportálás zárolva van'));
+});
