@@ -84,7 +84,7 @@ test('backup preview and both restoration modes are available in settings',()=>{
  for(const token of ['inspectBackup','restoreProgress','Mentés előnézete','Haladás egyesítése','Teljes visszaállítás','backupError'])assert.ok(main.includes(token),token);
 });
 
-test('unknown lesson IDs block destructive restore but allow merge',()=>{
+test('unknown lesson IDs block destructive restore and merge',()=>{
  for(const token of ["mode==='replace'&&backupPreview.unknown>0","disabled={backupPreview.unknown>0}","A teljes felülírás tiltva van."])assert.ok(main.includes(token),token);
 });
 test('settings exposes clickable production and Vercel project links',()=>{
