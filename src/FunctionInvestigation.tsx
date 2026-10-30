@@ -1,17 +1,22 @@
 import {useMemo,useState} from 'react';
 import type {ExtendedFunction} from './extendedFunctions';
 import {analyzeExtended,practiceFor} from './functionAnalysis';
+import {numericTasks,checkNumericAnswer,formatNumber} from './numericPractice';
 const fmt=(x:number)=>Number(x.toFixed(3)).toLocaleString('hu-HU');
 export default function FunctionInvestigation({fn}:{fn:ExtendedFunction}){
  const [answers,setAnswers]=useState<Record<number,number>>({});
  const [reveal,setReveal]=useState(false);
  const [checked,setChecked]=useState(false);
+ const [numericAnswers,setNumericAnswers]=useState<Record<string,string>>({});
+ const [numericChecked,setNumericChecked]=useState(false);
  const analysis=useMemo(()=>analyzeExtended(fn),[fn]);
  const questions=useMemo(()=>practiceFor(fn),[fn]);
+ const tasks=useMemo(()=>numericTasks(fn),[fn]);
+ const numericScore=tasks.filter(t=>checkNumericAnswer(numericAnswers[t.id]??'',t.answer)==='correct').length;
  const score=questions.filter((q,i)=>answers[i]===q.correct).length;
  const currentKey=fn.kind+':'+fn.a+':'+fn.h+':'+fn.k;
  const [lastKey,setLastKey]=useState(currentKey);
- if(lastKey!==currentKey){setLastKey(currentKey);setAnswers({});setReveal(false);setChecked(false);}
+ if(lastKey!==currentKey){setLastKey(currentKey);setAnswers({});setReveal(false);setChecked(false);setNumericAnswers({});setNumericChecked(false);}
  return <section className="function-investigation" aria-label="Függvényvizsgálat és önálló gyakorlás">
  <h4>Függvényvizsgálat – gondolkodj, majd ellenőrizz!</h4>
  <p>Próbáld meg először önállóan megállapítani a zérushelyeket, a monotonitást és a szimmetriát. Ezután nyisd meg a részletes megoldást.</p>
@@ -26,6 +31,22 @@ export default function FunctionInvestigation({fn}:{fn:ExtendedFunction}){
  </div>}
  <h4>Önálló ellenőrző kérdések</h4>
  {questions.map((q,i)=><fieldset className="investigation-question" key={i}><legend>{i+1}. {q.prompt}</legend>{q.options.map((option,j)=><label key={j}><input type="radio" name={'extended-question-'+i} checked={answers[i]===j} onChange={()=>{setAnswers(v=>({...v,[i]:j}));setChecked(false)}}/>{option}</label>)}{checked&&answers[i]!==undefined&&<p className={answers[i]===q.correct?'practice-correct':'practice-incorrect'} role="status">{answers[i]===q.correct?'Helyes!':'Még nem jó.'} {q.explanation}</p>}</fieldset>)}
+ <section className="numeric-practice" aria-label="Számolási gyakorlás">
+ <h4>Számolási feladatok – saját eredménnyel</h4>
+ <p>Számold ki a három eredményt! Tizedesvesszőt is használhatsz. A megoldásokat csak az ellenőrzés után mutatjuk meg.</p>
+ {tasks.map((task,i)=>{
+ const value=numericAnswers[task.id]??'';
+ const status=checkNumericAnswer(value,task.answer);
+ return <div className="numeric-task" key={task.id}>
+ <label htmlFor={'numeric-'+task.id}>{i+1}. {task.prompt}</label>
+ <input id={'numeric-'+task.id} inputMode="decimal" autoComplete="off" value={value} onChange={e=>{setNumericAnswers(v=>({...v,[task.id]:e.target.value}));setNumericChecked(false)}} placeholder="Írd be az eredményt"/>
+ {numericChecked&&<p role="status" className={status==='correct'?'practice-correct':'practice-incorrect'}>{status==='correct'?'Helyes!':status==='invalid'?'Nem számot adtál meg.':'Nem megfelelő eredmény.'} {task.explanation}</p>}
+ </div>})}
+ <button type="button" disabled={tasks.some(t=>!numericAnswers[t.id]?.trim())} onClick={()=>setNumericChecked(true)}>Számolási feladatok ellenőrzése</button>
+ <button type="button" onClick={()=>{setNumericAnswers({});setNumericChecked(false)}}>Számolás újrakezdése</button>
+ <p className="practice-score" aria-live="polite">{numericChecked?'Számolási eredmény: '+numericScore+' / '+tasks.length:'Kitöltve: '+tasks.filter(t=>numericAnswers[t.id]?.trim()).length+' / '+tasks.length}</p>
+ {numericChecked&&<p>A helyes számok: {tasks.map(t=>formatNumber(t.answer)).join('; ')}. Ellenőrizd a behelyettesítés és az eltolások lépéseit!</p>}
+ </section>
  <p className="practice-score" aria-live="polite">{checked?`Eredmény: ${score} / ${questions.length} helyes válasz.`:`Megválaszolva: ${Object.keys(answers).length} / ${questions.length}`}</p>
  <button type="button" disabled={Object.keys(answers).length!==questions.length} onClick={()=>setChecked(true)}>Válaszok ellenőrzése</button>
  <button type="button" onClick={()=>{setAnswers({});setChecked(false)}}>Gyakorlás újrakezdése</button>
