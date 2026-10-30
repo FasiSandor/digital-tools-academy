@@ -294,3 +294,30 @@ test('automatic viewport includes roots, vertex, probe and readable axis ticks',
  assert.ok(far.xMax-far.xMin>normal.xMax-normal.xMin);
  for(const token of ['graphViewport(a,b,c,probe,zoom)','graphTicks(viewport.xMin,viewport.xMax)','Nagyítás +','Kicsinyítés −','Automatikus nézet'])assert.ok(graph.includes(token),token);
 });
+
+test('extended functions safely parse, evaluate and explain three families',async()=>{
+ const ts=await import('typescript');
+ const js=ts.transpileModule(read('../src/extendedFunctions.ts'),{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ESNext}}).outputText;
+ const m=await import('data:text/javascript;base64,'+Buffer.from(js).toString('base64'));
+ for(const [input,kind,a,h,k] of [
+ ['|x−2|+1','absolute',1,2,1],
+ ['−2|x+1|+3','absolute',-2,-1,3],
+ ['x³−2','cubic',1,0,-2],
+ ['(x−1)³+2','cubic',1,1,2],
+ ['1/(x−2)+1','reciprocal',1,2,1],
+ ['-1/x','reciprocal',-1,0,0],
+ ['-x³','cubic',-1,0,0]
+ ]){const fn=m.parseExtendedFunction(input);assert.deepEqual([fn.kind,fn.a,fn.h,fn.k],[kind,a,h,k],input);assert.equal(m.extendedFacts(fn).steps.length,6);}
+ const abs=m.parseExtendedFunction('|x−2|+1');
+ assert.equal(m.evaluateExtended(abs,2),1);assert.equal(m.evaluateExtended(abs,0),3);
+ const cubic=m.parseExtendedFunction('(x−1)³+2');
+ assert.equal(m.evaluateExtended(cubic,1),2);assert.equal(m.evaluateExtended(cubic,3),10);
+ const reciprocal=m.parseExtendedFunction('1/(x−2)+1');
+ assert.equal(m.evaluateExtended(reciprocal,2),null);
+ assert.equal(m.evaluateExtended(reciprocal,3),2);
+ assert.match(m.extendedFacts(reciprocal).domain,/kivéve x = 2/);
+ for(const bad of ['sin(x)','x^4','eval(1)','x/x','1/(x-2)^2','2x³+3x',''])assert.throws(()=>m.parseExtendedFunction(bad),undefined,bad);
+ const ui=read('../src/ExtendedGraphLab.tsx');
+ for(const token of ['Értéktáblázat a nevezetes pont körül','Nincs értelmezve','extended-clip','Következő lépés','parseExtendedFunction(value)'])assert.ok(ui.includes(token),token);
+ assert.ok(graph.includes('<ExtendedGraphLab/>'));
+});
