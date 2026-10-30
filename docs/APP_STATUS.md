@@ -172,3 +172,8 @@ A három külső alkalmazás aktuális funkcióit hivatalos dokumentációval ke
 - Helyreállítási zárolásnál az új „Eredeti adat mentése (.txt)” gomb változtatás nélkül letölti a `dta-progress` kulcs nyers szöveges tartalmát.
 - A nyers `.txt` fájl szándékosan nem SHA-256 ellenőrzött JSON-importfájl, közvetlen importja nem támogatott. A felület ezt világosan jelzi; az ellenőrzött export továbbra is tiltott sérült állapotban.
 - A letöltés nem írja felül a helyi adatot; hiányzó/olvashatatlan tárhely esetén hibajelzés jelenik meg. Chromium E2E az eredeti sérült bájtok egyezését ellenőrzi.
+
+## Import és mentés regressziós ellenőrzés – 2026-10-30
+- Az importkódból kikerült egy elérhetetlen, régi feltétel, amely tévesen azt állította, hogy ismeretlen leckeazonosítók esetén az egyesítés engedélyezett. A tényleges adatvédelmi szabály továbbra is mindkét importmódot tiltja ilyen esetben.
+- A Chromium E2E most ténylegesen egyesít ismétlődő, de ismert leckeazonosítókat tartalmazó legacy mentést, ellenőrzi a duplikátumok elhagyását és az eredmény újratöltés utáni megmaradását.
+- A nyers helyreállítási letöltés új tesztje az ismeretlen, jövőbeli leckeazonosítók változatlan megőrzését is vizsgálja.
