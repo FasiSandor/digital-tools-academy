@@ -52,7 +52,7 @@ try{
  await page.reload();
  await page.getByRole('button',{name:'Menü megnyitása'}).click();
  await settings(page);
- assert.match(await page.locator('main').innerText(),/Jelenlegi haladás:|1 \/ 35 lecke|1 \/ 35/);
+ assert.match(await page.locator('main').innerText(),/1 \/ 35/);
  const persisted=await page.evaluate(()=>JSON.parse(localStorage.getItem('dta-progress')));
  assert.deepEqual(persisted,['gg1']);
  await page.evaluate(()=>localStorage.setItem('dta-progress','{corrupt'));
@@ -64,6 +64,7 @@ try{
  assert.equal(await page.getByRole('button',{name:'Haladás egyesítése'}).isDisabled(),true);
  page.once('dialog',dialog=>dialog.accept());
  await page.getByRole('button',{name:'Teljes visszaállítás'}).click();
+ await page.waitForFunction(()=>localStorage.getItem('dta-progress')==='["gg1"]');
  assert.deepEqual(await page.evaluate(()=>JSON.parse(localStorage.getItem('dta-progress'))),['gg1']);
  console.log('Browser E2E passed: mobile menu, PWA manifest/icon, SHA-256 export, import, persisted restore and corrupted-progress recovery.');
 }finally{
