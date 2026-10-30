@@ -71,3 +71,10 @@ A három külső alkalmazás aktuális funkcióit hivatalos dokumentációval ke
 - GitHub Actions `Verify application (no deploy)`: **success** a `9870c7c54080fd5f36a84b8e506107e95f5d35c9` commiton (smoke tesztek + TypeScript/Vite build).
 - Vercel státusz: **success** ugyanazon a fejlesztési commiton, de a preview telepítések letiltása nincs igazolva.
 - A PR #4 draft állapotban marad; nincs production merge, mert böngészős manuális regressziós teszt és a deploy-beállítások ellenőrzése még hiányzik.
+
+## Biztonsági mentés és visszaállítás – fejlesztési ág
+- Új `src/backup.ts`: a JSON-mentés alkalmazásazonosító-, verzió-, dátum- és azonosítótípus-ellenőrzése; ismeretlen leckeazonosítók és duplikációk számlálása.
+- Importnál 2 MB-os fájlméretkorlát, előnézet, felhasználói jóváhagyás és két mód: egyesítés / teljes visszaállítás. A korábbi `dta-progress` kulcs és az 1-es exportformátum megmaradt.
+- Új futtatható Node-teszt a backup modulon: export, hibás metaadatok, duplikációk, ismeretlen ID-k, egyesítés és felülírás.
+- Korlát: a JSON formátum nem tartalmaz kriptográfiai ellenőrzőösszeget, és csak a helyi leckekészültséget menti. A felhasználói beállítások és egyéb állományok nem részei a jelenlegi adatsémának.
+- Kézi böngészős visszaállítási teszt még szükséges, az automatizált modulvizsgálat nem helyettesíti.
