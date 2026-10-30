@@ -113,3 +113,10 @@ A tesztet a fejlesztési preview-n kell elvégezni, **nem** az éles oldalon. A 
 - [ ] Az alap parabola x=1 esetén h=2;1;0,5;0,1 sorokban 4;3;2,5;2,1 szelőmeredekség jelenik meg, az érintőé végig 2.
 - [ ] Az a/b/c/x csúszkák módosítására a táblázat frissül; lineáris és konstans esetben minden eltérés nulla.
 - [ ] Mobilon a táblázat vízszintesen görgethető, a képernyőolvasó számára címe és oszlopfejlécei vannak.
+
+### Saját függvény ábrázolása
+- [ ] `f(x)=2x²-3x+1` bevitelére a megfelelő parabola, együtthatók, zérushelyek és hatlépéses útmutató jelenik meg.
+- [ ] `-x²+2x+3`, `2x-1`, `y=3`, `0,5x²+1,5x-2` működik; a grafikon és táblázatok együtt frissülnek.
+- [ ] Az „Előző/Következő lépés” gombok végigvezetik a tanulót; a korábbi értéktáblázatok és csúszkák használhatók.
+- [ ] `sin(x)`, `x^3`, `x/x`, `x²+x²` és rosszindulatú kódnak látszó szöveg nem fut le, hanem értelmezhető hibaüzenetet ad.
+- [ ] 390px mobilnézetben a képletmező, gombok és magyarázat olvasható, nem lógnak ki.
