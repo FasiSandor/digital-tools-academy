@@ -145,3 +145,10 @@ A három külső alkalmazás aktuális funkcióit hivatalos dokumentációval ke
 - Most az egész x és y rácsvonalak ugyanazt az `xPx`/`yPx` transzformációt használják, mint a függvénygörbe; az x és y tengelyen diszkrét számozott osztások vannak.
 - A numerikus értéktáblázat, a csúszkák, a színvilág és az elfogadott megjelenés változatlan. Regressziós teszt védi a közös skálát.
 - A Chromium E2E a megelőző fejlesztési mérföldkőn sikeresen lefutott. A rácsjavítás új CI-futása külön ellenőrzendő.
+
+## Szelő és érintő – derivált szemléltetése
+- A függvénylaborban külön kapcsolható zöld szelőegyenes jelent meg, P és Q ponttal. A h csúszka 0,1 és 2 között állítható; az érintő kék, a függvénygörbe piros marad.
+- A szelő meredeksége a külön `secantSlope` matematikai modulból származik: `(f(x+h)-f(x))/h = 2ax+b+ah`. A számítás numerikusan stabil, h=0 tiltott.
+- A felület élőben megmutatja P, Q koordinátáit, a szelő és érintő meredekségét, valamint az eltérést. A h csökkentése a derivált fogalmát szemlélteti.
+- Az alaphelyzet visszaállítja a szelő kapcsolóját és a h csúszkát is. Az eredeti funkciók megmaradtak.
+- Node regressziós tesztek ellenőrzik a másodfokú, lineáris, konstans eseteket és a h→0 konvergenciát. A fizikai eszközös QA nyitott.
