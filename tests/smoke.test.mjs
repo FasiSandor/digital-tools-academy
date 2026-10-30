@@ -200,3 +200,18 @@ test('graph grid uses the same mathematical scale as the plotted curve',()=>{
  assert.equal(graph.includes("x1={10+i*20}"),false);
  assert.equal(graph.includes("y1={5+i*20}"),false);
 });
+
+test('secant slope converges to the tangent and handles all function types',async()=>{
+ const ts=await import('typescript');
+ const js=ts.transpileModule(read('../src/graphMath.ts'),{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ESNext}}).outputText;
+ const m=await import('data:text/javascript;base64,'+Buffer.from(js).toString('base64'));
+ assert.equal(m.secantSlope(1,0,-2,1,2),4);
+ assert.equal(m.secantSlope(1,0,-2,1,0.1),2.1);
+ assert.ok(Math.abs(m.secantSlope(1,0,-2,1,0.0001)-m.derivativeAt(1,0,1))<0.001);
+ assert.equal(m.secantSlope(0,2,1,3,0.1),2);
+ assert.equal(m.secantSlope(0,0,2,3,0.1),0);
+ assert.throws(()=>m.secantSlope(1,0,0,0,0),RangeError);
+ assert.ok(graph.includes('aria-label="Szelő lépésköze h"'));
+ assert.ok(graph.includes('showSecant&&<path d={secantPath}'));
+ assert.ok(graph.includes("showSecant&&marker(probe+stepH,secantY,'Q')"));
+});
