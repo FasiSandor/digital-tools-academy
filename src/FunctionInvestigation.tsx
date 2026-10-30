@@ -1,7 +1,7 @@
 import {useMemo,useState} from 'react';
 import type {ExtendedFunction} from './extendedFunctions';
 import {analyzeExtended,practiceFor} from './functionAnalysis';
-import {numericTasks,checkNumericAnswer,formatNumber} from './numericPractice';
+import {numericTasks,checkNumericAnswer,formatNumber,explainNumericAnswer} from './numericPractice';
 const fmt=(x:number)=>Number(x.toFixed(3)).toLocaleString('hu-HU');
 export default function FunctionInvestigation({fn}:{fn:ExtendedFunction}){
  const [answers,setAnswers]=useState<Record<number,number>>({});
@@ -37,10 +37,11 @@ export default function FunctionInvestigation({fn}:{fn:ExtendedFunction}){
  {tasks.map((task,i)=>{
  const value=numericAnswers[task.id]??'';
  const status=checkNumericAnswer(value,task.answer);
+ const feedback=explainNumericAnswer(fn,task,value);
  return <div className="numeric-task" key={task.id}>
  <label htmlFor={'numeric-'+task.id}>{i+1}. {task.prompt}</label>
  <input id={'numeric-'+task.id} inputMode="decimal" autoComplete="off" value={value} onChange={e=>{setNumericAnswers(v=>({...v,[task.id]:e.target.value}));setNumericChecked(false)}} placeholder="Írd be az eredményt"/>
- {numericChecked&&<p role="status" className={status==='correct'?'practice-correct':'practice-incorrect'}>{status==='correct'?'Helyes!':status==='invalid'?'Nem számot adtál meg.':'Nem megfelelő eredmény.'} {task.explanation}</p>}
+ {numericChecked&&<div role="status" className={status==='correct'?'practice-correct':'practice-incorrect'}><p>{status==='correct'?'Helyes!':status==='invalid'?'Nem számot adtál meg.':'Még nem megfelelő az eredmény.'} {feedback.hint}</p><p className="numeric-worked">{feedback.worked}</p></div>}
  </div>})}
  <button type="button" disabled={tasks.some(t=>!numericAnswers[t.id]?.trim())} onClick={()=>setNumericChecked(true)}>Számolási feladatok ellenőrzése</button>
  <button type="button" onClick={()=>{setNumericAnswers({});setNumericChecked(false)}}>Számolás újrakezdése</button>
