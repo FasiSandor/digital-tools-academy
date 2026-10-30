@@ -38,6 +38,13 @@ try{
  assert.equal(await extended.locator('svg path').count(),2);
  await extended.getByRole('button',{name:'Következő lépés'}).click();
  assert.match(await extended.innerText(),/Lépés 2 \/ 6/);
+ const investigation=extended.locator('.function-investigation');
+ await investigation.getByRole('button',{name:'Részletes megoldás megjelenítése'}).click();
+ assert.match(await investigation.innerText(),/Aszimptoták/);
+ await investigation.getByRole('radio',{name:/Minden valós szám, kivéve x = 2/}).check();
+ assert.match(await investigation.innerText(),/1 \/ 3 helyes válasz/);
+ await investigation.getByRole('button',{name:'Gyakorlás újrakezdése'}).click();
+ assert.match(await investigation.innerText(),/0 \/ 3 helyes válasz/);
  await extended.getByRole('button',{name:'|x−2|+1',exact:true}).click();
  assert.match(await extended.innerText(),/Abszolútérték-függvény/);
  await extended.getByRole('button',{name:'x³−2',exact:true}).click();
