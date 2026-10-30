@@ -212,3 +212,6 @@ A háromválaszos kérdések ellenőrzése külön gombbal történik, csak mind
 
 ## Számolási feladatok – 2026-10-30
 A három támogatott új függvénycsaládhoz önálló számolási gyakorlás került: függvényérték behelyettesítéssel, nevezetes pont vízszintes és függőleges koordinátája (reciproknál aszimptoták). A tanuló három számot ír be, tizedesvesszővel is; a pontozás és magyarázat csak külön ellenőrzés után jelenik meg. A pontossági tolerancia 0,005; hibás szöveges bemenet nem értékelhető. Az újrakezdés és függvényváltás törli az ideiglenes válaszokat, de nem módosítja a 35 lecke mentett haladását. Node és Chromium E2E tesztek bővítve.
+
+## Célzott matematikai hibajavítás – 2026-10-30
+A számbeviteles gyakorlás ellenőrzés után már nem csupán a helyes eredményt közli: felismeri a hiányzó függőleges eltolást, a vízszintes eltolás előjelcseréjét, a kihagyott a együtthatót és az érvénytelen számbevitelt. Mindhárom függvénycsaládnál négy számozott lépésben mutatja a behelyettesítést, illetve az eltolások magyarázatát. Az elemzés determinisztikus, nem AI és nem általános hibafelismerő; más tévedésnél általános sorrendi segítséget ad. A megoldás csak az ellenőrző gomb után jelenik meg. Új matematikai és mobilböngészős tesztek.
