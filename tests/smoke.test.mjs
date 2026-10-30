@@ -115,3 +115,23 @@ test('all 35 published lessons have unique IDs and nonempty learning elements',(
   for(const l of lessons){assert.ok(l[2].trim()&&l[3].trim()&&l[4].trim()&&l[5].trim()&&l[6].trim()&&l[7].trim(),l[1]);}
  }
 });
+
+test('PWA manifest, install links and branded PNG icons are valid',()=>{
+ const manifest=JSON.parse(read('../public/manifest.webmanifest'));
+ assert.equal(manifest.id,'/');
+ assert.equal(manifest.display,'standalone');
+ assert.equal(manifest.lang,'hu');
+ for(const size of [192,512]){
+  const icon=readFileSync(new URL('../public/icons/dta-'+size+'.png',import.meta.url));
+  assert.equal(icon.subarray(0,8).toString('hex'),'89504e470d0a1a0a');
+  assert.equal(icon.readUInt32BE(16),size);
+  assert.equal(icon.readUInt32BE(20),size);
+  assert.ok(manifest.icons.some(i=>i.src==='/icons/dta-'+size+'.png'&&i.sizes===size+'x'+size));
+ }
+ const apple=readFileSync(new URL('../public/icons/dta-180.png',import.meta.url));
+ assert.equal(apple.readUInt32BE(16),180);
+ assert.equal(apple.readUInt32BE(20),180);
+ const html=read('../index.html');
+ for(const token of ['rel="manifest"','rel="apple-touch-icon"','/icons/dta-180.png'])assert.ok(html.includes(token),token);
+ assert.ok(main.includes('settings-app-icon'));
+});
