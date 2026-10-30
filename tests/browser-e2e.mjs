@@ -76,6 +76,12 @@ try{
  await settings(page);
  assert.match(await page.locator('main').innerText(),/helyi haladás adatai hibásak/);
  assert.equal(await page.getByRole('button',{name:/Exportálás/}).isDisabled(),true);
+ const rescueDownloadPromise=page.waitForEvent('download');
+ await page.getByRole('button',{name:/Eredeti adat mentése/}).click();
+ const rescueDownload=await rescueDownloadPromise;
+ assert.match(rescueDownload.suggestedFilename(),/eredeti-helyi-adat\.txt$/);
+ assert.equal((await (await import('node:fs/promises')).readFile(await rescueDownload.path())).toString(),'{corrupt');
+ assert.equal(await page.evaluate(()=>localStorage.getItem('dta-progress')),'{corrupt');
  await upload(page,backup(['gg1']));
  assert.equal(await page.getByRole('button',{name:'Haladás egyesítése'}).isDisabled(),true);
  page.once('dialog',dialog=>dialog.accept());
