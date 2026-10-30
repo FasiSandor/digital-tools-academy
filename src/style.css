@@ -206,3 +206,15 @@ button:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid
 .extended-graph .graphlayout{margin:16px 0}
 .extended-graph .function-guide{margin:16px 0}
 @media(max-width:600px){.extended-graph{padding:12px}.extended-presets button{flex:1 1 115px}}
+
+.function-investigation{background:#fff;border:2px solid #ff8500;border-radius:12px;padding:16px;margin:20px 0;color:#111827}
+.function-investigation h4{color:#003cb1;font-size:19px;margin:10px 0}
+.function-investigation>button{border:0;border-radius:8px;padding:11px 14px;background:#005dff;color:white;font-weight:800;cursor:pointer}
+.investigation-results{border-left:4px solid #ff8500;background:#f7faff;padding:10px 14px;margin:12px 0}
+.investigation-question{border:1px solid #cbd5e1;border-radius:9px;padding:12px;margin:12px 0;min-width:0}
+.investigation-question legend{font-weight:800;padding:0 5px}
+.investigation-question label{display:flex;align-items:flex-start;gap:8px;padding:7px 0;cursor:pointer;overflow-wrap:anywhere}
+.investigation-question input{margin-top:4px;flex-shrink:0}
+.practice-correct{color:#166534;font-weight:700}
+.practice-incorrect{color:#9a3412;font-weight:700}
+.practice-score{font-weight:800;color:#003cb1}
