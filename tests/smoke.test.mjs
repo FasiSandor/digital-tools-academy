@@ -402,3 +402,11 @@ test('session practice summary is deterministic and does not persist progress',a
  const ui=read('../src/FunctionInvestigation.tsx');
  for(const token of ['setAttempts','Eredmények törlése','Másolható gyakorlási összesítő','csak ebben a megnyitott munkamenetben'])assert.ok(ui.includes(token),token);
 });
+
+test('zero-numerator reciprocal has a hole rather than a vertical asymptote',()=>{
+ const analysis=read('../src/functionAnalysis.ts');
+ const graph=read('../src/ExtendedGraphLab.tsx');
+ assert.ok(analysis.includes("asymptotes:a===0?"),'zero coefficient must have its own asymptote case');
+ assert.ok(graph.includes("fn.kind==='reciprocal'&&fn.a!==0"),'no vertical asymptote should be drawn when a=0');
+ assert.ok(graph.includes("hiányzó pont, nem függőleges aszimptota"));
+});
