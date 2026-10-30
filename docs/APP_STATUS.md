@@ -209,3 +209,6 @@ A három külső alkalmazás aktuális funkcióit hivatalos dokumentációval ke
 
 ## Gyakorlási mód finomítása
 A háromválaszos kérdések ellenőrzése külön gombbal történik, csak mindhárom válasz megadása után. A helyes válasz pozíciója változó; minden opció különböző. A válaszok módosítása újraellenőrzést igényel. A tanulói haladás adatai nem változnak.
+
+## Számolási feladatok – 2026-10-30
+A három támogatott új függvénycsaládhoz önálló számolási gyakorlás került: függvényérték behelyettesítéssel, nevezetes pont vízszintes és függőleges koordinátája (reciproknál aszimptoták). A tanuló három számot ír be, tizedesvesszővel is; a pontozás és magyarázat csak külön ellenőrzés után jelenik meg. A pontossági tolerancia 0,005; hibás szöveges bemenet nem értékelhető. Az újrakezdés és függvényváltás törli az ideiglenes válaszokat, de nem módosítja a 35 lecke mentett haladását. Node és Chromium E2E tesztek bővítve.
