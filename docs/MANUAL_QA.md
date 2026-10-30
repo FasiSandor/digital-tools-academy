@@ -126,3 +126,11 @@ A tesztet a fejlesztési preview-n kell elvégezni, **nem** az éles oldalon. A 
 - [ ] `x²−20x` esetén a csúcspont és mindkét zérushely a grafikon tartományába esik.
 - [ ] Nagyítás +, Kicsinyítés −, Automatikus nézet a látható x-tartományt módosítja, a függvény együtthatóit nem.
 - [ ] A tengelyek beosztásai olvashatók mobilon, nem zsúfolódnak össze; a csúszkák és a hatlépéses tanulómód továbbra is működnek.
+
+### További függvénycsaládok – mobil és tanári ellenőrzés
+- [ ] `|x−2|+1`: V alak, csúcs (2;1), értéktáblázat és hatlépéses útmutató.
+- [ ] `−2|x+1|+3`: lefelé nyíló V alak, csúcs (−1;3).
+- [ ] `(x−1)³+2`: S alak, szimmetriaközéppont (1;2).
+- [ ] `1/(x−2)+1`: két különálló görbeág, x=2-nél nincs értelmezve; aszimptoták x=2 és y=1.
+- [ ] Hibás vagy nem támogatott képlet (`sin(x)`, `x^4`) hibaüzenetet ad, az előző jó ábrát nem törli.
+- [ ] A további függvények nézete nem módosítja a 35 lecke haladását és a korábbi függvénylabor állapotát.
