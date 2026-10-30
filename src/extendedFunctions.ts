@@ -2,10 +2,10 @@
 export type ExtendedFunction={kind:'absolute'|'cubic'|'reciprocal';a:number;h:number;k:number;label:string};
 const number='(?:\\d+(?:[.,]\\d*)?|[.,]\\d+)';
 const signed='[+-]?'+number;
-const n=(s:string|undefined,fallback:number)=>s===undefined||s===''?fallback:Number(s.replace(',','.'));
+const n=(s:string|undefined,fallback:number)=>s===undefined||s===''?fallback:s==='-'?-1:s==='+'?1:Number(s.replace(',','.'));
 export function parseExtendedFunction(raw:string):ExtendedFunction{
- let s=raw.trim().toLowerCase().replace(/\\s+/g,'').replace(/−/g,'-').replace(/³/g,'^3').replace(/\\*/g,'');
- s=s.replace(/^f\\(x\\)=/,'').replace(/^y=/,'');
+ let s=raw.trim().toLowerCase().replace(/\s+/g,'').replace(/−/g,'-').replace(/³/g,'^3').replace(/\*/g,'');
+ s=s.replace(/^f\(x\)=/,'').replace(/^y=/,'');
  if(s.length>100||!s)throw new Error('Adj meg egy függvényt.');
  let m:RegExpMatchArray|null;
  // a|x-h|+k, including |x|, -2|x+1|+3
