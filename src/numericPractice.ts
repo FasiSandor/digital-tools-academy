@@ -25,3 +25,30 @@ export function checkNumericAnswer(raw:string,expected:number):'empty'|'invalid'
  return Math.abs(value-expected)<=Math.max(0.005,Math.abs(expected)*1e-8)?'correct':'incorrect';
 }
 export function formatNumber(value:number):string{return Number(value.toFixed(3)).toLocaleString('hu-HU');}
+
+/** Pedagogical feedback is deterministic and based only on the selected task and answer. */
+export type NumericFeedback={category:'correct'|'invalid'|'sign'|'shift'|'calculation';hint:string;worked:string};
+export function explainNumericAnswer(fn:ExtendedFunction,task:NumericTask,raw:string):NumericFeedback{
+ const status=checkNumericAnswer(raw,task.answer);
+ const x=fn.h+2;
+ const dx=x-fn.h;
+ const core=fn.kind==='absolute'?Math.abs(dx):fn.kind==='cubic'?dx**3:1/dx;
+ const operation=fn.kind==='absolute'?'|'+formatNumber(x)+' − '+formatNumber(fn.h)+'|':fn.kind==='cubic'?'('+formatNumber(x)+' − '+formatNumber(fn.h)+')³':'1 / ('+formatNumber(x)+' − '+formatNumber(fn.h)+')';
+ const worked=task.id==='value'
+  ?'1. x = '+formatNumber(x)+'. 2. Belső kifejezés: '+operation+' = '+formatNumber(core)+'. 3. Szorozd meg a = '+formatNumber(fn.a)+' értékkel: '+formatNumber(fn.a*core)+'. 4. Add hozzá k = '+formatNumber(fn.k)+': '+formatNumber(task.answer)+'.'
+  :task.id==='horizontal'
+  ?'A képlet belsejében x − h szerepel. Az eltolás előjele fordított: x − ('+formatNumber(fn.h)+'), ezért h = '+formatNumber(fn.h)+'.'
+  :'A képleten kívüli + k tag függőlegesen tol. Itt k = '+formatNumber(fn.k)+', tehát az y koordináta '+formatNumber(task.answer)+'.';
+ if(status==='correct')return {category:'correct',hint:'A helyettesítés és az eltolás eredménye megfelelő.',worked};
+ if(status==='empty'||status==='invalid')return {category:'invalid',hint:'Egyetlen számot írj be. Például: 1,5 vagy −2. Képletet ne írj a mezőbe.',worked};
+ const answer=parseNumericAnswer(raw)!;
+ if(task.id==='horizontal'&&Math.abs(answer+fn.h)<0.005&&Math.abs(fn.h)>0.005)
+  return {category:'sign',hint:'Az x − h alaknál könnyű az eltolás előjelét felcserélni. Keresd meg, mikor lesz a belső kifejezés nulla.',worked};
+ if(task.id==='value'){
+  if(Math.abs(answer-(fn.a*core))<0.005&&Math.abs(fn.k)>0.005)
+   return {category:'shift',hint:'A belső kifejezést és az a szorzót jól számoltad, de a függőleges eltolás (+ k) kimaradhatott.',worked};
+  if(Math.abs(answer-(core+fn.k))<0.005&&Math.abs(fn.a-1)>0.005)
+   return {category:'calculation',hint:'Az alapfüggvény értéke után még az a együtthatóval is szorozni kell.',worked};
+ }
+ return {category:'calculation',hint:task.id==='value'?'Haladj sorrendben: először x − h, majd alapfüggvény, utána szorzás a-val, végül + k.':'Nézd meg, hogy a keresett koordináta a belső (h) vagy a külső (k) eltolásból adódik.',worked};
+}
