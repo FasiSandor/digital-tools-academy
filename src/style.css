@@ -173,3 +173,20 @@ button:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid
 .graph-values .graph-current-row{background:#e6f0ff!important;box-shadow:inset 4px 0 #005dff}
 .graph-values .graph-current-row th{color:#003cb1}
 @media(max-width:600px){.graph-values{padding:13px}.graph-values th,.graph-values td{padding:9px 7px;font-size:13px}}
+
+/* User-entered functions retain the approved high-contrast Academy palette. */
+.function-entry{background:#f7faff;border:2px solid #005dff;border-radius:14px;padding:18px;margin:18px 0;color:#111827}
+.function-entry h3{color:#003cb1;font-size:21px;margin:0 0 8px}
+.function-entry p{line-height:1.6}
+.function-entry-form label{display:block;font-weight:800;margin:12px 0 6px}
+.function-entry-form>div{display:flex;gap:10px;flex-wrap:wrap}
+.function-entry-form input{flex:1 1 260px;min-width:0;border:2px solid #94a3b8;border-radius:9px;padding:12px;font-size:17px;color:#111827;background:#fff}
+.function-entry-form input:focus-visible{outline:3px solid #ff8500;outline-offset:2px}
+.function-entry-form button,.function-step-actions button{border:0;border-radius:9px;padding:12px 16px;background:#005dff;color:white;font-weight:800;cursor:pointer}
+.function-entry .function-examples{font-size:13px;color:#334155}
+.function-guide{background:white;border-left:5px solid #ff8500;border-radius:10px;padding:16px;margin-top:16px}
+.function-guide h4{font-size:19px;margin:8px 0;color:#111827}
+.function-step-count{color:#003cb1;font-weight:800}
+.function-step-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.function-step-actions button:disabled{opacity:.45;cursor:not-allowed}
+@media(max-width:600px){.function-entry{padding:12px}.function-entry-form>div{display:flex;flex-direction:column}.function-entry-form input{flex:auto;width:100%}.function-entry-form button{width:100%}}
