@@ -127,3 +127,21 @@ button:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid
 .lab-legend{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:12px;font-size:12px;font-weight:750;color:#111827}.lab-legend span{display:inline-flex;align-items:center;gap:6px}.lab-legend i{display:inline-block;width:24px;height:4px;border-radius:2px}.legend-curve{background:#ff1736}.legend-tangent{background:#005dff}.probe-slider{display:flex;flex-direction:column;gap:8px;padding:13px;border:2px solid #005dff;border-radius:10px;background:white}.probe-slider input{width:100%;accent-color:#005dff}.probe-result{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;border-left:4px solid #ff8500;background:#fff7ed;padding:11px;color:#111827!important;border-radius:5px}
 
 .guided-explanation{margin-top:18px;background:#fff;border:2px solid #005dff;border-radius:12px;padding:18px;color:#111827}.guided-explanation h3{margin:0 0 12px;color:#005dff;font-size:20px}.guided-explanation ol{padding-left:23px;display:grid;gap:12px;margin:0}.guided-explanation li{line-height:1.65;padding-left:6px}.guided-explanation li::marker{color:#ff1736;font-weight:900}.guided-explanation b{color:#111827}
+
+/* Guided laboratory: vivid presets, optional tangent and self-check. */
+.graph-presets{display:flex;flex-wrap:wrap;gap:9px;margin:14px 0 18px}
+.graph-presets button{border:2px solid #005dff;border-radius:9px;background:#fff;color:#003cb1;padding:10px 12px;font-weight:800;cursor:pointer}
+.graph-presets button:hover,.graph-presets button:focus-visible{background:#005dff;color:#fff}
+.tangent-toggle{display:flex!important;flex-direction:row!important;align-items:center;gap:9px;font-weight:750;color:#111827}
+.tangent-toggle input{accent-color:#005dff;width:18px;height:18px}
+.graph-challenge{margin-top:18px;padding:18px;background:#fff;border:2px solid #00b84a;border-radius:12px;color:#111827}
+.graph-challenge h3{color:#087b34;margin:0 0 8px;font-size:20px}
+.graph-challenge p{line-height:1.55}
+.graph-choices{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0}
+.graph-choices label{display:flex;align-items:center;gap:7px;border:2px solid #d6dee8;background:#fff;border-radius:9px;padding:10px 12px;font-weight:700;cursor:pointer}
+.graph-choices label:has(input:checked){border-color:#005dff;background:#eff6ff}
+.graph-choices input{accent-color:#005dff}
+.graph-challenge>button{background:#00b84a;color:#fff;border:0;border-radius:9px;padding:12px 18px;font-weight:850;cursor:pointer}
+.graph-correct{border-left:4px solid #00b84a;padding:10px;background:#effcf3;color:#065f2a}
+.graph-retry{border-left:4px solid #ff8500;padding:10px;background:#fff7ed;color:#713f12}
+@media(max-width:600px){.graph-presets button{flex:1 1 140px}.graph-choices label{flex:1 1 110px}}
