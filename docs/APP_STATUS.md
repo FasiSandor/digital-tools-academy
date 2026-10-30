@@ -66,3 +66,8 @@ A három külső alkalmazás aktuális funkcióit hivatalos dokumentációval ke
 - Megőrzés: a 35 lecke azonosítója, a `dta-progress` localStorage-adatok és a JSON export/import változatlanok.
 - Ismert korlát: a smoke tesztek részben forrásszöveg-alapúak; valódi mobilos interakciós, képernyőolvasós és export-visszaállítási teszt még szükséges. A Vercel-projekt beállításait az aktuális csatlakozással nem sikerült kiolvasni (404), ezért a preview deployok kizárása nem igazolt.
 - Következő nagy csomag: többfeladatos leckék és differenciált hibamagyarázat; mentés előnézete, integritás és visszaállítási teszt; böngészős regressziótesztek.
+
+## Ellenőrzés – 2026-10-30, összevont fejlesztési csomag
+- GitHub Actions `Verify application (no deploy)`: **success** a `9870c7c54080fd5f36a84b8e506107e95f5d35c9` commiton (smoke tesztek + TypeScript/Vite build).
+- Vercel státusz: **success** ugyanazon a fejlesztési commiton, de a preview telepítések letiltása nincs igazolva.
+- A PR #4 draft állapotban marad; nincs production merge, mert böngészős manuális regressziós teszt és a deploy-beállítások ellenőrzése még hiányzik.
