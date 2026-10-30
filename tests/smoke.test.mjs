@@ -13,7 +13,7 @@ test('12 additional lessons use distinct IDs',()=>{
  assert.ok(ids.every(x=>!main.includes("id:'"+x+"'")));
 });
 test('graph lab includes critical mathematical cases',()=>{
- for(const token of ['a!==0','delta<0','delta===0','b!==0','vertex','roots','setA(1)']) assert.ok(graph.includes(token),token);
+ for(const token of ['a!==0','delta>0','delta===0','realRoots(a,b,c)','vertex','roots','setA(1)']) assert.ok(graph.includes(token),token);
 });
 test('roadmap and backup features remain available',()=>{
  for(const token of ['curriculum[course]','exportData','importData','dta-progress','setDone','<GraphLab/>']) assert.ok(main.includes(token),token);
@@ -40,7 +40,7 @@ test('backup validation and progress persistence are present',()=>{
 const phaseTwo=read('../src/phaseTwoLessons.ts');
 test('second phase has six unique lessons and is wired into course catalog',()=>{const ids=[...phaseTwo.matchAll(/id:'([^']+)'/g)].map(x=>x[1]);assert.equal(ids.length,6);assert.equal(new Set(ids).size,6);assert.ok(ids.every(id=>!extra.includes("id:'"+id+"'")&&!more.includes("id:'"+id+"'")));assert.ok(main.includes('phaseTwoLessons[course.name]'));});
 
-test('graph lab includes probe point and tangent slope',()=>{for(const token of ['setProbe(1)','2*a*probe+b','probeY+slope*(x-probe)','strokeDasharray','Vizsgált x koordináta'])assert.ok(graph.includes(token),token);});
+test('graph lab includes probe point and tangent slope',()=>{for(const token of ['setProbe(1)','derivativeAt(a,b,probe)','probeY+slope*(x-probe)','strokeDasharray','Vizsgált x koordináta'])assert.ok(graph.includes(token),token);});
 
 test('guided graph explanations cover all coefficients and tangent',()=>{for(const token of ['guided-explanation','Az a együttható','A b együttható','A c együttható','A mozgó pont','f′(x) = 2ax+b'])assert.ok(graph.includes(token),token);});
 
@@ -134,4 +134,27 @@ test('PWA manifest, install links and branded PNG icons are valid',()=>{
  const html=read('../index.html');
  for(const token of ['rel="manifest"','rel="apple-touch-icon"','/icons/dta-180.png'])assert.ok(html.includes(token),token);
  assert.ok(main.includes('settings-app-icon'));
+});
+
+test('pure graph math: parabola, line, constant and exact root cases',async()=>{
+ const ts=await import('typescript');
+ const js=ts.transpileModule(read('../src/graphMath.ts'),{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ESNext}}).outputText;
+ const m=await import('data:text/javascript;base64,'+Buffer.from(js).toString('base64'));
+ assert.equal(m.evaluateQuadratic(1,0,-2,3),7);
+ assert.equal(m.derivativeAt(1,0,2),4);
+ assert.deepEqual(m.realRoots(1,-2,1),[1]);
+ assert.deepEqual(m.realRoots(1,0,1),[]);
+ assert.deepEqual(m.realRoots(0,2,4),[-2]);
+ assert.deepEqual(m.realRoots(0,0,3),[]);
+ assert.deepEqual(m.realRoots(0,0,0),[]);
+ const roots=m.realRoots(1,0,-4);assert.deepEqual(roots,[-2,2]);
+ const samples=m.sampleAround(1,-2,1,1);
+ assert.equal(samples.length,5);
+ assert.deepEqual(samples[2],{x:1,y:0,derivative:0,offset:0});
+ assert.deepEqual(samples.map(s=>s.x),[0,0.5,1,1.5,2]);
+ assert.deepEqual(samples.map(s=>s.y),[1,0.25,0,0.25,1]);
+});
+test('live graph has a readable table with highlighted probe row',()=>{
+ for(const token of ['sampleAround(a,b,c,probe)','graph-values','graph-table-scroll','scope="col"','scope="row"','graph-current-row'])assert.ok(graph.includes(token),token);
+ const css=read('../src/style.css');for(const token of ['.graph-values','.graph-table-scroll','.graph-current-row'])assert.ok(css.includes(token),token);
 });
