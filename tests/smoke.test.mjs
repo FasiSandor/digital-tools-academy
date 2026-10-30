@@ -429,3 +429,10 @@ test('GeoGebra multi-method workshop has stable unique content and is course-sco
  assert.ok(app.includes('course===0&&<GeoTipsLab/>'));
  for(const token of ['aria-pressed','Válasz ellenőrzése','Kipróbálás a GeoGebrában','type="search"'])assert.ok(ui.includes(token));
 });
+
+test('GeoGebra live transformation lab keeps sliders, graph, formula and table in sync',()=>{
+ const ui=read('../src/GeoTransformLab.tsx');
+ const app=read('../src/main.tsx');
+ for(const token of ['type="range"','setA','setH','setK','geo-transform-formula','geo-transform-table','<svg','a===0','Math.abs(h)'])assert.ok(ui.includes(token),token);
+ assert.ok(app.includes('course===0&&<><GeoTransformLab/><GeoTipsLab/></>'));
+});
