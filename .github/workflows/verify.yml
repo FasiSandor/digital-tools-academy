@@ -18,3 +18,9 @@ jobs:
       - run: npm install --no-audit --no-fund
       - run: node --test tests/*.test.mjs
       - run: npm run build
+      - name: Install browser for local no-deploy E2E
+        run: |
+          npm install --no-save --no-audit --no-fund playwright@1.58.2
+          npx playwright install --with-deps chromium
+      - name: Test real Chromium browser against local Vite preview
+        run: node tests/browser-e2e.mjs

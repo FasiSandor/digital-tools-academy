@@ -12,7 +12,9 @@ npm run build
 
 ## Állapot
 
-0.1.0 – első működő tanulási alap: 11 bevezető lecke, feladatellenőrzés, helyi haladáskövetés, JSON export/import. Nem teljes tananyag; a három rendszer haladó részei későbbi mérföldkövek.
+0.1.0 (csomagverzió) – a jelenlegi alkalmazás 35 leckés tanulási alapot tartalmaz. A külön fejlesztési PR #4 kibővített függvénylaborral, függvényvizsgálattal, számolási gyakorlással és mentési biztonsági fejlesztésekkel készül. **A teljes alkalmazás még nincs kész; a PR nincs élesítve.**
+
+Részletes készültségi és hiányaudit: [2026-10-30 teljes készültségi audit](docs/TELJES_KESZULTSEGI_AUDIT_2026-10-30.md).
 
 ## Fejlesztési szabályok
 

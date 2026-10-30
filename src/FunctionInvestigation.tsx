@@ -1,0 +1,74 @@
+import {useMemo,useState} from 'react';
+import type {ExtendedFunction} from './extendedFunctions';
+import {analyzeExtended,practiceFor} from './functionAnalysis';
+import {numericTasks,checkNumericAnswer,formatNumber,explainNumericAnswer,numericHint} from './numericPractice';
+import {summarizeAttempts,formatPracticeReport} from './practiceSummary';
+import type {PracticeAttempt} from './practiceSummary';
+const fmt=(x:number)=>Number(x.toFixed(3)).toLocaleString('hu-HU');
+export default function FunctionInvestigation({fn}:{fn:ExtendedFunction}){
+ const [answers,setAnswers]=useState<Record<number,number>>({});
+ const [reveal,setReveal]=useState(false);
+ const [checked,setChecked]=useState(false);
+ const [numericAnswers,setNumericAnswers]=useState<Record<string,string>>({});
+ const [numericChecked,setNumericChecked]=useState(false);
+ const [round,setRound]=useState(0);
+ const [hintLevels,setHintLevels]=useState<Record<string,0|1|2>>({});
+ const [attempts,setAttempts]=useState<PracticeAttempt[]>([]);
+ const [showReport,setShowReport]=useState(false);
+ const analysis=useMemo(()=>analyzeExtended(fn),[fn]);
+ const questions=useMemo(()=>practiceFor(fn),[fn]);
+ const tasks=useMemo(()=>numericTasks(fn,round),[fn,round]);
+ const numericScore=tasks.filter(t=>checkNumericAnswer(numericAnswers[t.id]??'',t.answer)==='correct').length;
+ const summary=useMemo(()=>summarizeAttempts(attempts),[attempts]);
+ const score=questions.filter((q,i)=>answers[i]===q.correct).length;
+ const currentKey=fn.kind+':'+fn.a+':'+fn.h+':'+fn.k;
+ const [lastKey,setLastKey]=useState(currentKey);
+ if(lastKey!==currentKey){setLastKey(currentKey);setAnswers({});setReveal(false);setChecked(false);setNumericAnswers({});setNumericChecked(false);setRound(0);setHintLevels({});setAttempts([]);setShowReport(false);}
+ return <section className="function-investigation" aria-label="Függvényvizsgálat és önálló gyakorlás">
+ <h4>Függvényvizsgálat – gondolkodj, majd ellenőrizz!</h4>
+ <p>Próbáld meg először önállóan megállapítani a zérushelyeket, a monotonitást és a szimmetriát. Ezután nyisd meg a részletes megoldást.</p>
+ <button type="button" className="investigation-reveal" onClick={()=>setReveal(v=>!v)} aria-expanded={reveal}>{reveal?'Részletes megoldás elrejtése':'Részletes megoldás megjelenítése'}</button>
+ {reveal&&<div className="investigation-results">
+ <p><b>Értelmezési tartomány:</b> {analysis.domain}</p><p><b>Értékkészlet:</b> {analysis.range}</p>
+ <p><b>Zérushelyek:</b> {analysis.zeros.length?analysis.zeros.map(fmt).join('; '):fn.a===0&&fn.k===0?'Minden értelmezési tartománybeli pont zérushely.':'Nincs zérushely.'}</p>
+ <p><b>y-tengelymetszet:</b> {analysis.intercept===null?'Nem létezik, mert x = 0 nincs az értelmezési tartományban.':'(0; '+fmt(analysis.intercept)+')'}</p>
+ {analysis.criticalPoint&&<p><b>Nevezetes pont:</b> ({fmt(analysis.criticalPoint.x)}; {fmt(analysis.criticalPoint.y)}) – {analysis.criticalPoint.type}</p>}
+ <p><b>Monotonitás:</b> {analysis.monotonic.join('; ')}</p><p><b>Szimmetria:</b> {analysis.symmetry}</p>
+ {analysis.asymptotes.length>0&&<p><b>Aszimptoták:</b> {analysis.asymptotes.join('; ')}</p>}
+ </div>}
+ <h4>Önálló ellenőrző kérdések</h4>
+ {questions.map((q,i)=><fieldset className="investigation-question" key={i}><legend>{i+1}. {q.prompt}</legend>{q.options.map((option,j)=><label key={j}><input type="radio" name={'extended-question-'+i} checked={answers[i]===j} onChange={()=>{setAnswers(v=>({...v,[i]:j}));setChecked(false)}}/>{option}</label>)}{checked&&answers[i]!==undefined&&<p className={answers[i]===q.correct?'practice-correct':'practice-incorrect'} role="status">{answers[i]===q.correct?'Helyes!':'Még nem jó.'} {q.explanation}</p>}</fieldset>)}
+ <section className="numeric-practice" aria-label="Számolási gyakorlás">
+ <h4>Számolási feladatok – saját eredménnyel</h4>
+ <p>Számold ki a három eredményt! Tizedesvesszőt is használhatsz. A megoldásokat csak az ellenőrzés után mutatjuk meg.</p>
+ {tasks.map((task,i)=>{
+ const value=numericAnswers[task.id]??'';
+ const status=checkNumericAnswer(value,task.answer);
+ const feedback=explainNumericAnswer(fn,task,value,round);
+ const hintLevel=hintLevels[task.id]??0;
+ return <div className="numeric-task" key={task.id}>
+ <label htmlFor={'numeric-'+task.id}>{i+1}. {task.prompt}</label>
+ <input id={'numeric-'+task.id} inputMode="decimal" autoComplete="off" value={value} onChange={e=>{setNumericAnswers(v=>({...v,[task.id]:e.target.value}));setNumericChecked(false)}} placeholder="Írd be az eredményt"/>
+ <div className="numeric-hint"><button type="button" onClick={()=>setHintLevels(v=>({...v,[task.id]:Math.min(2,(v[task.id]??0)+1) as 0|1|2}))} disabled={hintLevel===2}>{hintLevel===0?'Segítség kérek':hintLevel===1?'Még egy segítség':'Mindkét segítség megnyitva'}</button>{hintLevel>0&&<p>1. segítség: {numericHint(fn,task,1)}</p>}{hintLevel===2&&<p>2. segítség: {numericHint(fn,task,2)}</p>}</div>
+ {numericChecked&&<div role="status" className={status==='correct'?'practice-correct':'practice-incorrect'}><p>{status==='correct'?'Helyes!':status==='invalid'?'Nem számot adtál meg.':'Még nem megfelelő az eredmény.'} {feedback.hint}</p><p className="numeric-worked">{feedback.worked}</p></div>}
+ </div>})}
+ <button type="button" disabled={tasks.some(t=>!numericAnswers[t.id]?.trim())} onClick={()=>{if(!numericChecked){setAttempts(v=>[...v,{round:round+1,correct:numericScore,total:tasks.length,hints:Object.values(hintLevels).reduce<number>((n,h)=>n+h,0),timestamp:new Date().toISOString()}]);}setNumericChecked(true)}}>Számolási feladatok ellenőrzése</button>
+ <button type="button" onClick={()=>{setNumericAnswers({});setNumericChecked(false);setHintLevels({})}}>Számolás újrakezdése</button>
+ <p className="practice-round">Gyakorlási kör: {round+1} / 5. A függvényértéket minden körben másik x helyen kell kiszámolni.</p>
+ <button type="button" onClick={()=>{setRound(v=>(v+1)%5);setNumericAnswers({});setNumericChecked(false);setHintLevels({})}}>Új feladatsor</button>
+ <p className="practice-score" aria-live="polite">{numericChecked?'Számolási eredmény: '+numericScore+' / '+tasks.length:'Kitöltve: '+tasks.filter(t=>numericAnswers[t.id]?.trim()).length+' / '+tasks.length}</p>
+ {numericChecked&&<p>A helyes számok: {tasks.map(t=>formatNumber(t.answer)).join('; ')}. Ellenőrizd a behelyettesítés és az eltolások lépéseit!</p>}
+ </section>
+ <section className="practice-history" aria-label="Gyakorlási összesítő">
+ <h4>Saját gyakorlási eredmények</h4>
+ <p>Ez az összesítő csak ebben a megnyitott munkamenetben él; nem kerül a leckék mentett haladásába.</p>
+ <p aria-live="polite">Ellenőrzött próbálkozások: {summary.attempts}. Helyes válaszok: {summary.totalCorrect} / {summary.totalQuestions}. Átlag: {summary.average}%. Különböző körök: {summary.completedRounds} / 5. Segítségek: {summary.hintUses}.</p>
+ <button type="button" disabled={attempts.length===0} onClick={()=>setShowReport(v=>!v)}>{showReport?'Összesítő elrejtése':'Szöveges összesítő megjelenítése'}</button>
+ <button type="button" disabled={attempts.length===0} onClick={()=>{setAttempts([]);setShowReport(false)}}>Eredmények törlése</button>
+ {showReport&&<><label htmlFor="practice-report">Másolható gyakorlási összesítő</label><textarea id="practice-report" readOnly rows={9} value={formatPracticeReport(fn.label,attempts)} /></>}
+ </section>
+ <p className="practice-score" aria-live="polite">{checked?`Eredmény: ${score} / ${questions.length} helyes válasz.`:`Megválaszolva: ${Object.keys(answers).length} / ${questions.length}`}</p>
+ <button type="button" disabled={Object.keys(answers).length!==questions.length} onClick={()=>setChecked(true)}>Válaszok ellenőrzése</button>
+ <button type="button" onClick={()=>{setAnswers({});setChecked(false)}}>Gyakorlás újrakezdése</button>
+ </section>;
+}
