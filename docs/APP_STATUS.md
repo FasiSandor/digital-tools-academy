@@ -167,3 +167,8 @@ A három külső alkalmazás aktuális funkcióit hivatalos dokumentációval ke
 - Az import előnézetében ismeretlen leckeazonosítót tartalmazó mentésből sem egyesítés, sem teljes visszaállítás nem végezhető: mindkettő elveszítené az ismeretlen eredményeket.
 - A felület mindkét gombot letiltja, és az `applyBackup` üzleti logika külön elutasítja a műveletet. A fájl és a helyi haladás változatlan marad.
 - Chromium E2E ellenőrzi a két tiltást egészséges helyi haladás mellett is. A korábbi, ismert azonosítós legacy és SHA-256 mentések működése változatlan.
+
+## Sérült helyi haladás nyers mentése – 2026-10-30
+- Helyreállítási zárolásnál az új „Eredeti adat mentése (.txt)” gomb változtatás nélkül letölti a `dta-progress` kulcs nyers szöveges tartalmát.
+- A nyers `.txt` fájl szándékosan nem SHA-256 ellenőrzött JSON-importfájl, közvetlen importja nem támogatott. A felület ezt világosan jelzi; az ellenőrzött export továbbra is tiltott sérült állapotban.
+- A letöltés nem írja felül a helyi adatot; hiányzó/olvashatatlan tárhely esetén hibajelzés jelenik meg. Chromium E2E az eredeti sérült bájtok egyezését ellenőrzi.
