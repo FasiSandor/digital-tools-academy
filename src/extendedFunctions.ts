@@ -52,9 +52,9 @@ export function extendedFacts(f:ExtendedFunction):{name:string;domain:string;ran
  return {name:'Reciprokfüggvény',domain:'Minden valós szám, kivéve x = '+h,range:a===0?'y = '+k:'Minden valós szám, kivéve y = '+k,steps:[
  'Az alapfüggvény y = 1/x. Két különálló ága van.',
  'A nevező x − h, így x = '+h+' helyen nincs értelmezve.',
- 'A függőleges aszimptota x = '+h+'. A vízszintes aszimptota y = '+k+'.',
- 'Az a = '+a+' az ágak irányát és méretét szabályozza.',
- 'A grafikon két ágát nem szabad összekötni az x = '+h+' szakadási helyen.',
+ a===0?'Az x = '+h+' helyen a grafikonból egy pont hiányzik; nem függőleges aszimptota. A többi helyen y = '+k+'.':'A függőleges aszimptota x = '+h+'. A vízszintes aszimptota y = '+k+'.',
+ a===0?'Az a = 0 miatt a függvény minden megengedett x helyen állandó.':'Az a = '+a+' az ágak irányát és méretét szabályozza.',
+ a===0?'Az x = '+h+' helyen üres karikával jelölhető a hiányzó pont.':'A grafikon két ágát nem szabad összekötni az x = '+h+' szakadási helyen.',
  'Közelíts az aszimptotához mindkét oldalról, és hasonlítsd össze a táblázat értékeit.'
  ]};
 }
