@@ -1,5 +1,5 @@
 import {useMemo,useState} from 'react';
-import {evaluateQuadratic,derivativeAt,sampleAround,realRoots,secantSlope} from './graphMath';
+import {evaluateQuadratic,derivativeAt,sampleAround,realRoots,secantSlope,secantConvergence} from './graphMath';
 
 const fmt=(n:number)=>Number(n.toFixed(3)).toLocaleString('hu-HU');
 const xPx=(x:number)=>170+x*32;
@@ -15,6 +15,7 @@ export default function GraphLab(){
  const secant=secantSlope(a,b,c,probe,stepH);
  const secantY=evaluateQuadratic(a,b,c,probe+stepH);
  const secantPath=useMemo(()=>Array.from({length:321},(_,i)=>{const x=(i-160)/32;return (i?'L':'M')+xPx(x)+' '+yPx(probeY+secant*(x-probe))}).join(' '),[probe,probeY,secant]);
+ const convergence=useMemo(()=>secantConvergence(a,b,c,probe),[a,b,c,probe]);
  const samples=useMemo(()=>sampleAround(a,b,c,probe),[a,b,c,probe]);
  const tangent=useMemo(()=>Array.from({length:321},(_,i)=>{const x=(i-160)/32;return (i?'L':'M')+xPx(x)+' '+yPx(probeY+slope*(x-probe))}).join(' '),[probe,probeY,slope]);
  const applyPreset=(nextA:number,nextB:number,nextC:number,nextX:number)=>{setA(nextA);setB(nextB);setC(nextC);setProbe(nextX);setPrediction('');setPredictionResult('')};
@@ -65,6 +66,12 @@ export default function GraphLab(){
  <li><b>Diszkrimináns és zérushelyek:</b> {a===0?(b===0?(c===0?'Minden x értéknél f(x)=0.':'A konstans függvénynek nincs zérushelye.'):`Lineáris esetben 0 = ${fmt(b)}x + ${fmt(c)}, ezért x = −c/b = ${fmt(-c/b)}.`):`D = b² − 4ac = ${fmt(b)}² − 4·(${fmt(a)})·(${fmt(c)}) = ${fmt(delta)}. ${delta>0?'Két különböző valós zérushely van.':delta===0?'Egy kétszeres valós zérushely van.':'Nincs valós zérushely.'}`}</li>
  <li><b>Összefoglalás:</b> {vertex?`A parabola ${turning} a C(${fmt(vertex.x)}; ${fmt(vertex.y)}) pontban van.`:isConstant?'A grafikon vízszintes egyenes.':'A grafikon egyenes, ezért nincs parabolacsúcsa.'} {roots.length?`Valós zérushelyek: ${roots.map(fmt).join('; ')}.`:isConstant&&c===0?'Minden valós szám zérushely.':'Nincs valós zérushely.'}</li>
  </ol>
+ </section>
+ <section className="graph-values" aria-labelledby="secant-table-title">
+ <h3 id="secant-table-title">Hogyan lesz a szelőből érintő?</h3>
+ <p>Hasonlítsd össze ugyanannál a P pontnál a különböző h lépésközöket. A h csökkenésével a szelő meredeksége az érintő meredekségéhez tart. A zöld szelő és a h csúszka segítségével külön is kipróbálhatod az értékeket.</p>
+ <div className="graph-table-scroll"><table><caption>A szelő meredekségének közelítése a deriválthoz</caption><thead><tr><th scope="col">h</th><th scope="col">Szelő meredeksége</th><th scope="col">Érintő meredeksége</th><th scope="col">Eltérés</th></tr></thead><tbody>{convergence.map(row=><tr key={row.h}><th scope="row">{fmt(row.h)}</th><td>{fmt(row.secant)}</td><td>{fmt(row.tangent)}</td><td>{fmt(row.difference)}</td></tr>)}</tbody></table></div>
+ <p><b>Miért működik?</b> A másodfokú függvénynél a szelő meredeksége 2ax + b + ah, az érintőé 2ax + b. A különbség |ah|, ami h → 0 esetén nullához tart. Egyenesnél és konstans függvénynél a két meredekség minden h esetén azonos.</p>
  </section>
  <section className="graph-values" aria-labelledby="graph-values-title">
  <h3 id="graph-values-title">Értéktáblázat a vizsgált pont körül</h3>
