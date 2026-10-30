@@ -48,10 +48,10 @@ try{
  const ownFunction=page.locator('#function-expression');
  await ownFunction.fill('f(x)=2x²-3x+1');
  await page.locator('.function-entry').getByRole('button',{name:'Ábrázolás indítása'}).click();
- await page.getByText('Lépés 1 / 6').waitFor();
+ await page.locator('.function-entry').getByText('Lépés 1 / 6').waitFor();
  assert.match(await page.locator('.function-guide').innerText(),/2x²/);
  await page.locator('.function-entry').getByRole('button',{name:'Következő lépés'}).click();
- await page.getByText('Lépés 2 / 6').waitFor();
+ await page.locator('.function-entry').getByText('Lépés 2 / 6').waitFor();
  const initialRange=await page.locator('.graph-view-range').innerText();
  await page.getByRole('button',{name:'Nagyítás +'}).click();
  assert.notEqual(await page.locator('.graph-view-range').innerText(),initialRange);
