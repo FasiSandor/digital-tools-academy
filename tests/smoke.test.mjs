@@ -34,7 +34,7 @@ test('lesson search keeps original lesson indices',()=>{
  assert.ok(main.includes('Nincs találat'));
 });
 test('backup validation and progress persistence are present',()=>{
- for(const token of ['Array.isArray(saved)','new Set(saved.filter','dta-progress','inspectBackup','confirm(']) assert.ok(main.includes(token),token);
+ for(const token of ['readProgress(localStorage','writeProgress(localStorage','inspectBackup','confirm(']) assert.ok(main.includes(token),token);
 });
 
 const phaseTwo=read('../src/phaseTwoLessons.ts');
@@ -157,4 +157,24 @@ test('pure graph math: parabola, line, constant and exact root cases',async()=>{
 test('live graph has a readable table with highlighted probe row',()=>{
  for(const token of ['sampleAround(a,b,c,probe)','graph-values','graph-table-scroll','scope="col"','scope="row"','graph-current-row'])assert.ok(graph.includes(token),token);
  const css=read('../src/style.css');for(const token of ['.graph-values','.graph-table-scroll','.graph-current-row'])assert.ok(css.includes(token),token);
+});
+
+test('local progress storage preserves corrupt data and reports quota failures',async()=>{
+ const ts=await import('typescript');
+ const js=ts.transpileModule(read('../src/progressStorage.ts'),{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ESNext}}).outputText;
+ const m=await import('data:text/javascript;base64,'+Buffer.from(js).toString('base64'));
+ const valid=new Set(['gg1','gg2']);
+ assert.deepEqual(m.readProgress({getItem:()=>null},valid),{completed:[],warning:''});
+ assert.deepEqual(m.readProgress({getItem:()=>JSON.stringify(['gg1','gg1','obsolete'])},valid),{completed:['gg1'],warning:''});
+ assert.match(m.readProgress({getItem:()=>'{not json'},valid).warning,/hibásak/);
+ assert.match(m.readProgress({getItem:()=>JSON.stringify({completed:['gg1']})},valid).warning,/hibásak/);
+ assert.match(m.readProgress({getItem:()=>{throw Error('SecurityError')}},valid).warning,/nem olvasható/);
+ let persisted='';
+ assert.equal(m.writeProgress({setItem:(k,v)=>{assert.equal(k,'dta-progress');persisted=v}},['gg1']),'');
+ assert.equal(persisted,'["gg1"]');
+ assert.match(m.writeProgress({setItem:()=>{throw Error('QuotaExceededError')}},['gg1']),/nem engedte elmenteni/);
+});
+test('storage warning is visible and invalid initial state is not immediately overwritten',()=>{
+ assert.ok(main.includes('initialProgress.warning&&done.length===0'));
+ assert.ok(main.includes('role="alert" className="backup-error">{storageWarning}'));
 });
