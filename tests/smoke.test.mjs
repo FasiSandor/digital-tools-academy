@@ -43,3 +43,11 @@ test('second phase has six unique lessons and is wired into course catalog',()=>
 test('graph lab includes probe point and tangent slope',()=>{for(const token of ['setProbe(1)','2*a*probe+b','probeY+slope*(x-probe)','strokeDasharray','Vizsgált x koordináta'])assert.ok(graph.includes(token),token);});
 
 test('guided graph explanations cover all coefficients and tangent',()=>{for(const token of ['guided-explanation','Az a együttható','A b együttható','A c együttható','A mozgó pont','f′(x) = 2ax+b'])assert.ok(graph.includes(token),token);});
+
+test('guided graph lab offers five reproducible mathematical experiments',()=>{
+ for(const token of ['applyPreset(1,0,-2,1)','applyPreset(-1,0,3,1)','applyPreset(0,2,1,1)','applyPreset(0,0,2,1)','applyPreset(1,-2,1,1)'])assert.ok(graph.includes(token),token);
+});
+test('graph lab supports tangent visibility and immediate prediction feedback',()=>{
+ for(const token of ['setShowTangent','showTangent&&','expectedTrend','checkPrediction','role="status"','setPredictionResult(\'\')','type="radio"'])assert.ok(graph.includes(token),token);
+ const css=read('../src/style.css');for(const token of ['.graph-presets','.graph-challenge','.graph-choices','@media(max-width:600px)'])assert.ok(css.includes(token),token);
+});
