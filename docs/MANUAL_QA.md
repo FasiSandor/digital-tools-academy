@@ -75,3 +75,10 @@ A tesztet a fejlesztési preview-n kell elvégezni, **nem** az éles oldalon. A 
 - [ ] Az y tengely rácsvonalai az y feliratokkal egybeesnek, a két tengely skálája eltérő lehet, de egyik sem megtévesztő.
 - [ ] A `f(x)=x²−2` esetben a (0;−2), (1;−1), (2;2) pontok leolvasása egyezik a táblázattal.
 - [ ] Mobilon a tengelyfeliratok, a jelölők és az értéktáblázat olvashatók maradnak.
+
+### Szelő és derivált szemléltetése
+- [ ] A zöld szelő kapcsolható, a kék érintő kapcsolója továbbra is önállóan működik.
+- [ ] `a=1,b=0,c=-2,x=1,h=1` esetben a szelő meredeksége 3, az érintőé 2; `h=0,1` esetén a szelő 2,1.
+- [ ] A h csökkentésével a szelő az érintőhöz közelít, és az eltérés a számokban is csökken.
+- [ ] Lineáris és konstans függvény esetén a szelő és az érintő meredeksége megegyezik.
+- [ ] Mobilon a h csúszka és a P/Q jelölők használhatók, a korábbi grafikon és táblázat olvasható.
