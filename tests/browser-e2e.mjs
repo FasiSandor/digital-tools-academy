@@ -31,6 +31,18 @@ try{
  const context=await browser.newContext({viewport:{width:390,height:844},acceptDownloads:true});
  const page=await open(context);
  await page.getByText('Interaktív függvénylabor megnyitása').click();
+ const ownFunction=page.getByRole('textbox',{name:'Függvény képlete'});
+ await ownFunction.fill('f(x)=2x²-3x+1');
+ await page.getByRole('button',{name:'Ábrázolás indítása'}).click();
+ await page.getByText('Lépés 1 / 6').waitFor();
+ assert.match(await page.locator('.function-guide').innerText(),/a = 2/);
+ await page.getByRole('button',{name:'Következő lépés'}).click();
+ await page.getByText('Lépés 2 / 6').waitFor();
+ await ownFunction.fill('sin(x)');
+ await page.getByRole('button',{name:'Ábrázolás indítása'}).click();
+ assert.equal(await page.getByRole('alert').isVisible(),true);
+ await ownFunction.fill('x²-2');
+ await page.getByRole('button',{name:'Ábrázolás indítása'}).click();
  const convergenceTable=page.getByRole('table',{name:'A szelő meredekségének közelítése a deriválthoz'});
  assert.equal(await convergenceTable.isVisible(),true);
  assert.ok((await convergenceTable.innerText()).includes('2,1'));
