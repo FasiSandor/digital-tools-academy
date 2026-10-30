@@ -87,3 +87,8 @@ A tesztet a fejlesztési preview-n kell elvégezni, **nem** az éles oldalon. A 
 - [ ] Sérült `dta-progress` esetén az „Exportálás (JSON)” gomb letiltott, és a felület megmagyarázza, hogy az üres export elfedhetné a korábbi adatokat.
 - [ ] Érvényes mentés teljes visszaállítása után az export gomb újra működik, a visszaállított azonosítók az új mentésben szerepelnek.
 - [ ] A helyi adatok kifejezett törlése után az új üres mentés készítése megengedett.
+
+### Ismeretlen leckeazonosítók megőrzése
+- [ ] Ha a helyi `dta-progress` lista ismert és ismeretlen azonosítókat is tartalmaz, az ismert teljesítések megjelennek, de a teljes eredeti JSON változatlan marad újratöltés után.
+- [ ] A figyelmeztetés jelzi az ismeretlen azonosítók számát; az export és az új teljesítés mentése zárolt.
+- [ ] Kifejezett teljes visszaállítás vagy újrakezdés nélkül a rendszer nem törölheti a nem ismert azonosítókat.
