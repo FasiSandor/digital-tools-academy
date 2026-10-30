@@ -177,3 +177,9 @@ A három külső alkalmazás aktuális funkcióit hivatalos dokumentációval ke
 - Az importkódból kikerült egy elérhetetlen, régi feltétel, amely tévesen azt állította, hogy ismeretlen leckeazonosítók esetén az egyesítés engedélyezett. A tényleges adatvédelmi szabály továbbra is mindkét importmódot tiltja ilyen esetben.
 - A Chromium E2E most ténylegesen egyesít ismétlődő, de ismert leckeazonosítókat tartalmazó legacy mentést, ellenőrzi a duplikátumok elhagyását és az eredmény újratöltés utáni megmaradását.
 - A nyers helyreállítási letöltés új tesztje az ismeretlen, jövőbeli leckeazonosítók változatlan megőrzését is vizsgálja.
+
+## Derivált szemléltetése közelítési táblázattal – 2026-10-30
+- A függvénylabor új, akadálymentes HTML-táblázatban mutatja a szelő meredekségét h = 2; 1; 0,5; 0,1 esetén, ugyanazon vizsgált pontnál.
+- A táblázat élőben frissül az a, b, c és a vizsgált x csúszkák módosításakor. A szelő és az érintő meredeksége, illetve az eltérés egyszerre olvasható.
+- Külön magyarázat vezeti le a másodfokú eset |ah| különbségét, és megkülönbözteti a lineáris és konstans esetet.
+- Matematikai Node regresszió és mobilméretű Chromium-teszt védi az új funkciót. Az elfogadott megjelenés és a korábbi funkciók megmaradtak.
