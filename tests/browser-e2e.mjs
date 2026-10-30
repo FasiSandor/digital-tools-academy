@@ -42,9 +42,13 @@ try{
  await investigation.getByRole('button',{name:'Részletes megoldás megjelenítése'}).click();
  assert.match(await investigation.innerText(),/Aszimptoták/);
  await investigation.getByRole('radio',{name:/Minden valós szám, kivéve x = 2/}).check();
- assert.match(await investigation.innerText(),/1 \/ 3 helyes válasz/);
+ assert.equal(await investigation.getByRole('button',{name:'Válaszok ellenőrzése'}).isDisabled(),true);
+ await investigation.locator('fieldset').nth(1).getByRole('radio').first().check();
+ await investigation.locator('fieldset').nth(2).getByRole('radio').first().check();
+ await investigation.getByRole('button',{name:'Válaszok ellenőrzése'}).click();
+ assert.match(await investigation.innerText(),/Eredmény: [1-3] \/ 3 helyes válasz/);
  await investigation.getByRole('button',{name:'Gyakorlás újrakezdése'}).click();
- assert.match(await investigation.innerText(),/0 \/ 3 helyes válasz/);
+ assert.match(await investigation.innerText(),/Megválaszolva: 0 \/ 3/);
  await extended.getByRole('button',{name:'|x−2|+1',exact:true}).click();
  assert.match(await extended.innerText(),/Abszolútérték-függvény/);
  await extended.getByRole('button',{name:'x³−2',exact:true}).click();
