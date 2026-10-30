@@ -206,3 +206,6 @@ A három külső alkalmazás aktuális funkcióit hivatalos dokumentációval ke
 - Az abszolútértékes, harmadfokú és reciprokfüggvényekhez megnyitható részletes vizsgálat készült: értelmezési tartomány, értékkészlet, zérushelyek, y-tengelymetszet, nevezetes pont, monotonitás, szimmetria és aszimptoták.
 - A tanuló először önállóan gondolkodhat, majd megjelenítheti a megoldást. Három kérdéses azonnali visszajelzéses gyakorlás, pontszámmal és újrakezdéssel. Új képlet kiválasztásakor a gyakorlás újraindul; a 35 lecke mentett haladása változatlan.
 - Az új vizsgálat matematikai függvényei külön tesztelhetők. A megoldás csak a támogatott függvénycsaládokra érvényes; általános CAS-elemzést nem állítunk.
+
+## Gyakorlási mód finomítása
+A háromválaszos kérdések ellenőrzése külön gombbal történik, csak mindhárom válasz megadása után. A helyes válasz pozíciója változó; minden opció különböző. A válaszok módosítása újraellenőrzést igényel. A tanulói haladás adatai nem változnak.
