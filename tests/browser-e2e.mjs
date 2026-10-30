@@ -35,7 +35,7 @@ try{
  await ownFunction.fill('f(x)=2x²-3x+1');
  await page.getByRole('button',{name:'Ábrázolás indítása'}).click();
  await page.getByText('Lépés 1 / 6').waitFor();
- assert.match(await page.locator('.function-guide').innerText(),/a = 2/);
+ assert.match(await page.locator('.function-guide').innerText(),/2x²/);
  await page.getByRole('button',{name:'Következő lépés'}).click();
  await page.getByText('Lépés 2 / 6').waitFor();
  await ownFunction.fill('sin(x)');
