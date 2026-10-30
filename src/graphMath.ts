@@ -22,3 +22,12 @@ export function secantSlope(a:number,b:number,c:number,x:number,h:number):number
  if(!Number.isFinite(h)||h===0)throw new RangeError('A szelőhöz nem nulla h szükséges.');
  return 2*a*x+b+a*h;
 }
+
+/** A sequence of positive steps showing how a secant approaches the derivative. */
+export function secantConvergence(a:number,b:number,c:number,x:number,steps:readonly number[]=[2,1,0.5,0.1]):{h:number;secant:number;tangent:number;difference:number}[]{
+ const tangent=derivativeAt(a,b,x);
+ return steps.map(h=>{
+  const secant=secantSlope(a,b,c,x,h);
+  return {h,secant,tangent,difference:Math.abs(secant-tangent)};
+ });
+}
