@@ -190,3 +190,8 @@ button:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid
 .function-step-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
 .function-step-actions button:disabled{opacity:.45;cursor:not-allowed}
 @media(max-width:600px){.function-entry{padding:12px}.function-entry-form>div{display:flex;flex-direction:column}.function-entry-form input{flex:auto;width:100%}.function-entry-form button{width:100%}}
+
+.graph-zoom{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 8px}
+.graph-zoom button{border:1px solid #005dff;border-radius:8px;padding:8px 10px;background:#fff;color:#003cb1;font-weight:750;cursor:pointer}
+.graph-zoom button:hover,.graph-zoom button:focus-visible{background:#005dff;color:#fff}
+.graph-view-range{font-size:12px;color:#334155;margin:0 0 12px}
