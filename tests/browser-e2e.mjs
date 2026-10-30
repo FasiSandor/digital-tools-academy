@@ -62,6 +62,13 @@ try{
  assert.match(await numeric.innerText(),/Számolási eredmény: 2 \/ 3/);
  assert.match(await numeric.innerText(),/Belső kifejezés/);
  assert.match(await numeric.innerText(),/Szorozd meg/);
+ await numeric.getByRole('button',{name:'Új feladatsor'}).click();
+ assert.match(await numeric.innerText(),/Gyakorlási kör: 2 \/ 5/);
+ assert.equal(await numeric.getByRole('textbox',{name:/Mennyi f\(-1\)/}).isVisible(),true);
+ await numeric.getByRole('button',{name:'Segítség kérek'}).first().click();
+ assert.match(await numeric.innerText(),/Helyettesítsd be/);
+ await numeric.getByRole('button',{name:'Még egy segítség'}).first().click();
+ assert.match(await numeric.innerText(),/reciprok képzése/);
  await numeric.getByRole('button',{name:'Számolás újrakezdése'}).click();
  assert.match(await numeric.innerText(),/Kitöltve: 0 \/ 3/);
  await extended.getByRole('button',{name:'|x−2|+1',exact:true}).click();
