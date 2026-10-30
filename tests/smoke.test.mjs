@@ -164,8 +164,8 @@ test('local progress storage preserves corrupt data and reports quota failures',
  const js=ts.transpileModule(read('../src/progressStorage.ts'),{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ESNext}}).outputText;
  const m=await import('data:text/javascript;base64,'+Buffer.from(js).toString('base64'));
  const valid=new Set(['gg1','gg2']);
- assert.deepEqual(m.readProgress({getItem:()=>null},valid),{completed:[],warning:''});
- assert.deepEqual(m.readProgress({getItem:()=>JSON.stringify(['gg1','gg1','obsolete'])},valid),{completed:['gg1'],warning:''});
+ assert.deepEqual(m.readProgress({getItem:()=>null},valid),{completed:[],warning:'',requiresRecovery:false});
+ assert.deepEqual(m.readProgress({getItem:()=>JSON.stringify(['gg1','gg1','obsolete'])},valid),{completed:['gg1'],warning:'',requiresRecovery:false});
  assert.match(m.readProgress({getItem:()=>'{not json'},valid).warning,/hibásak/);
  assert.match(m.readProgress({getItem:()=>JSON.stringify({completed:['gg1']})},valid).warning,/hibásak/);
  assert.match(m.readProgress({getItem:()=>{throw Error('SecurityError')}},valid).warning,/nem olvasható/);
@@ -175,6 +175,12 @@ test('local progress storage preserves corrupt data and reports quota failures',
  assert.match(m.writeProgress({setItem:()=>{throw Error('QuotaExceededError')}},['gg1']),/nem engedte elmenteni/);
 });
 test('storage warning is visible and invalid initial state is not immediately overwritten',()=>{
- assert.ok(main.includes('initialProgress.warning&&done.length===0'));
+ assert.ok(main.includes('if(recoveryRequired)return;'));
  assert.ok(main.includes('role="alert" className="backup-error">{storageWarning}'));
+});
+
+test('recovery gate protects damaged browser progress',()=>{
+ assert.ok(main.includes('recoveryRequired?setStorageWarning'));
+ assert.ok(main.includes('setRecoveryRequired(false);setDone(next)'));
+ assert.ok(main.includes('setRecoveryRequired(false);setDone([])'));
 });
