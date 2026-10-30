@@ -63,7 +63,7 @@ try{
  assert.ok((await page.locator('svg.graphsvg path').first().getAttribute('d')).length>100);
  await ownFunction.fill('sin(x)');
  await page.locator('.function-entry').getByRole('button',{name:'Ábrázolás indítása'}).click();
- assert.equal(await page.getByRole('alert').isVisible(),true);
+ assert.equal(await page.locator('.function-entry').getByRole('alert').isVisible(),true);
  await ownFunction.fill('x²-2');
  await page.locator('.function-entry').getByRole('button',{name:'Ábrázolás indítása'}).click();
  await page.getByRole('slider',{name:'Vizsgált x koordináta'}).fill('1');
