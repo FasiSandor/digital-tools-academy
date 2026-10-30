@@ -24,7 +24,10 @@ A tesztet a fejlesztési preview-n kell elvégezni, **nem** az éles oldalon. A 
 4. Válaszd az **Egyesítés** lehetőséget: a később teljesített lecke is maradjon meg.
 5. Importáld ismét a korábbi mentést; válaszd a **Teljes visszaállítás** opciót, majd erősítsd meg: csak a mentésbeli leckék maradjanak.
 6. Módosított, ismeretlen azonosítót tartalmazó mentésnél a teljes visszaállítás legyen letiltva.
-7. Hibás JSON és idegen alkalmazás mentése esetén hiba jelenjen meg, a haladás ne változzon.
+7. A friss exportban legyen `manifest` és 64 karakteres hexadecimális `checksum`; az előnézetben „SHA-256 ellenőrzött” jelenjen meg.
+8. Egy teljesített leckeazonosítót kézzel módosíts a JSON-ban az ellenőrzőösszeg változtatása nélkül: az importot utasítsa el az alkalmazás.
+9. Egy régi, ellenőrzőösszeg nélküli v1 mentésnél jelenjen meg az erre figyelmeztető jelzés, és a korábbi kompatibilis import maradjon használható.
+10. Hibás JSON és idegen alkalmazás mentése esetén hiba jelenjen meg, a haladás ne változzon.
 8. Végül állítsd vissza a **legfrissebb** exportodat.
 
 ## 4. Release-kapu
