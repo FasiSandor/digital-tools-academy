@@ -62,7 +62,7 @@ A három külső alkalmazás aktuális funkcióit hivatalos dokumentációval ke
 - Production: https://digital-tools-academy.vercel.app
 - Éles kiadások: PR #1 élénk arculat és 29 lecke; PR #2 összesen 35 lecke; PR #3 mozgatható pont és érintő. A GitHub/Vercel automatikus státuszok ezeknél sikeresek voltak; ez nem helyettesíti a kézi böngészős tesztet.
 - Aktuális fejlesztési ág: `development/graphlab-guided-explanations-20261030`, PR #4 (draft).
-- PR #4 csomag: öt élő matematikai magyarázati lépés; öt visszaállítható grafikonkísérlet (pozitív/negatív parabola, lineáris, konstans, csúcsponti érintő); érintő ki-be kapcsolása; aktuális meredekségre épülő önellenőrző feladat és azonnali visszajelzés; mobilos CSS; automatikus smoke tesztek.
+- PR #4 csomag: öt élő matematikai magyarázati lépés; öt visszaállítható grafikonkísérlet (pozitív/negatív parabola, lineáris, konstans, csúcsponti érintő); érintő ki-be kapcsolása; aktuális meredekségre épülő önellenőrző feladat és azonnali visszajelzés; leckénkénti segítő tipp, próbálkozásszámláló, magyar tizedesvessző támogatása; mobilos CSS; automatikus smoke tesztek.
 - Megőrzés: a 35 lecke azonosítója, a `dta-progress` localStorage-adatok és a JSON export/import változatlanok.
 - Ismert korlát: a smoke tesztek részben forrásszöveg-alapúak; valódi mobilos interakciós, képernyőolvasós és export-visszaállítási teszt még szükséges. A Vercel-projekt beállításait az aktuális csatlakozással nem sikerült kiolvasni (404), ezért a preview deployok kizárása nem igazolt.
 - Következő nagy csomag: többfeladatos leckék és differenciált hibamagyarázat; mentés előnézete, integritás és visszaállítási teszt; böngészős regressziótesztek.
