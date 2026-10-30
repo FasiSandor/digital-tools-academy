@@ -66,6 +66,10 @@ try{
  assert.match(await page.locator('main').innerText(),/1 \/ 35/);
  const persisted=await page.evaluate(()=>JSON.parse(localStorage.getItem('dta-progress')));
  assert.deepEqual(persisted,['gg1']);
+ await upload(page,backup(['gg1','future-lesson']));
+ assert.equal(await page.getByRole('button',{name:'Haladás egyesítése'}).isDisabled(),true);
+ assert.equal(await page.getByRole('button',{name:'Teljes visszaállítás'}).isDisabled(),true);
+ await page.getByRole('button',{name:'Mégse'}).click();
  await page.evaluate(()=>localStorage.setItem('dta-progress','{corrupt'));
  await page.reload();
  await page.getByRole('button',{name:'Menü megnyitása'}).click();
@@ -85,10 +89,6 @@ try{
  await settings(page);
  assert.match(await page.locator('main').innerText(),/ismeretlen leckeazonosítót/);
  assert.equal(await page.getByRole('button',{name:/Exportálás/}).isDisabled(),true);
- assert.equal(await page.evaluate(()=>localStorage.getItem('dta-progress')),'["gg1","future-lesson"]');
- await upload(page,backup(['gg1','future-lesson']));
- assert.equal(await page.getByRole('button',{name:'Haladás egyesítése'}).isDisabled(),true);
- assert.equal(await page.getByRole('button',{name:'Teljes visszaállítás'}).isDisabled(),true);
  assert.equal(await page.evaluate(()=>localStorage.getItem('dta-progress')),'["gg1","future-lesson"]');
  console.log('Browser E2E passed: mobile menu, PWA manifest/icon, SHA-256 export, import, persisted restore and corrupted-progress recovery.');
 }finally{
