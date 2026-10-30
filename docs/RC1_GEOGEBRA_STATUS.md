@@ -10,6 +10,8 @@ Alap: `development/graphlab-guided-explanations-20261030`
 - Háromválaszos önellenőrzés és indokolt visszajelzés.
 - Mobilra törő, meglévő élénk arculathoz igazított UI.
 - Strukturális és tartalmi automatikus regresszióteszt.
+- Élő parabola-transzformációs labor a/h/k csúszkákkal, SVG-grafikonnal, csúcs- és szélsőérték-magyarázattal, szinkron értéktáblázattal.
+- Grafikon vágási szélsőeset javítása és új regresszióteszt.
 - A korábbi 35 lecke azonosítója, a haladás tárolása és a Desmos/Wolfram modul nem változott.
 
 ## Kötelezően hátralévő RC1-kapu
