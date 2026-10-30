@@ -273,3 +273,24 @@ test('user polynomial input parses safely and handles negative and decimal coeff
  for(const invalid of ['sin(x)','x^3','x/x','x²+x²','x++2','2*(x+1)','', 'x;alert(1)'])assert.throws(()=>m.parsePolynomial(invalid),undefined,invalid);
  for(const token of ['Saját függvényem – ábrázolás lépésről lépésre','Ábrázolás indítása','Következő lépés','parsePolynomial(functionText)','guidedSteps[guidedStep]'])assert.ok(graph.includes(token),token);
 });
+
+test('automatic viewport includes roots, vertex, probe and readable axis ticks',async()=>{
+ const ts=await import('typescript');
+ const js=ts.transpileModule(read('../src/graphMath.ts'),{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ESNext}}).outputText;
+ const m=await import('data:text/javascript;base64,'+Buffer.from(js).toString('base64'));
+ for(const [a,b,c,x] of [[1,0,-2,1],[2,-3,1,0],[1,-20,0,10],[0,0,300,1],[0,2,-100,0],[-1,2,3,1]]){
+  const v=m.graphViewport(a,b,c,x);
+  assert.ok(Object.values(v).every(Number.isFinite),JSON.stringify(v));
+  assert.ok(v.xMin<=x&&v.xMax>=x);
+  assert.ok(v.yMin<=m.evaluateQuadratic(a,b,c,x)&&v.yMax>=m.evaluateQuadratic(a,b,c,x));
+  for(const root of m.realRoots(a,b,c))assert.ok(root>=v.xMin&&root<=v.xMax);
+  if(a!==0){const vertex=-b/(2*a);assert.ok(vertex>=v.xMin&&vertex<=v.xMax);}
+  for(const [lo,hi] of [[v.xMin,v.xMax],[v.yMin,v.yMax]]){const ticks=m.graphTicks(lo,hi);assert.ok(ticks.length>=2&&ticks.length<=12);assert.ok(ticks.every((t,i)=>t>=lo&&t<=hi&&(i===0||t>ticks[i-1])));}
+ }
+ const normal=m.graphViewport(1,0,-2,1);
+ const close=m.graphViewport(1,0,-2,1,0.5);
+ const far=m.graphViewport(1,0,-2,1,2);
+ assert.ok(close.xMax-close.xMin<normal.xMax-normal.xMin);
+ assert.ok(far.xMax-far.xMin>normal.xMax-normal.xMin);
+ for(const token of ['graphViewport(a,b,c,probe,zoom)','graphTicks(viewport.xMin,viewport.xMax)','Nagyítás +','Kicsinyítés −','Automatikus nézet'])assert.ok(graph.includes(token),token);
+});
