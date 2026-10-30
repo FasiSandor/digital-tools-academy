@@ -321,3 +321,27 @@ test('extended functions safely parse, evaluate and explain three families',asyn
  for(const token of ['Értéktáblázat a nevezetes pont körül','Nincs értelmezve','extended-clip','Következő lépés','parseExtendedFunction(value)'])assert.ok(ui.includes(token),token);
  assert.ok(graph.includes('<ExtendedGraphLab/>'));
 });
+
+test('function analysis and practice: roots, asymptotes, monotonicity, feedback',async()=>{
+ const ts=await import('typescript');
+ const extJs=ts.transpileModule(read('../src/extendedFunctions.ts'),{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ESNext}}).outputText;
+ const analysisJs=ts.transpileModule(read('../src/functionAnalysis.ts'),{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ESNext}}).outputText.replaceAll("from './extendedFunctions'","from 'data:text/javascript;base64,"+Buffer.from(extJs).toString('base64')+"'");
+ const e=await import('data:text/javascript;base64,'+Buffer.from(extJs).toString('base64'));
+ const a=await import('data:text/javascript;base64,'+Buffer.from(analysisJs).toString('base64'));
+ const abs=a.analyzeExtended(e.parseExtendedFunction('|x-2|+1'));
+ assert.deepEqual(abs.zeros,[]);assert.equal(abs.criticalPoint.type,'minimum');
+ const abs2=a.analyzeExtended(e.parseExtendedFunction('|x|-2'));
+ assert.deepEqual(abs2.zeros,[-2,2]);
+ const cubic=a.analyzeExtended(e.parseExtendedFunction('(x-1)^3+2'));
+ assert.ok(cubic.criticalPoint.type.includes('nem szélsőérték'));
+ assert.ok(Math.abs(cubic.zeros[0]-(1-Math.cbrt(2)))<1e-10);
+ const recip=a.analyzeExtended(e.parseExtendedFunction('1/(x-2)+1'));
+ assert.deepEqual(recip.zeros,[1]);assert.equal(recip.intercept,0.5);
+ assert.equal(recip.asymptotes.length,2);
+ assert.ok(recip.monotonic.every(s=>s.includes('Csökken')));
+ for(const fn of [e.parseExtendedFunction('|x|'),e.parseExtendedFunction('x^3'),e.parseExtendedFunction('1/x')]){
+  const qs=a.practiceFor(fn);assert.equal(qs.length,3);assert.deepEqual(qs.map(q=>q.correct),[0,1,2]);assert.ok(qs.every(q=>q.options.length===3&&q.explanation.length>5));
+ }
+ const ui=read('../src/FunctionInvestigation.tsx');
+ for(const token of ['Részletes megoldás megjelenítése','Gyakorlás újrakezdése','Eredmény:','setAnswers','analysis.monotonic'])assert.ok(ui.includes(token),token);
+});
