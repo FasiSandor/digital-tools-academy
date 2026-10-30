@@ -97,3 +97,9 @@ A tesztet a fejlesztési preview-n kell elvégezni, **nem** az éles oldalon. A 
 - [ ] Ismert és ismeretlen azonosítókat vegyesen tartalmazó mentés előnézetében mind az egyesítés, mind a teljes visszaállítás letiltott.
 - [ ] A figyelmeztetés megmagyarázza az adatvesztés veszélyét; a helyi haladás nem változik.
 - [ ] Kizárólag ismert azonosítókat tartalmazó mentés esetén az eddigi egyesítés és megerősített visszaállítás továbbra is működik.
+
+### Nyers mentés helyreállítás előtt
+- [ ] Sérült helyi haladásnál a szabványos JSON-export tiltott, de az „Eredeti adat mentése (.txt)” elérhető.
+- [ ] A letöltött `.txt` pontosan a helyi `dta-progress` eredeti szövege; a mentés után a böngésző tárhelye nem változik.
+- [ ] A felület jelzi, hogy a nyers szöveg nem ellenőrzött mentés és nem importálható közvetlenül.
+- [ ] Ha a helyi tárhely nem olvasható, a nyers mentés hibát jelez, nem állítja, hogy sikeres volt.
