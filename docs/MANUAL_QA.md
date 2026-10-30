@@ -69,3 +69,9 @@ A tesztet a fejlesztési preview-n kell elvégezni, **nem** az éles oldalon. A 
 - A `tests/browser-e2e.mjs` mobil méretű Chromiumot futtat helyi Vite preview-n: manifest, ikon, menü, export/import, SHA-256, frissítés utáni adatmegmaradás és sérült tároló helyreállítása.
 - Az automatizált Chromium sikeressége **nem** helyettesíti az iPhone Safari, iPad és Android eszközös telepítési próbát.
 - GitHub Actions futás végén az E2E lépésnek külön sikeresnek kell lennie; az egyszerű Node smoke + build önmagában nem elegendő e mérföldkő lezárásához.
+
+### Függvénylabor tengelyskálájának ellenőrzése
+- [ ] Az x tengelyen az egységnyi távolság mindenütt azonos; a rácsvonalak a megjelenített x feliratokhoz igazodnak.
+- [ ] Az y tengely rácsvonalai az y feliratokkal egybeesnek, a két tengely skálája eltérő lehet, de egyik sem megtévesztő.
+- [ ] A `f(x)=x²−2` esetben a (0;−2), (1;−1), (2;2) pontok leolvasása egyezik a táblázattal.
+- [ ] Mobilon a tengelyfeliratok, a jelölők és az értéktáblázat olvashatók maradnak.
