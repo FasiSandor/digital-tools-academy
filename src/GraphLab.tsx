@@ -1,4 +1,5 @@
 import {useMemo,useState} from 'react';
+import {parsePolynomial} from './functionInput';
 import {evaluateQuadratic,derivativeAt,sampleAround,realRoots,secantSlope,secantConvergence} from './graphMath';
 
 const fmt=(n:number)=>Number(n.toFixed(3)).toLocaleString('hu-HU');
@@ -6,6 +7,8 @@ const xPx=(x:number)=>170+x*32;
 const yPx=(y:number)=>125-y*18;
 export default function GraphLab(){
  const[a,setA]=useState(1),[b,setB]=useState(0),[c,setC]=useState(-2),[probe,setProbe]=useState(1),[prediction,setPrediction]=useState(''),[predictionResult,setPredictionResult]=useState(''),[showTangent,setShowTangent]=useState(true),[showSecant,setShowSecant]=useState(false),[stepH,setStepH]=useState(1);
+ const[functionText,setFunctionText]=useState('f(x)=x²-2'),[functionError,setFunctionError]=useState(''),[guidedStep,setGuidedStep]=useState(0),[customActive,setCustomActive]=useState(false);
+ const loadFunction=()=>{try{const parsed=parsePolynomial(functionText);setA(parsed.a);setB(parsed.b);setC(parsed.c);setProbe(0);setPrediction('');setPredictionResult('');setFunctionError('');setGuidedStep(0);setCustomActive(true);}catch(error){setFunctionError(error instanceof Error?error.message:'Nem sikerült értelmezni a függvényt.')}};
  const points=useMemo(()=>Array.from({length:321},(_,i)=>{const x=(i-160)/32;return (i?'L':'M')+xPx(x)+' '+yPx(evaluateQuadratic(a,b,c,x))}).join(' '),[a,b,c]);
  const vertex=a!==0?{x:-b/(2*a),y:c-b*b/(4*a)}:null;
  const delta=b*b-4*a*c;
@@ -16,6 +19,14 @@ export default function GraphLab(){
  const secantY=evaluateQuadratic(a,b,c,probe+stepH);
  const secantPath=useMemo(()=>Array.from({length:321},(_,i)=>{const x=(i-160)/32;return (i?'L':'M')+xPx(x)+' '+yPx(probeY+secant*(x-probe))}).join(' '),[probe,probeY,secant]);
  const convergence=useMemo(()=>secantConvergence(a,b,c,probe),[a,b,c,probe]);
+ const guidedSteps=[
+ {title:'1. A függvény felismerése',detail:a!==0?'Másodfokú függvény: parabola.':b!==0?'Elsőfokú függvény: egyenes.':'Konstans függvény: vízszintes egyenes.'},
+ {title:'2. Együtthatók és tengelymetszet',detail:`a = ${fmt(a)}, b = ${fmt(b)}, c = ${fmt(c)}. Az y-tengely metszéspontja (0; ${fmt(c)}).`},
+ {title:'3. Zérushelyek',detail:a===0&&b===0&&c===0?'Minden valós szám zérushely.':roots.length?`A függvény zérushelyei: ${roots.map(fmt).join('; ')}.`:'Nincs valós zérushely.'},
+ {title:'4. Csúcspont és szélsőérték',detail:vertex?`Csúcspont: (${fmt(vertex.x)}; ${fmt(vertex.y)}). Ez ${a>0?'minimum':'maximum'}.`:'Nincs parabolacsúcspont, mert a = 0.'},
+ {title:'5. Meredekség és változás',detail:`A derivált f′(x) = ${fmt(2*a)}x ${b<0?'−':'+'} ${fmt(Math.abs(b))}. A vizsgált x = ${fmt(probe)} helyen a meredekség ${fmt(slope)}.`},
+ {title:'6. Ellenőrzés a grafikonon',detail:'Nézd meg a piros görbét, az értéktáblázatot és az érintőt. Mozgasd a vizsgált x csúszkát, majd próbáld ki a szelő közelítését.'}
+ ];
  const samples=useMemo(()=>sampleAround(a,b,c,probe),[a,b,c,probe]);
  const tangent=useMemo(()=>Array.from({length:321},(_,i)=>{const x=(i-160)/32;return (i?'L':'M')+xPx(x)+' '+yPx(probeY+slope*(x-probe))}).join(' '),[probe,probeY,slope]);
  const applyPreset=(nextA:number,nextB:number,nextC:number,nextX:number)=>{setA(nextA);setB(nextB);setC(nextC);setProbe(nextX);setPrediction('');setPredictionResult('')};
@@ -29,6 +40,14 @@ export default function GraphLab(){
  return <section className="panel graphlab">
  <h2>Interaktív függvénylabor</h2>
  <p>Változtasd az együtthatókat, és figyeld a függvény alakját, zérushelyeit és csúcspontját! A grafikon saját szemléltető eszköz.</p>
+ <section className="function-entry" aria-labelledby="function-entry-title">
+ <h3 id="function-entry-title">Saját függvényem – ábrázolás lépésről lépésre</h3>
+ <p>Írd be a függvényedet! A program felismeri az együtthatókat, felrajzolja a grafikont, majd hat lépésben megmutatja, hogyan ábrázolhatod önállóan.</p>
+ <form onSubmit={e=>{e.preventDefault();loadFunction()}} className="function-entry-form"><label htmlFor="function-expression">Függvény képlete</label><div><input id="function-expression" type="text" value={functionText} onChange={e=>{setFunctionText(e.target.value);setFunctionError('')}} placeholder="például f(x)=2x²-3x+1" autoComplete="off"/><button type="submit">Ábrázolás indítása</button></div></form>
+ <p className="function-examples">Példák: x²−4, −x²+2x+3, 2x−1, y=3. A jelenlegi változat legfeljebb másodfokú polinomokat kezel, összevont alakban.</p>
+ {functionError&&<p className="backup-error" role="alert">{functionError}</p>}
+ {customActive&&<div className="function-guide" aria-live="polite"><p><b>Felismert függvény:</b> f(x) = {fmt(a)}x² {b<0?'−':'+'} {fmt(Math.abs(b))}x {c<0?'−':'+'} {fmt(Math.abs(c))}</p><p className="function-step-count">Lépés {guidedStep+1} / {guidedSteps.length}</p><h4>{guidedSteps[guidedStep].title}</h4><p>{guidedSteps[guidedStep].detail}</p><div className="function-step-actions"><button type="button" disabled={guidedStep===0} onClick={()=>setGuidedStep(v=>v-1)}>Előző lépés</button><button type="button" disabled={guidedStep===guidedSteps.length-1} onClick={()=>setGuidedStep(v=>v+1)}>Következő lépés</button></div></div>}
+ </section>
  <div className="graph-presets" role="group" aria-label="Kísérleti példák">
  <button type="button" onClick={()=>applyPreset(1,0,-2,1)}>Felfelé nyíló parabola</button>
  <button type="button" onClick={()=>applyPreset(-1,0,3,1)}>Lefelé nyíló parabola</button>
@@ -49,7 +68,7 @@ export default function GraphLab(){
  <text x="323" y="119" fill="#111827" fontSize="11">x</text><text x="177" y="13" fill="#111827" fontSize="11">y</text>
  </svg>
  <div className="controls"><label className="tangent-toggle"><input type="checkbox" checked={showTangent} onChange={e=>setShowTangent(e.target.checked)}/> Érintő megjelenítése</label><label className="tangent-toggle"><input type="checkbox" checked={showSecant} onChange={e=>setShowSecant(e.target.checked)}/> Szelő megjelenítése</label><div className="lab-legend"><span><i className="legend-curve"/> Függvény</span><span><i className="legend-tangent"/> Érintő</span><span><i style={{display:'inline-block',width:14,height:3,background:'#16a34a'}}/> Szelő</span></div>
- {([{name:'a – másodfokú tag',value:a,fn:setA},{name:'b – elsőfokú tag',value:b,fn:setB},{name:'c – konstans tag',value:c,fn:setC}]).map(s=><label key={s.name}><span>{s.name}: <b>{fmt(s.value)}</b></span><input aria-label={s.name} type="range" min="-4" max="4" step=".5" value={s.value} onChange={e=>{s.fn(Number(e.target.value));setPredictionResult('')}}/></label>)}
+ {([{name:'a – másodfokú tag',value:a,fn:setA},{name:'b – elsőfokú tag',value:b,fn:setB},{name:'c – konstans tag',value:c,fn:setC}]).map(s=><label key={s.name}><span>{s.name}: <b>{fmt(s.value)}</b></span><input aria-label={s.name} type="range" min={-Math.max(4,Math.ceil(Math.abs(s.value)))} max={Math.max(4,Math.ceil(Math.abs(s.value)))} step=".1" value={s.value} onChange={e=>{s.fn(Number(e.target.value));setPredictionResult('')}}/></label>)}
  <label className="probe-slider"><span>Vizsgált x: <b>{fmt(probe)}</b></span><input aria-label="Vizsgált x koordináta" type="range" min="-5" max="5" step=".25" value={probe} onChange={e=>{setProbe(Number(e.target.value));setPredictionResult('')}}/></label><label className="probe-slider"><span>Szelő lépésköze (h): <b>{fmt(stepH)}</b></span><input aria-label="Szelő lépésköze h" type="range" min="0.1" max="2" step="0.1" value={stepH} onChange={e=>setStepH(Number(e.target.value))}/></label><p className="probe-result"><b>f({fmt(probe)}) = {fmt(probeY)}</b><span> Érintő meredeksége: <b>{fmt(slope)}</b></span></p><p className="probe-result">P = ({fmt(probe)}; {fmt(probeY)}), Q = ({fmt(probe+stepH)}; {fmt(secantY)}). <b>Szelő meredeksége: {fmt(secant)}</b>. Az érintő meredeksége: {fmt(slope)}. Eltérés: {fmt(Math.abs(secant-slope))}. Ha h közelít nullához, a szelő meredeksége az érintőéhez tart.</p><strong>f(x) = {fmt(a)}x² {b<0?'−':'+'} {fmt(Math.abs(b))}x {c<0?'−':'+'} {fmt(Math.abs(c))}</strong>
  <p>{a===0?(b===0?'Konstans függvény.':'Lineáris függvény.'):a>0?'A parabola felfelé nyílik.':'A parabola lefelé nyílik.'}</p>
  <p><b>Y-tengelymetszet:</b> (0; {fmt(c)})</p>
