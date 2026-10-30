@@ -3,6 +3,7 @@ import {spawn} from 'node:child_process';
 import {setTimeout as delay} from 'node:timers/promises';
 import {chromium} from 'playwright';
 
+const watchdog=setTimeout(()=>{console.error('Browser E2E exceeded 120 seconds');process.exit(1)},120000);
 const port=4177,base='http://127.0.0.1:'+port;
 const server=spawn(process.execPath,['node_modules/vite/bin/vite.js','preview','--host','127.0.0.1','--port',String(port),'--strictPort'],{stdio:'pipe'});
 let output='';
@@ -70,4 +71,5 @@ try{
 }finally{
  if(browser)await browser.close();
  server.kill('SIGTERM');
+ clearTimeout(watchdog);
 }
