@@ -92,3 +92,8 @@ A tesztet a fejlesztési preview-n kell elvégezni, **nem** az éles oldalon. A 
 - [ ] Ha a helyi `dta-progress` lista ismert és ismeretlen azonosítókat is tartalmaz, az ismert teljesítések megjelennek, de a teljes eredeti JSON változatlan marad újratöltés után.
 - [ ] A figyelmeztetés jelzi az ismeretlen azonosítók számát; az export és az új teljesítés mentése zárolt.
 - [ ] Kifejezett teljes visszaállítás vagy újrakezdés nélkül a rendszer nem törölheti a nem ismert azonosítókat.
+
+### Ismeretlen leckeazonosítók a mentésfájlban
+- [ ] Ismert és ismeretlen azonosítókat vegyesen tartalmazó mentés előnézetében mind az egyesítés, mind a teljes visszaállítás letiltott.
+- [ ] A figyelmeztetés megmagyarázza az adatvesztés veszélyét; a helyi haladás nem változik.
+- [ ] Kizárólag ismert azonosítókat tartalmazó mentés esetén az eddigi egyesítés és megerősített visszaállítás továbbra is működik.
