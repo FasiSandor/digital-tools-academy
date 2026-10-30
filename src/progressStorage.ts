@@ -5,7 +5,8 @@ export function readProgress(storage:Pick<Storage,'getItem'>,validIds:ReadonlySe
  try{
   const raw=storage.getItem(PROGRESS_KEY);
   if(raw===null)return {completed:[],warning:''};
-  const parsed:unknown=JSON.parse(raw);
+  let parsed:unknown;
+  try{parsed=JSON.parse(raw)}catch{return {completed:[],warning:'A helyi haladás adatai hibásak. A korábbi adatot nem írtuk felül; exportálás vagy helyreállítás előtt ellenőrizd a böngésző tárhelyét.'}}
   if(!Array.isArray(parsed)||!parsed.every((id:unknown)=>typeof id==='string')){
    return {completed:[],warning:'A helyi haladás adatai hibásak. A korábbi adatot nem írtuk felül; exportálás vagy helyreállítás előtt ellenőrizd a böngésző tárhelyét.'};
   }
