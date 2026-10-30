@@ -195,3 +195,9 @@ A három külső alkalmazás aktuális funkcióit hivatalos dokumentációval ke
 - Nagyítás, kicsinyítés, automatikus nézet gombok; az eredeti függvények, értéktáblázat, szelő/érintő, vezetett ábrázolás megmaradtak. A nézetbeállítás csak megjelenítés, nem módosítja a tanulói haladást.
 - A képernyőn a látható x-tartomány kiolvasható. Új matematikai tesztek ellenőrzik a fontos pontok bekerülését és a skála beosztásait; Chromium E2E nagy y-tengelymetszetet és zoom-visszaállítást is vizsgál.
 - A megoldás egyelőre az első- és másodfokú polinomokra készült; későbbi függvénytípusokhoz külön adaptív mintavételezés és szakadáspont-kezelés szükséges.
+
+## Új függvénycsaládok – 2026-10-30
+- A meglévő másodfokú függvénylaboron belül önálló, kiegészítő munkaterület: abszolútérték (`|x−2|+1`, `−2|x+1|+3`), harmadfok (`x³−2`, `(x−1)³+2`) és reciprok (`1/(x−2)+1`, `-1/x`).
+- Külön grafikon, mobilbarát mintagombok, nagyítás, hatlépéses tanári magyarázat, értelmezési tartomány/értékkészlet és értéktáblázat. A reciprok két ága szakadáspontnál külön görbe, aszimptotái szaggatott kékkel jelennek meg.
+- A bemeneti értelmezés kifejezetten korlátozott és biztonságos; nem futtat tetszőleges JavaScriptet. Az általános összetett kifejezések, szinusz/koszinusz, többtagú harmadfokú polinomok még nem támogatottak.
+- Az eredeti másodfokú/lineáris labor, tanulói haladás és elfogadott dizájn változatlan. Új Node matematikai és Chromium mobil E2E tesztek.
