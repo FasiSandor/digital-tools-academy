@@ -165,7 +165,12 @@ test('local progress storage preserves corrupt data and reports quota failures',
  const m=await import('data:text/javascript;base64,'+Buffer.from(js).toString('base64'));
  const valid=new Set(['gg1','gg2']);
  assert.deepEqual(m.readProgress({getItem:()=>null},valid),{completed:[],warning:'',requiresRecovery:false});
- assert.deepEqual(m.readProgress({getItem:()=>JSON.stringify(['gg1','gg1','obsolete'])},valid),{completed:['gg1'],warning:'',requiresRecovery:false});
+ assert.deepEqual(m.readProgress({getItem:()=>JSON.stringify(['gg1','gg1'])},valid),{completed:['gg1'],warning:'',requiresRecovery:false});
+ const foreign=m.readProgress({getItem:()=>JSON.stringify(['gg1','gg1','obsolete'])},valid);
+ assert.deepEqual(foreign.completed,['gg1']);
+ assert.equal(foreign.requiresRecovery,true);
+ assert.match(foreign.warning,/ismeretlen leckeazonosítót/);
+ assert.equal(m.readProgress({getItem:()=>JSON.stringify(['obsolete'])},valid).requiresRecovery,true);
  assert.match(m.readProgress({getItem:()=>'{not json'},valid).warning,/hibásak/);
  assert.match(m.readProgress({getItem:()=>JSON.stringify({completed:['gg1']})},valid).warning,/hibásak/);
  assert.match(m.readProgress({getItem:()=>{throw Error('SecurityError')}},valid).warning,/nem olvasható/);
