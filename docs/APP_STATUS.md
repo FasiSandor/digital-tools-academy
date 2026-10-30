@@ -162,3 +162,8 @@ A három külső alkalmazás aktuális funkcióit hivatalos dokumentációval ke
 - A korábban ismert leckeazonosítókat tartalmazó, de jelenlegi verzióban ismeretlen azonosítókat is hordozó `dta-progress` lista már nem tisztul ki automatikusan az alkalmazás indulásakor.
 - Az ismert eredmények a felületen továbbra is látszanak, de a teljes eredeti JSON érintetlen marad. A helyreállítási zárolás megakadályozza az automatikus felülírást, az új eredmények mentését és a hiányos exportot.
 - Ez jövőbeli vagy korábbi verziók adatainak véletlen elvesztése ellen véd. Külön Node-teszt és Chromium újratöltéses teszt védi a viselkedést. A felhasználó továbbra is választhat teljes mentés-visszaállítást vagy kifejezetten jóváhagyott újrakezdést.
+
+## Importvédelem ismeretlen leckeazonosítóknál – 2026-10-30
+- Az import előnézetében ismeretlen leckeazonosítót tartalmazó mentésből sem egyesítés, sem teljes visszaállítás nem végezhető: mindkettő elveszítené az ismeretlen eredményeket.
+- A felület mindkét gombot letiltja, és az `applyBackup` üzleti logika külön elutasítja a műveletet. A fájl és a helyi haladás változatlan marad.
+- Chromium E2E ellenőrzi a két tiltást egészséges helyi haladás mellett is. A korábbi, ismert azonosítós legacy és SHA-256 mentések működése változatlan.
