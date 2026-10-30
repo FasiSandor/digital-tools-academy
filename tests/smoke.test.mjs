@@ -226,3 +226,9 @@ test('unreadable local progress cannot be exported as a misleading empty backup'
  assert.ok(main.includes("onClick={exportData} disabled={recoveryRequired}"));
  assert.ok(main.includes('Az exportálás zárolva van'));
 });
+
+test('backups with unknown lesson IDs cannot be partially merged or restored',()=>{
+ assert.ok(main.includes("if(backupPreview.unknown>0){setBackupError("));
+ assert.ok(main.includes("disabled={recoveryRequired||backupPreview.unknown>0}"));
+ assert.ok(main.includes("Az egyesítés és a teljes felülírás tiltva van."));
+});
