@@ -53,9 +53,9 @@ try{
  await page.locator('.function-entry').getByRole('button',{name:'Következő lépés'}).click();
  await page.locator('.function-entry').getByText('Lépés 2 / 6').waitFor();
  const initialRange=await page.locator('.graph-view-range').innerText();
- await page.getByRole('button',{name:'Nagyítás +'}).click();
+ await page.locator('.graphlab > .graphlayout').getByRole('button',{name:'Nagyítás +'}).click();
  assert.notEqual(await page.locator('.graph-view-range').innerText(),initialRange);
- await page.getByRole('button',{name:'Automatikus nézet'}).click();
+ await page.locator('.graphlab > .graphlayout').getByRole('button',{name:'Automatikus nézet'}).click();
  assert.equal(await page.locator('.graph-view-range').innerText(),initialRange);
  await ownFunction.fill('y=300');
  await page.locator('.function-entry').getByRole('button',{name:'Ábrázolás indítása'}).click();
