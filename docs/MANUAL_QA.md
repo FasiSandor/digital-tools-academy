@@ -82,3 +82,8 @@ A tesztet a fejlesztési preview-n kell elvégezni, **nem** az éles oldalon. A 
 - [ ] A h csökkentésével a szelő az érintőhöz közelít, és az eltérés a számokban is csökken.
 - [ ] Lineáris és konstans függvény esetén a szelő és az érintő meredeksége megegyezik.
 - [ ] Mobilon a h csúszka és a P/Q jelölők használhatók, a korábbi grafikon és táblázat olvasható.
+
+### Sérült helyi haladás exportálása
+- [ ] Sérült `dta-progress` esetén az „Exportálás (JSON)” gomb letiltott, és a felület megmagyarázza, hogy az üres export elfedhetné a korábbi adatokat.
+- [ ] Érvényes mentés teljes visszaállítása után az export gomb újra működik, a visszaállított azonosítók az új mentésben szerepelnek.
+- [ ] A helyi adatok kifejezett törlése után az új üres mentés készítése megengedett.
