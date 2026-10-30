@@ -133,3 +133,9 @@ A három külső alkalmazás aktuális funkcióit hivatalos dokumentációval ke
 - Sérült vagy nem olvasható helyi haladás mellett az egyesítés már nem megengedett: a gomb letiltott, és a műveleti függvény is külön visszautasítja. Ez kizárja a hiányos, üresnek látszó helyi állapot és egy mentés félrevezető összefésülését.
 - Teljes visszaállítás csak ellenőrzött, ismert azonosítójú mentéssel, felhasználói jóváhagyással engedélyezett; az ismeretlen azonosítók miatti korábbi védelem megmaradt.
 - A valódi Safari/böngészős visszaállítási teszt még nincs elvégezve. Production változatlan.
+
+## Chromium-alapú böngészős ellenőrzés – 2026-10-30
+- Új `tests/browser-e2e.mjs`: valódi headless Chromium, 390×844 mobilnézet, helyi Vite preview kiszolgálón; nem használ Vercel deployt.
+- A teszt lefedi a mobilmenüt, Beállítások megnyitását, PWA manifestet és ikont, SHA-256 JSON exportot, fájlból történő importot, megerősített visszaállítást, újratöltés utáni megmaradást, sérült localStorage esetén zárolt egyesítést és teljes helyreállítást.
+- A GitHub Actions build után Chromiumot telepít, majd helyi szerveren futtatja az E2E ellenőrzést. Ez automatizált böngészős teszt, **nem valódi iPhone/iPad/Android hardverteszt**.
+- A teszt első CI-futása külön ellenőrizendő; a korábbi 28+ teszt és build sikeres volt.
